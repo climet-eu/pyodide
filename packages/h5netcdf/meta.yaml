@@ -1,0 +1,17 @@
+package:
+  name: h5netcdf
+  version: 1.3.0
+  top-level:
+    - h5netcdf
+requirements:
+  run:
+    - h5py
+    - packaging
+source:
+  url: https://files.pythonhosted.org/packages/68/2d/63851081b19d1ccf245091255797cb358c53c886609b5056da5457f7dbbf/h5netcdf-1.3.0-py3-none-any.whl
+  sha256: f2df69dcd3665dc9c4d43eb6529dedd113b2508090d12ac973573305a8406465
+about:
+  home: "https://github.com/h5netcdf/h5netcdf"
+  PyPI: https://pypi.org/project/h5netcdf
+  summary: netCDF4 via h5py
+  license: BSD-3-Clause

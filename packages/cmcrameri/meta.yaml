@@ -1,0 +1,13 @@
+package:
+  name: cmcrameri
+  version: "1.5"
+  top-level:
+    - cmcrameri
+source:
+  url: https://files.pythonhosted.org/packages/12/ec/de245dfecc864e342dcf411e83d61c25e5f50102c4918d5ddf9f92778a2b/cmcrameri-1.5-py3-none-any.whl
+  sha256: c8af03345cd5d8d9f0f0f55d3cd29434fb279553ad44581c7dc9c74747f9a733
+about:
+  home: "https://github.com/callumrollo/cmcrameri"
+  PyPI: https://pypi.org/project/cmcrameri
+  summary: Perceptually uniform colormaps by Fabio Crameri
+  license: MIT

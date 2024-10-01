@@ -1,0 +1,13 @@
+package:
+  name: ipyloglite
+  version: 0.1.2
+  top-level:
+    - ipyloglite
+source:
+  url: https://files.pythonhosted.org/packages/1f/00/69dfe374606d8b1c13b8df6e96fb2ad455cbec4fa281c56ab2f373ea13ca/ipyloglite-0.1.2-py3-none-any.whl
+  sha256: dbfdccbb93a7e981574448fa2496330648e57d0aec64be50694e830776bab8a8
+about:
+  home: https://github.com/juntyr/ipyloglite
+  PyPI: https://pypi.org/project/ipyloglite
+  summary: Forward console.log and friends to cell outputs in JupyterLite.
+  license: MIT OR Apache-2.0

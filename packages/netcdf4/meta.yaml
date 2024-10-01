@@ -13,9 +13,9 @@ requirements:
   run:
     - numpy
     - packaging
-    - h5py
     - cftime
     - certifi
+    - h5py
 test:
   imports:
     - netCDF4

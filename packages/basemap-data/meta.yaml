@@ -1,0 +1,13 @@
+package:
+  name: basemap-data
+  version: 1.3.2
+  top-level:
+    - basemap_data
+source:
+  url: https://files.pythonhosted.org/packages/2c/c3/63fdb885308c999206c7a497d79a50891581626da7dc491d432d2732bb46/basemap_data-1.3.2-py2.py3-none-any.whl
+  sha256: 26e794556c496b26f7714658cdbea5c68cb47d6a8a9fb0e674844fa89c56fc59
+about:
+  home: https://matplotlib.org/basemap
+  PyPI: https://pypi.org/project/basemap-data
+  summary: Data assets for matplotlib basemap
+  license: GNU Lesser General Public License v3 or later (LGPLv3+)

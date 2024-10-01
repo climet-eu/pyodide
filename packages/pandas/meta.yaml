@@ -20,6 +20,7 @@ requirements:
     - numpy
     - python-dateutil
     - pytz
+    - tzdata
 about:
   home: https://pandas.pydata.org
   PyPI: https://pypi.org/project/pandas

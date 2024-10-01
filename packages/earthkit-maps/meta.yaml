@@ -1,0 +1,21 @@
+package:
+  name: earthkit-maps
+  version: 0.0.19
+  top-level:
+    - earthkit.maps
+source:
+  url: https://files.pythonhosted.org/packages/07/3c/4740247c15ca7dac2dfaeea4243e1046666ce8dd9bb5ffd99ca74dbb2ef9/earthkit_maps-0.0.19-py3-none-any.whl
+  sha256: ea4d00e070dc47597ac8b3f1336ffa92c1d5e7beeb00f64ebd284802edff8dda
+requirements:
+  run:
+    - earthkit-data
+    - Cartopy
+    - matplotlib
+    - pyyaml
+    - numpy
+    - adjustText
+about:
+  home: https://github.com/ecmwf/earthkit-maps
+  PyPI: https://pypi.org/project/earthkit-maps
+  summary: Geospatial visualisation tools and templates
+  license: Apache License 2.0

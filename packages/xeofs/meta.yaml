@@ -1,0 +1,29 @@
+package:
+  name: xeofs
+  version: 2.3.1
+  top-level:
+    - xeofs
+source:
+  url: https://files.pythonhosted.org/packages/b0/7f/eeaec5d4963bbbefa4a7ab04a8af1f98fe353fd2d930670eca1778c57385/xeofs-2.3.1.tar.gz
+  sha256: 118b1ee332ebb8a60304b41c80fc2ece5023ff4bcec58f14e275e3ca295522c7
+  patches:
+    - patches/0001-xeofs-no-gwpca.patch
+requirements:
+  run:
+    - dask
+    - netcdf4
+    - numpy
+    - pandas
+    - pooch
+    - scikit-learn
+    - statsmodels
+    - tqdm
+    - typing-extensions
+    - xarray
+    - xarray-datatree
+    - zarr
+about:
+  home: https://github.com/nicrie/xeofs
+  PyPI: https://pypi.org/project/xeofs
+  summary: Collection of EOF analysis and related techniques for climate science
+  license: MIT

@@ -1,0 +1,23 @@
+package:
+  name: earthkit-plots
+  version: 0.2.0
+  top-level:
+    - earthkit.plots
+source:
+  url: https://files.pythonhosted.org/packages/23/58/15fdbde16e5155fc6895a1a07488bba66aa10a47b009d00cfaf55273b29b/earthkit_plots-0.2.0-py3-none-any.whl
+  sha256: c36eb4a5267cae3da288453d0d0a9fbf43f1a1fb4f93396ec4fb575fa5cb66c0
+requirements:
+  run:
+    - earthkit-data
+    - earthkit-plots-default-styles
+    - Cartopy
+    - pint
+    - matplotlib
+    - pyyaml
+    - numpy
+    - adjustText
+about:
+  home: https://github.com/ecmwf/earthkit-plots
+  PyPI: https://pypi.org/project/earthkit-plots
+  summary: Interactive meteorological and climate visualisation tools and templates
+  license: Apache License 2.0

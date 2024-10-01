@@ -1,0 +1,37 @@
+package:
+  name: comm
+  version: 0.2.1
+  top-level:
+    - comm
+source:
+  url: https://files.pythonhosted.org/packages/6e/c1/e7335bd49aa3fa3bd453e34a4580b0076804f219897ad76d4d5aa4d8f22f/comm-0.2.1-py3-none-any.whl
+  sha256: 87928485c0dfc0e7976fd89fc1e187023cf587e7c353e4a9b417555b44adf021
+requirements:
+  run:
+    - traitlets
+about:
+  home: https://github.com/ipython/comm
+  PyPI: https://pypi.org/project/comm
+  summary:
+    Jupyter Python Comm implementation, for usage in ipykernel, xeus-python
+    etc.
+  license:
+    'BSD 3-Clause License  Copyright (c) 2022, Jupyter All rights reserved.  Redistribution
+    and use in source and binary forms, with or without modification, are permitted
+    provided that the following conditions are met:  1. Redistributions of source
+    code must retain the above copyright notice, this list of conditions and the following
+    disclaimer.  2. Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in the documentation
+    and/or other materials provided with the distribution.  3. Neither the name of
+    the copyright holder nor the names of its contributors may be used to endorse
+    or promote products derived from this software without specific prior written
+    permission.  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+    "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+    THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+    ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+    FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+    (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS
+    OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+    THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+    NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+    IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.'

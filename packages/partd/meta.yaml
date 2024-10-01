@@ -1,0 +1,17 @@
+package:
+  name: partd
+  version: 1.4.1
+  top-level:
+    - partd
+source:
+  url: https://files.pythonhosted.org/packages/11/8a/b7a58e208b144a7315208a0dd627e23f5f50b47fa89c2924bb2e9238ecfb/partd-1.4.1-py3-none-any.whl
+  sha256: 27e766663d36c161e2827aa3e28541c992f0b9527d3cca047e13fb3acdb989e6
+requirements:
+  run:
+   - locket
+   - toolz
+about:
+  home: http://github.com/dask/partd/
+  PyPI: https://pypi.org/project/partd
+  summary: Appendable key-value storage
+  license: BSD

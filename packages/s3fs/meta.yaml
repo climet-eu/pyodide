@@ -1,0 +1,18 @@
+package:
+  name: s3fs
+  version: 2024.2.0
+  top-level:
+    - s3fs
+source:
+  url: https://files.pythonhosted.org/packages/7c/76/efa5f84237620d5aa38e58285945b47449d8a94bf7037cae06f680b34c41/s3fs-2024.2.0-py3-none-any.whl
+  sha256: c140de37175c157cb662aa6ad7423365df732ac5f10ef5bf7b76078c6333a942
+requirements:
+  run:
+    - aiobotocore
+    - fsspec
+    - aiohttp # FIXME: requires >=3.9.2
+about:
+  home: http://github.com/fsspec/s3fs/
+  PyPI: https://pypi.org/project/s3fs
+  summary: Convenient Filesystem interface over S3
+  license: BSD

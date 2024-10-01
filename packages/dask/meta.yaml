@@ -1,0 +1,26 @@
+package:
+  name: dask
+  version: 2024.2.1
+  top-level:
+    - dask
+source:
+  url: https://files.pythonhosted.org/packages/ff/d3/f1dcba697c7d7e8470ffa34b31ca1e663d4a2654ef806877f1017ecc5102/dask-2024.2.1-py3-none-any.whl
+  sha256: a13fcdeead3bab3576495023f83097adcffe2f03c371c241b5a1f0b232b35b38
+test:
+  imports:
+    - dask
+requirements:
+  run:
+    - click
+    - cloudpickle
+    - importlib_metadata
+    - Jinja2
+    - packaging
+    - partd
+    - pyyaml
+    - toolz
+about:
+  home: https://github.com/dask/dask/
+  PyPI: https://pypi.org/project/dask
+  summary: Parallel PyData with Task Scheduling
+  license: BSD

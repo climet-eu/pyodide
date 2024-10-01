@@ -1,0 +1,13 @@
+package:
+  name: aioitertools
+  version: 0.12.0
+  top-level:
+    - aioitertools
+source:
+  url: https://files.pythonhosted.org/packages/85/13/58b70a580de00893223d61de8fea167877a3aed97d4a5e1405c9159ef925/aioitertools-0.12.0-py3-none-any.whl
+  sha256: fc1f5fac3d737354de8831cbba3eb04f79dd649d8f3afb4c5b114925e662a796
+about:
+  home: https://github.com/omnilib/aioitertools
+  PyPI: https://pypi.org/project/aioitertools
+  summary: itertools and builtins for AsyncIO and mixed iterables
+  license: MIT License

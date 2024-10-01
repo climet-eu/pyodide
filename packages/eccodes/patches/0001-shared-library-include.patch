@@ -1,0 +1,40 @@
+diff --git a/gribapi/bindings.py b/gribapi/bindings.py
+index 32fdc34..c65c4c2 100644
+--- a/gribapi/bindings.py
++++ b/gribapi/bindings.py
+@@ -15,6 +15,7 @@
+ #
+ 
+ from __future__ import absolute_import, division, print_function, unicode_literals
++from pathlib import Path
+ 
+ import logging
+ import pkgutil
+@@ -25,14 +26,7 @@ __version__ = "1.7.0"
+ 
+ LOG = logging.getLogger(__name__)
+ 
+-try:
+-    import ecmwflibs as findlibs
+-except ImportError:
+-    import findlibs
+-
+-library_path = findlibs.find("eccodes")
+-if library_path is None:
+-    raise RuntimeError("Cannot find the ecCodes library")
++library_path = str(Path(__file__).parent / "libeccodes.so")
+ 
+ # default encoding for ecCodes strings
+ ENC = "ascii"
+diff --git a/setup.py b/setup.py
+index 3e4050e..e26b91a 100644
+--- a/setup.py
++++ b/setup.py
+@@ -57,6 +57,7 @@ setuptools.setup(
+     url="https://github.com/ecmwf/eccodes-python",
+     packages=setuptools.find_packages(),
+     include_package_data=True,
++    package_data={'gribapi': ["libeccodes.so"]},
+     install_requires=install_requires,
+     tests_require=[
+         "pytest",

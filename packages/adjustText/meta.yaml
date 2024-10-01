@@ -1,0 +1,18 @@
+package:
+  name: adjustText
+  version: 1.1.1
+  top-level:
+    - adjustText
+source:
+  url: https://files.pythonhosted.org/packages/e7/e9/83c53c56a3251bf92903d0ad817f0e73f98e42add91d585a9c26e67eac0b/adjustText-1.1.1-py3-none-any.whl
+  sha256: ad2285f4239cd6c172508d772b026a133806deed9779977dfbeadcf233454938
+requirements:
+  run:
+    - numpy
+    - matplotlib
+    - scipy
+about:
+  home: https://github.com/Phlya/adjustText
+  PyPI: https://pypi.org/project/adjustText
+  summary: Iteratively adjust text position in matplotlib plots to minimize overlaps
+  license: MIT
