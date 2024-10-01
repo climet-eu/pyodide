@@ -1,0 +1,31 @@
+package:
+  name: earthkit-data
+  version: 0.7.0
+  top-level:
+    - earthkit.data
+source:
+  url: https://files.pythonhosted.org/packages/98/69/bfafdd039f846cfbeba12f8f83cfc3a55b1b261c52bedb1b22c2468d28fc/earthkit_data-0.7.0-py3-none-any.whl
+  sha256: 0376730eba485fee910a389c010dfd9125af68691e0a4d09cfa17766cdcc9a26
+requirements:
+  run:
+    - cfgrib
+    - eccodes
+    - dask
+    - entrypoints
+    - filelock
+    - Jinja2
+    - jsonschema
+    - markdown
+    - multiurl
+    - netcdf4
+    - pandas
+    - pdbufr
+    - pyyaml
+    - tqdm
+    - xarray
+    - earthkit-meteo
+about:
+  home: https://github.com/ecmwf/earthkit-data
+  PyPI: https://pypi.org/project/earthkit-data
+  summary: A format-agnostic Python interface for geospatial data
+  license: Apache License 2.0

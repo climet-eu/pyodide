@@ -1,0 +1,11 @@
+package:
+  name: jupyterlite-preload
+  version: 0.0.0
+  top-level:
+    - jupyterlite_preload
+source:
+  path: ./jupyterlite-preload
+requirements:
+  run:
+    - ipyloglite  # 0.0.0
+    - pyodide-http  # 0.2.1

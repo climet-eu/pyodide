@@ -1,0 +1,26 @@
+package:
+  name: MetPy
+  version: 1.5.1
+  top-level:
+    - metpy
+source:
+  url: https://files.pythonhosted.org/packages/6d/bf/9794cba86ef63644d41799d0dfe4031f430e937245a5f3f1e66508a6c8fb/MetPy-1.5.1-py3-none-any.whl
+  sha256: a654a1aae77422ad340c06daaa70bd34f0ca5325f4ff202796d2dce48e53e776
+requirements:
+  run:
+    - matplotlib
+    - numpy
+    - pandas
+    - pint
+    - pooch
+    - pyproj
+    - scipy
+    - traitlets
+    - xarray
+about:
+  home: https://github.com/Unidata/MetPy
+  PyPI: https://pypi.org/project/MetPy
+  summary:
+    Collection of tools for reading, visualizing and performing calculations
+    with weather data.
+  license: BSD-3-Clause

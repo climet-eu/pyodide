@@ -1,0 +1,31 @@
+package:
+  name: basemap
+  version: 1.4.1
+  top-level:
+    - mpl_toolkits
+source:
+  url: https://files.pythonhosted.org/packages/00/63/f3a5e74a8a31c20ea785ebd0fc1a9e680a9f1c5ac9ab4888f349ef9a3165/basemap-1.4.1.zip
+  sha256: 6822d3d08c11cdc443e3ed01d61d512e7cf62d4b40bbc1d235f0a898f2c54a7a
+requirements:
+  host:
+    - geos
+  run:
+    - basemap-data
+    - numpy
+    - cycler
+    - distutils
+    - pyparsing
+    - matplotlib
+    - pyproj
+    - pyshp
+
+build:
+  vendor-sharedlib: true
+  cflags: -Wno-int-conversion -Wno-incompatible-function-pointer-types
+  script: |
+    export GEOS_DIR=${WASM_LIBRARY_DIR}
+about:
+  home: https://matplotlib.org/basemap
+  PyPI: https://pypi.org/project/basemap
+  summary: Plot data on map projections with matplotlib
+  license: MIT

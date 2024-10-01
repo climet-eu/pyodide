@@ -1,0 +1,16 @@
+package:
+  name: importlib_metadata
+  version: 7.0.1
+  top-level:
+    - importlib_metadata
+source:
+  url: https://files.pythonhosted.org/packages/c0/8b/d8427f023c081a8303e6ac7209c16e6878f2765d5b59667f3903fbcfd365/importlib_metadata-7.0.1-py3-none-any.whl
+  sha256: 4805911c3a4ec7c3966410053e9ec6a1fecd629117df5adee56dfc9432a1081e
+requirements:
+  run:
+    - zipp
+about:
+  home: https://github.com/python/importlib_metadata
+  PyPI: https://pypi.org/project/importlib_metadata
+  summary: Read metadata from Python packages
+  license: "Apache Software License"

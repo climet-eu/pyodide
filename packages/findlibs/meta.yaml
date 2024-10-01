@@ -1,0 +1,13 @@
+package:
+  name: findlibs
+  version: 0.0.5
+  top-level:
+    - findlibs
+source:
+  url: https://files.pythonhosted.org/packages/ae/be/6c72ef9d990cd25fe3dd97ebe9d77a859f7d27b7273e62ad750846d207ee/findlibs-0.0.5.tar.gz
+  sha256: 7a801571e999d0ee83f9b92cbb598c21f861ee26ca9dba74cea8958ba4335e7e
+about:
+  home: https://github.com/ecmwf/findlibs
+  PyPI: https://pypi.org/project/findlibs
+  summary: A packages to search for shared libraries on various platforms
+  license: Apache License Version 2.0

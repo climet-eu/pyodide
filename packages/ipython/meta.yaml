@@ -1,27 +1,26 @@
 package:
   name: ipython
-  version: 8.23.0
+  version: 8.22.1
   top-level:
     - IPython
 source:
-  url: https://files.pythonhosted.org/packages/8a/15/ea245239487bbd8d7203fe010ea48c7539e42bf1fde0592313241a3fba3a/ipython-8.23.0-py3-none-any.whl
-  sha256: 07232af52a5ba146dc3372c7bf52a0f890a23edf38d77caef8d53f9cdc2584c1
+  url: https://files.pythonhosted.org/packages/95/2c/9ef08ee0cc836f95bc2750e7c3f18790a90dff596d372cee4bcd2561ae1c/ipython-8.22.1.tar.gz
+  sha256: 39c6f9efc079fb19bfb0f17eee903978fe9a290b1b82d68196c641cecb76ea22
+  patches:
+    - patches/0001-jupyterlite-preload.patch
 requirements:
   run:
-    - asttokens
+    - comm
     - decorator
-    - executing
+    - jedi
     - matplotlib-inline
     - prompt_toolkit
-    - pure_eval
     - Pygments
-    - six
-    - stack-data
+    - stack_data
     - traitlets
-    - sqlite3
-    - wcwidth
+    - jupyterlite-preload
 about:
-  home: https://ipython.org
+  home: https://ipython.org/
   PyPI: https://pypi.org/project/ipython
   summary: "IPython: Productive Interactive Computing"
   license: BSD-3-Clause

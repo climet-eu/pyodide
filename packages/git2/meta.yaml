@@ -1,0 +1,14 @@
+package:
+  name: git2
+  version: 1.7.1
+  top-level:
+    - git2
+source:
+  path: ./git2
+requirements:
+  host:
+    - libgit2
+build:
+  vendor-sharedlib: true
+  script: |
+    cp ${WASM_LIBRARY_DIR}/lib/libgit2.so git2/

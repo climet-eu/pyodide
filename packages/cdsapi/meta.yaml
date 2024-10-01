@@ -1,0 +1,19 @@
+package:
+  name: cdsapi
+  version: 0.7.2
+  top-level:
+    - cdsapi
+source:
+  url: https://files.pythonhosted.org/packages/41/00/2a9bf86503651d82c004f63f23a01fe12ec1ae6cd9b6640b0aed5b97ba11/cdsapi-0.7.2-py2.py3-none-any.whl
+  sha256: fc79f6a88ea3506d5557dc83a9fdb27c7a6a9aeed6da16dbd7a9f37fbe1d898e
+requirements:
+  run:
+    - cads-api-client
+    - requests
+    - setuptools
+    - tqdm
+about:
+  home: https://github.com/ecmwf/cdsapi
+  PyPI: https://pypi.org/project/cdsapi
+  summary: Climate Data Store API
+  license: Apache 2.0

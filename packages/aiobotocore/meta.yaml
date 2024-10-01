@@ -1,0 +1,19 @@
+package:
+  name: aiobotocore
+  version: 2.15.1
+  top-level:
+    - aiobotocore
+source:
+  url: https://files.pythonhosted.org/packages/df/b8/a0fc9cf540d15f4962448c7ec097e99196b4ddd2a988d98b3d4236cbc89e/aiobotocore-2.15.1-py3-none-any.whl
+  sha256: 0f738cde74108553b753b24655094289a3c7ea0f0f179ed1c0f8cea488999a35
+requirements:
+  run:
+    - botocore
+    - aiohttp
+    - wrapt
+    - aioitertools
+about:
+  home: https://github.com/aio-libs/aiobotocore
+  PyPI: https://pypi.org/project/aiobotocore
+  summary: Async client for aws services using botocore and aiohttp
+  license: Apache License 2.0
