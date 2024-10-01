@@ -67,6 +67,32 @@ index 0c4865f3..fa9d5738 100644
  
  fn main() -> io::Result<()> {
      // Check for `clippy` and return early in this case
+diff --git a/fcbench/Cargo.toml b/fcbench/Cargo.toml
+index a0329180..856c21a9 100644
+--- a/fcbench/Cargo.toml
++++ b/fcbench/Cargo.toml
+@@ -14,7 +14,7 @@ name = "fcbench"
+ crate-type = ["cdylib"]
+ 
+ [dependencies]
+-codecs-build = { workspace = true }
++# codecs-build = { workspace = true }
+ convert_case = { workspace = true }
+ core-benchmark = { workspace = true }
+ core-compressor = { workspace = true }
+diff --git a/fcbench/src/lib.rs b/fcbench/src/lib.rs
+index af8660b7..76dc2bd5 100644
+--- a/fcbench/src/lib.rs
++++ b/fcbench/src/lib.rs
+@@ -3,7 +3,7 @@
+ 
+ use pyo3::prelude::*;
+ 
+-use codecs_build as _;
++// use codecs_build as _;
+ 
+ mod benchmark;
+ pub mod compressor;
 diff --git a/wasi/build/Cargo.toml b/wasi/build/Cargo.toml
 index 47ccdb44..67644654 100644
 --- a/wasi/build/Cargo.toml
