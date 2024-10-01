@@ -1,14 +1,14 @@
 package:
   name: libhdf5
-  version: 1.12.1
+  version: 1.14.3
   tag:
     - library
     - shared_library
 source:
-  sha256: e6dde173c2d243551922d23a0387a79961205b018502e6a742acb30b61bc2d5f
-  url: https://github.com/HDFGroup/hdf5/archive/refs/tags/hdf5-1_12_1.tar.gz
-  patches:
-    - patches/0001-Hardcode-float-precision.patch
+  sha256: df5ee33c74d5efb59738075ef96f4201588e1f1eeb233f047ac7fd1072dee1f6
+  url: https://github.com/HDFGroup/hdf5/archive/refs/tags/hdf5-1_14_3.tar.gz
+  # patches:
+  #   - patches/0001-Hardcode-float-precision.patch
 
 requirements:
   host:

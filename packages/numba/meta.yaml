@@ -1,0 +1,15 @@
+package:
+  name: numba
+  version: 0.61.0
+  top-level:
+    - numba
+source:
+  path: ./numba
+requirements:
+  run:
+    - numpy
+about:
+  home: https://numba.pydata.org
+  PyPI: https://pypi.org/project/numba
+  summary: compiling Python code using LLVM, minimally mocked for Pyodide
+  license: BSD

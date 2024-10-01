@@ -13,13 +13,6 @@ requirements:
     - libproj
   run:
     - numpy
-    - affine
-    - gdal
-    - attrs
-    - certifi
-    - click
-    - cligj
-      # - click-plugins # only for rio cli?
 build:
   vendor-sharedlib: true
   script: |

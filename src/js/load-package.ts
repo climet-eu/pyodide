@@ -20,6 +20,7 @@ import {
 import {
   nodeFsPromisesMod,
   loadBinaryFile,
+  loadBinaryFileSync,
   resolvePath,
   initNodeModules,
   ensureDirNode,
@@ -288,6 +289,156 @@ export class PackageManager {
     }
   }
 
+  public loadPackageSync(
+    names: string | PyProxy | Array<string>,
+    options: {
+      messageCallback?: (message: string) => void;
+      errorCallback?: (message: string) => void;
+      checkIntegrity?: boolean;
+    } = {
+      checkIntegrity: true,
+    },
+  ): PackageData[] {
+    const wrappedLoadPackage = this.setCallbacks(
+      options.messageCallback,
+      options.errorCallback,
+    )(this.loadPackageInnerSync);
+
+    return wrappedLoadPackage.call(this, names, options);
+  }
+
+  public loadPackageInnerSync(
+    names: string | PyProxy | string[],
+    options: {
+      messageCallback?: (message: string) => void;
+      errorCallback?: (message: string) => void;
+      checkIntegrity?: boolean;
+    } = {
+      checkIntegrity: true,
+    },
+  ): Array<PackageData> {
+    const loadedPackageData = new Set<InternalPackageData>();
+    const pkgNames = toStringArray(names);
+
+    const toLoad = this.recursiveDependencies(pkgNames);
+
+    for (const [_, { name, normalizedName, channel }] of toLoad) {
+      const loadedChannel = this.getLoadedPackageChannel(name);
+      if (!loadedChannel) continue;
+
+      toLoad.delete(normalizedName);
+      // If uri is from the default channel, we assume it was added as a
+      // dependency, which was previously overridden.
+      if (loadedChannel === channel || channel === this.defaultChannel) {
+        this.logStdout(`${name} already loaded from ${loadedChannel}`);
+      } else {
+        this.logStderr(
+          `URI mismatch, attempting to load package ${name} from ${channel} ` +
+            `while it is already loaded from ${loadedChannel}. To override a dependency, ` +
+            `load the custom package first.`,
+        );
+      }
+    }
+
+    if (toLoad.size === 0) {
+      this.logStdout("No new packages to load");
+      return [];
+    }
+
+    const packageNames = Array.from(toLoad.values(), ({ name }) => name)
+      .sort()
+      .join(", ");
+    const failed = new Map<string, Error>();
+
+    return this._lock.withLockSync(() => {
+      this.logStdout(`Loading ${packageNames}`);
+      for (const [_, pkg] of toLoad) {
+        if (this.getLoadedPackageChannel(pkg.name)) {
+          // Handle the race condition where the package was loaded between when
+          // we did dependency resolution and when we acquired the lock.
+          toLoad.delete(pkg.normalizedName);
+          continue;
+        }
+      }
+
+      const nodes = Array.from(toLoad.values());
+      const V = nodes.length;
+
+      const nameToIndex = new Map<string, number>;
+      for (const [i, pkg] of nodes.entries()) {
+        nameToIndex.set(pkg.normalizedName, i);
+      }
+
+      const adj: Array<Array<number>> = Array.from({ length: V }, () => []);
+      for (const [i, pkg] of nodes.entries()) {
+        for (const dep of pkg.depends) {
+          if (nameToIndex.has(dep)) {
+            adj[i].push(nameToIndex.get(dep)!);
+          }
+        }
+      }
+
+      // https://www.geeksforgeeks.org/topological-sorting/
+      function topologicalSortUtil(v: number, adj: Array<Array<number>>, visited: Array<boolean>, stack: Array<number>) {
+        visited[v] = true;
+
+        for (let i of adj[v]) {
+          if (!visited[i]) {
+            topologicalSortUtil(i, adj, visited, stack);
+          }
+        }
+
+        stack.push(v);
+      }
+
+      // https://www.geeksforgeeks.org/topological-sorting/
+      function topologicalSort(adj: Array<Array<number>>, V: number): Array<number> {
+        const stack: Array<number> = [];
+        const visited = new Array(V).fill(false);
+
+        for (let i = 0; i < V; i++) {
+          if (!visited[i]) {
+            topologicalSortUtil(i, adj, visited, stack);
+          }
+        }
+
+        return stack;
+      }
+
+      const sorted: Array<PackageLoadMetadata> = topologicalSort(adj, V).map((i) => nodes[i]);
+
+      for (const pkg of sorted) {
+        this.downloadAndInstallSync(pkg, loadedPackageData, failed, options.checkIntegrity);
+      }
+
+      // Warning: this sounds like it might not do anything important, but it
+      // fills in the GOT. There can be segfaults if we leave it out.
+      // See https://github.com/emscripten-core/emscripten/issues/22052
+      // TODO: Fix Emscripten so this isn't needed
+      this.#module.reportUndefinedSymbols();
+      if (loadedPackageData.size > 0) {
+        const successNames = Array.from(loadedPackageData, (pkg) => pkg.name)
+          .sort()
+          .join(", ");
+        this.logStdout(`Loaded ${successNames}`);
+      }
+
+      if (failed.size > 0) {
+        const failedNames = Array.from(failed.keys()).sort().join(", ");
+        this.logStdout(`Failed to load ${failedNames}`);
+        for (const [name, err] of failed) {
+          this.logStderr(`The following error occurred while loading ${name}:`);
+          this.logStderr(err.message);
+        }
+      }
+
+      // We have to invalidate Python's import caches, or it won't
+      // see the new files.
+      this.#api.importlib.invalidate_caches();
+      return Array.from(loadedPackageData, filterPackageData);
+    });
+  }
+
   /**
    * Recursively add a package and its dependencies to toLoad.
    * A helper function for recursiveDependencies.
@@ -325,7 +476,7 @@ export class PackageManager {
       return;
     }
 
-    for (let depName of pkgInfo.depends) {
+    for (const depName of pkgInfo.depends) {
       this.addPackageToLoad(depName, toLoad);
     }
   }
@@ -439,6 +590,37 @@ export class PackageManager {
     return binary;
   }
 
+  private downloadPackageSync(
+    pkg: PackageLoadMetadata,
+    checkIntegrity: boolean = true,
+  ): Uint8Array {
+    if (IN_NODE) {
+      throw new Error("downloadPackageSync is not supported in Node");
+    }
+    const installBaseUrl = this.#api.config.indexURL;
+
+    let fileName, uri, fileSubResourceHash;
+    if (pkg.channel === this.defaultChannel) {
+      if (!(pkg.normalizedName in this.#api.lockfile_packages)) {
+        throw new Error(`Internal error: no entry for package named ${name}`);
+      }
+      const lockfilePackage = this.#api.lockfile_packages[pkg.normalizedName];
+      fileName = lockfilePackage.file_name;
+
+      uri = resolvePath(fileName, installBaseUrl);
+      fileSubResourceHash = "sha256-" + base16ToBase64(lockfilePackage.sha256);
+    } else {
+      uri = pkg.channel;
+      fileSubResourceHash = undefined;
+    }
+
+    if (!checkIntegrity) {
+      fileSubResourceHash = undefined;
+    }
+
+    return loadBinaryFileSync(uri, fileSubResourceHash);
+  }
+
   /**
    * Install the package into the file system.
    * @param metadata The package metadata
@@ -474,6 +656,31 @@ export class PackageManager {
             : metadata.channel,
         ],
       ]),
+    );
+  }
+
+  private installPackageSync(
+    metadata: PackageLoadMetadata,
+    buffer: Uint8Array,
+  ) {
+    let pkg = this.#api.lockfile_packages[metadata.normalizedName];
+    if (!pkg) {
+      pkg = metadata.packageData;
+    }
+
+    const filename = pkg.file_name;
+
+    // This Python helper function unpacks the buffer and lists out any .so files in it.
+    const installDir: string = this.#api.package_loader.get_install_dir(
+      pkg.install_dir,
+    );
+
+    this.#installer.installSync(
+      buffer,
+      filename,
+      installDir,
+      INSTALLER,
+      metadata.channel === this.defaultChannel ? "pyodide" : metadata.channel,
     );
   }
 
@@ -513,6 +720,39 @@ export class PackageManager {
       await Promise.all(installPromiseDependencies);
 
       await this.installPackage(pkg, buffer);
+
+      loaded.add(pkg.packageData);
+      loadedPackages[pkg.name] = pkg.channel;
+    } catch (err: any) {
+      failed.set(pkg.name, err);
+      // We don't throw error when loading a package fails, but just report it.
+      // pkg.done.reject(err);
+    } finally {
+      pkg.done.resolve();
+    }
+  }
+
+  // Must only be called after pkg's dependencies have already been installed
+  private downloadAndInstallSync(
+    pkg: PackageLoadMetadata,
+    loaded: Set<InternalPackageData>,
+    failed: Map<string, Error>,
+    checkIntegrity: boolean = true,
+  ) {
+    if (loadedPackages[pkg.name] !== undefined) {
+      return;
+    }
+
+    try {
+      const buffer = this.downloadPackageSync(pkg, checkIntegrity);
+
+      // Can't install until bootstrap is finalized.
+      if (API.bootstrapFinalizedDone !== true) {
+        throw new Error("can't sync install package until after bootstrap is finalized");
+      }
+
+      // all dependencies have already been installed per pre-condition
+      this.installPackageSync(pkg, buffer);
 
       loaded.add(pkg.packageData);
       loadedPackages[pkg.name] = pkg.channel;
@@ -569,6 +809,14 @@ export class PackageManager {
   public logStderr(message: string) {
     this.stderr(message);
   }
+
+  public setStdout(logger: (message: string) => void) {
+    this.stdout = logger;
+  }
+
+  public setStderr(logger: (message: string) => void) {
+    this.stderr = logger;
+  }
 }
 
 function filterPackageData({
@@ -611,10 +859,24 @@ export let loadPackage: typeof PackageManager.prototype.loadPackage;
  */
 export let loadedPackages: LoadedPackages;
 
+export let loadPackageSync: typeof PackageManager.prototype.loadPackageSync;
+export let loadPackageSetStdout: typeof PackageManager.prototype.setStdout;
+export let loadPackageSetStderr: typeof PackageManager.prototype.setStderr;
+
 if (typeof API !== "undefined" && typeof Module !== "undefined") {
   const singletonPackageManager = new PackageManager(API, Module);
 
   loadPackage = singletonPackageManager.loadPackage.bind(
+    singletonPackageManager,
+  );
+  loadPackageSync = singletonPackageManager.loadPackageSync.bind(
+    singletonPackageManager,
+  );
+
+  loadPackageSetStdout = singletonPackageManager.setStdout.bind(
+    singletonPackageManager,
+  );
+  loadPackageSetStderr = singletonPackageManager.setStderr.bind(
     singletonPackageManager,
   );
 

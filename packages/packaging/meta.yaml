@@ -8,6 +8,7 @@ source:
   url: https://files.pythonhosted.org/packages/d0/63/68dbb6eb2de9cb10ee4c9c14a0148804425e13c4fb20d61cce69f53106da/packaging-24.2.tar.gz
   patches:
     - patches/0001-Add-Pyodide-compatibility.patch
+
 about:
   home: https://github.com/pypa/packaging
   PyPI: https://pypi.org/project/packaging

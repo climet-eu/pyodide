@@ -10,7 +10,7 @@ source:
     - patches/0001-Fix-incompatible-pointer-type.patch
     - patches/configure.patch
 about:
-  home: ""
+  home: https://github.com/h5py/h5py
   PyPI: https://pypi.org/project/h5py
   summary: Read and write HDF5 files from Python
   license: BSD-3-Clause
@@ -18,7 +18,6 @@ about:
 requirements:
   run:
     - numpy
-    - pkgconfig
   host:
     - numpy
     - libhdf5
@@ -28,5 +27,5 @@ build:
   script: |
     export HDF5_MPI=OFF
     export H5PY_SETUP_REQUIRES="0"
-    export HDF5_VERSION=1.12.1
+    export HDF5_VERSION=1.14.3
     export HDF5_DIR=${WASM_LIBRARY_DIR}

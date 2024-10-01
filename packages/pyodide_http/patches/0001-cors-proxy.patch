@@ -1,0 +1,90 @@
+diff --git a/README.md b/README.md
+index 409d511..5a43b4f 100644
+--- a/README.md
++++ b/README.md
+@@ -55,4 +55,4 @@ Currently the following packages can be patched:
+ 
+ `pyodide-http` is used by a some awesome projects:
+ - [Pyodide](https://github.com/pyodide/pyodide) - included as a standard package
+-- [Panel](https://github.com/holoviz/panel) - included since 0.14.1 (can be disabled) when running Panel in the Browser using WASM. [Read more](https://github.com/holoviz/panel/blob/master/doc/user_guide/Running_in_Webassembly.md)
+\ No newline at end of file
++- [Panel](https://github.com/holoviz/panel) - included since 0.14.1 (can be disabled) when running Panel in the Browser using WASM. [Read more](https://panel.holoviz.org/user_guide/Running_in_Webassembly.html#handling-http-requests)
+diff --git a/pyodide_http/_core.py b/pyodide_http/_core.py
+index 1cb711d..84c4b9f 100644
+--- a/pyodide_http/_core.py
++++ b/pyodide_http/_core.py
+@@ -2,6 +2,7 @@ import json
+ from dataclasses import dataclass, field
+ from typing import Optional, Dict
+ from email.parser import Parser
++from jupyterlite_cors import cors_status, cors_url
+ from pyodide.ffi import to_js
+ 
+ # need to import streaming here so that the web-worker is setup
+@@ -72,7 +73,7 @@ def show_streaming_warning():
+         )
+ 
+ 
+-def send(request: Request, stream: bool = False) -> Response:
++def _send(request: Request, stream: bool = False) -> Response:
+     if request.params:
+         from js import URLSearchParams
+ 
+@@ -128,3 +129,12 @@ def send(request: Request, stream: bool = False) -> Response:
+         body = xhr.response.encode("ISO-8859-15")
+ 
+     return Response(status_code=xhr.status, headers=headers, body=body)
++
++
++def send(request: Request, stream: bool = False) -> Response:
++    request.url = cors_url(request.url)
++
++    response = _send(request, stream)
++    response.status_code = cors_status(request.url, response.status_code)
++
++    return response
+diff --git a/pyodide_http/_requests.py b/pyodide_http/_requests.py
+index daa2fa8..a3980cc 100644
+--- a/pyodide_http/_requests.py
++++ b/pyodide_http/_requests.py
+@@ -32,6 +32,13 @@ class PyodideHTTPAdapter(BaseAdapter):
+         stream = kwargs.get("stream", False)
+         pyodide_request = Request(request.method, request.url)
+         pyodide_request.timeout = kwargs.get("timeout", 0)
++        if isinstance(pyodide_request.timeout, tuple):
++            if len(pyodide_request.timeout) > 1:
++                pyodide_request.timeout = (pyodide_request.timeout[0] or 0) + (
++                    pyodide_request.timeout[1] or 0
++                )
++            elif len(pyodide_request.timeout) > 0:
++                pyodide_request.timeout = pyodide_request.timeout[0] or 0
+         if not pyodide_request.timeout:
+             pyodide_request.timeout = 0
+         pyodide_request.params = None  # this is done in preparing request now
+diff --git a/pyodide_http/_urllib.py b/pyodide_http/_urllib.py
+index d1fa9c3..d6ebc8e 100644
+--- a/pyodide_http/_urllib.py
++++ b/pyodide_http/_urllib.py
+@@ -35,15 +35,18 @@ def urlopen(url, *args, **kwargs):
+     # compressed format) the 'Content-Length' is the compressed length, while the
+     # data itself is uncompressed. This will cause problems while decoding our
+     # fake response.
+-    headers_without_content_length = {
+-        k: v for k, v in resp.headers.items() if k != "content-length"
+-    }
++    headers_without_content_length = (
++        {k: v for k, v in resp.headers.items() if k != "content-length"}
++        if "content-encoding" in resp.headers.keys()
++        else resp.headers
++    )
+     response_data = (
+         b"HTTP/1.1 "
+         + str(resp.status_code).encode("ascii")
+         + b"\n"
+         + "\n".join(
+-            f"{key}: {value}" for key, value in headers_without_content_length.items()
++            f"{'_'.join(k.title() for k in key.split('_'))}: {value}"
++            for key, value in headers_without_content_length.items()
+         ).encode("ascii")
+         + b"\n\n"
+         + resp.body

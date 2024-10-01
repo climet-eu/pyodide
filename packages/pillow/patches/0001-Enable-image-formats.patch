@@ -1,0 +1,69 @@
+diff --git a/setup.py b/setup.py
+index 6070708..fcd5112 100644
+--- a/setup.py
++++ b/setup.py
+@@ -685,7 +685,9 @@ class pil_build_ext(build_ext):
+ 
+         if feature.want("zlib"):
+             _dbg("Looking for zlib")
+-            if _find_include_file(self, "zlib.h"):
++            if "PYODIDE" in os.environ:
++                feature.set("zlib", "z")
++            elif _find_include_file(self, "zlib.h"):
+                 if _find_library_file(self, "z"):
+                     feature.set("zlib", "z")
+                 elif sys.platform == "win32" and _find_library_file(self, "zlib"):
+@@ -693,7 +695,9 @@ class pil_build_ext(build_ext):
+ 
+         if feature.want("jpeg"):
+             _dbg("Looking for jpeg")
+-            if _find_include_file(self, "jpeglib.h"):
++            if "PYODIDE" in os.environ:
++                feature.set("jpeg", "jpeg")
++            elif _find_include_file(self, "jpeglib.h"):
+                 if _find_library_file(self, "jpeg"):
+                     feature.set("jpeg", "jpeg")
+                 elif sys.platform == "win32" and _find_library_file(self, "libjpeg"):
+@@ -745,7 +749,9 @@ class pil_build_ext(build_ext):
+ 
+         if feature.want("tiff"):
+             _dbg("Looking for tiff")
+-            if _find_include_file(self, "tiff.h"):
++            if "PYODIDE" in os.environ:
++                feature.set("tiff", "tiff")
++            elif _find_include_file(self, "tiff.h"):
+                 if _find_library_file(self, "tiff"):
+                     feature.set("tiff", "tiff")
+                 if sys.platform in ["win32", "darwin"] and _find_library_file(
+@@ -755,7 +761,9 @@ class pil_build_ext(build_ext):
+ 
+         if feature.want("freetype"):
+             _dbg("Looking for freetype")
+-            if _find_library_file(self, "freetype"):
++            if "PYODIDE" in os.environ:
++                feature.set("freetype", "freetype")
++            elif _find_library_file(self, "freetype"):
+                 # look for freetype2 include files
+                 freetype_version = 0
+                 for subdir in self.compiler.include_dirs:
+@@ -820,7 +828,9 @@ class pil_build_ext(build_ext):
+ 
+         if feature.want("webp"):
+             _dbg("Looking for webp")
+-            if all(
++            if "PYODIDE" in os.environ:
++                feature.set("webp", "webp")
++            elif all(
+                 _find_include_file(self, "webp/" + include)
+                 for include in ("encode.h", "decode.h", "mux.h", "demux.h")
+             ):
+@@ -861,7 +871,8 @@ class pil_build_ext(build_ext):
+                 # See #4237, #5243, #5359 for more information.
+                 defs.append(("USE_WIN32_FILEIO", None))
+         if feature.get("jpeg"):
+-            libs.append(feature.get("jpeg"))
++            if "PYODIDE" not in os.environ:
++                libs.append(feature.get("jpeg"))
+             defs.append(("HAVE_LIBJPEG", None))
+         if feature.get("jpeg2000"):
+             libs.append(feature.get("jpeg2000"))

@@ -1,0 +1,54 @@
+package:
+  name: libeccodes
+  version: 2.39.1
+
+source:
+  url: https://github.com/ecmwf/eccodes/archive/refs/tags/2.39.1.tar.gz
+  sha256: 5639d93dcf81408305d13d6e854c54bfdbd5ba792362798f70daa97b50f29167
+  patches:
+    - patches/0001-32bit-support-hack.patch
+
+requirements:
+  host:
+    - libaec
+
+build:
+  type: shared_library
+  script: |
+    git clone --branch 3.7.0 --depth 1 https://github.com/ecmwf/ecbuild;
+
+    mkdir -p build;
+
+    export EMSCRIPTEN_SYSROOT=$(em-config CACHE)/sysroot
+    export EMSCRIPTEN_INCLUDE=$EMSCRIPTEN_SYSROOT/include
+    export EMSCRIPTEN_BIN=$EMSCRIPTEN_SYSROOT/bin
+    export EMSCRIPTEN_LIB=$EMSCRIPTEN_SYSROOT/lib/wasm32-emscripten/pic
+
+    embuilder build libjpeg --pic
+    embuilder build libpng-wasm-sjlj --pic
+
+    cd build \
+        && emcmake cmake ../ \
+        -DCMAKE_INSTALL_PREFIX=${WASM_LIBRARY_DIR} \
+        -DBUILD_SHARED_LIBS=ON \
+        -DENABLE_NETCDF=OFF \
+        -DENABLE_JPG=ON \
+        -DENABLE_JPG_LIBOPENJPEG=OFF \
+        -DENABLE_JPG_LIBJASPER=OFF \
+        -DENABLE_PNG=ON \
+        -DENABLE_AEC=ON \
+        -DENABLE_FORTRAN=OFF \
+        -DENABLE_MEMFS=ON \
+        -DDISABLE_OS_CHECK=ON \
+        -DENABLE_TESTS=OFF \
+        -DENABLE_PRODUCT_GRIB=ON \
+        -DENABLE_PRODUCT_BUFR=ON \
+        -DENABLE_EXAMPLES=OFF \
+        -DENABLE_BUILD_TOOLS=OFF \
+        -DENABLE_INSTALL_ECCODES_DEFINITIONS=ON \
+        -DENABLE_INSTALL_ECCODES_SAMPLES=OFF;
+
+    emmake make -j ${PYODIDE_JOBS:-3};
+    emmake make -j ${PYODIDE_JOBS:-3} install;
+
+    cp -P ${WASM_LIBRARY_DIR}/lib/libeccodes.so ${DISTDIR}

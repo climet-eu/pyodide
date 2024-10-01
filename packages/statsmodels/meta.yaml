@@ -16,12 +16,10 @@ requirements:
   host:
     - numpy
     - scipy
-    - setuptools
   run:
     - numpy
     - scipy
     - pandas
-    - patsy
     - packaging
 
 test:

@@ -1,0 +1,11 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "numba"
+version = "0.61.0"
+
+dependencies = [
+    "numpy >= 1.24",
+]

@@ -1,7 +1,6 @@
 package:
   name: frozenlist
   version: 1.5.0
-  _disabled: true
   top-level:
     - frozenlist
 source:

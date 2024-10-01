@@ -21,8 +21,7 @@ requirements:
     - packaging
     - numpy
     - pyerfa
-    - pyyaml
-    - astropy_iers_data
+    - PyYAML
 test:
   imports:
     - astropy

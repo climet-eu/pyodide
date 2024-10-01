@@ -1,0 +1,21 @@
+package:
+  name: pyodc
+  version: 1.4.1
+  top-level:
+    # - codc
+    - pyodc
+source:
+  url: https://files.pythonhosted.org/packages/42/f8/a785bf6539e69ca602dcde06b09187c5b0c6a33bb63eebdeda7c25ec905b/pyodc-1.4.1.tar.gz
+  sha256: faf5f348d053a0b5e8a4c14fe01f0fb2fbf8729bee1dcdadd660b23d01e4b8ab
+  patches:
+    - patches/0001-only-pyodc.patch
+requirements:
+  run:
+    # - cffi  # only for codc
+    # - findlibs  # only for codc
+    - pandas
+about:
+  home: https://github.com/ecmwf/pyodc
+  PyPI: https://pypi.org/project/pyodc
+  summary: A Python interface to odc for encoding/decoding ODB-2 files.
+  license: Apache License Version 2.0
