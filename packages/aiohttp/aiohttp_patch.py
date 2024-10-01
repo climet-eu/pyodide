@@ -12,18 +12,21 @@ from yarl import URL
 
 
 class Content:
-    __slots__ = ("_jsresp", "_exception")
+    __slots__ = ("_bytesio", "_jsresp", "_exception")
 
     def __init__(self, _jsresp):
+        self._bytesio = None
         self._jsresp = _jsresp
         self._exception = None
 
-    async def read(self):
+    async def read(self, size=-1, /):
         if self._exception:
             raise self._exception
-        buf = await self._jsresp.arrayBuffer()
-        self._jsresp = None
-        return buf.to_bytes()
+        if self._bytesio is None:
+            buf = await self._jsresp.arrayBuffer()
+            self._jsresp = None
+            self._bytesio = BytesIO(buf.to_bytes())
+        return self._bytesio.read(size)
 
     def exception(self):
         return self._exception

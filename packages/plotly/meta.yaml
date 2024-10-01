@@ -1,0 +1,16 @@
+package:
+  name: plotly
+  version: 5.21.0
+  top-level:
+    - _plotly_future_
+    - _plotly_utils
+    - jupyterlab_plotly
+    - plotly
+source:
+  url: https://files.pythonhosted.org/packages/04/e5/04cf049c08975e016da446356a47566889be8b6cf88ed45045774f5bf112/plotly-5.21.0-py3-none-any.whl
+  sha256: a33f41fd5922e45b2b253f795b200d14452eb625790bb72d0a72cf1328a6abbf
+about:
+  home: https://plotly.com/python/
+  PyPI: https://pypi.org/project/plotly
+  summary: An open-source, interactive data visualization library for Python
+  license: MIT

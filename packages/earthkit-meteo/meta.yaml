@@ -1,0 +1,16 @@
+package:
+  name: earthkit-meteo
+  version: 0.1.1
+  top-level:
+    - earthkit.meteo
+source:
+  url: https://files.pythonhosted.org/packages/60/fb/841e0cd2c0adda8319183e3ffb8c2a69ded2d089b92bf81368e7082bc6a4/earthkit_meteo-0.1.1-py3-none-any.whl
+  sha256: 6ee6f391d6a3ff20a45953eb2bbc873041abf7eb0220b23581e9ee21d9cbb730
+requirements:
+  run:
+    - numpy
+about:
+  home: https://github.com/ecmwf/earthkit-meteo
+  PyPI: https://pypi.org/project/earthkit-meteo
+  summary: Meteorological computations
+  license: Apache License 2.0

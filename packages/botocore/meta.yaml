@@ -1,0 +1,19 @@
+package:
+  name: botocore
+  version: 1.35.23
+  top-level:
+    - botocore
+source:
+  url: https://files.pythonhosted.org/packages/f8/81/90e1b82697d849e4a5e7e6dcf21ef7ba9fa902b98324849bd2956e6efac3/botocore-1.35.23-py3-none-any.whl
+  sha256: cab9ec4e0367b9f33f0bc02c5a29f587b0119ecffd6d125bacee085dcbc8817d
+requirements:
+  run:
+    - jmespath
+    - python-dateutil
+    - ssl
+    - urllib3
+about:
+  home: https://github.com/boto/botocore
+  PyPI: https://pypi.org/project/botocore
+  summary: Low-level, data-driven core of boto 3.
+  license: Apache License 2.0

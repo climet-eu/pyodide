@@ -1,0 +1,17 @@
+package:
+  name: earthkit-geo
+  version: 0.2.0
+  top-level:
+    - earthkit.geo
+source:
+  url: https://files.pythonhosted.org/packages/4f/26/f35e93f6805acc28a23210c9b6491660a5475a8a4fda23a9293d83027d63/earthkit_geo-0.2.0-py3-none-any.whl
+  sha256: f10aab0929fadb50f1bdecdd61d0e958e20ce1ba768f8bd8c870b9e9d657c92e
+requirements:
+  run:
+    - pyproj
+    - scipy
+about:
+  home: https://github.com/ecmwf/earthkit-geo
+  PyPI: https://pypi.org/project/earthkit-geo
+  summary: Geospatial computations
+  license: Apache License Version 2.0

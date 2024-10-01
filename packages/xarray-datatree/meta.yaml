@@ -1,0 +1,13 @@
+package:
+  name: xarray-datatree
+  version: 0.0.14
+  top-level:
+    - datatree
+source:
+  url: https://files.pythonhosted.org/packages/6e/a3/5e92dc7e35c08574472bbd9201aabdad03e38d54cc47c421922d219502c6/xarray_datatree-0.0.14-py3-none-any.whl
+  sha256: 07f5d0d9a03a3220d732e1c764ee60f2c5110f884a290b2af371f92952379166
+about:
+  home: ""
+  PyPI: https://pypi.org/project/xarray-datatree
+  summary: Hierarchical tree-like data structures for xarray
+  license: Apache-2

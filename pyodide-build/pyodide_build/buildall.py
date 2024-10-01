@@ -162,7 +162,12 @@ class Package(BasePackage):
             logger.error(f"Error building {self.name}. Printing build logs.")
             logfile = self.pkgdir / "build.log"
             if logfile.is_file():
-                logger.error(logfile.read_text(encoding="utf-8"))
+                try:
+                    logger.error(logfile.read_text(encoding="utf-8"))
+                except:
+                    print("\n" * 10)
+                    print(logfile.read_text(encoding="utf-8"))
+                    print("\n" * 10)
             else:
                 logger.error("ERROR: No build log found.")
             logger.error("ERROR: cancelling buildall")
@@ -175,9 +180,9 @@ class PackageStatus:
     ) -> None:
         self.pkg_name = name
         self.prefix = f"[{idx}/{total_packages}] " f"(thread {thread})"
-        self.status = Spinner("dots", style="red", speed=0.2)
+        # self.status = Spinner("dots", style="red", speed=0.2)
         self.table = Table.grid(padding=1)
-        self.table.add_row(f"{self.prefix} building {self.pkg_name}", self.status)
+        self.table.add_row(f"{self.prefix} building {self.pkg_name}") # , self.status)
         self.finished = False
 
     def finish(self, success: bool, elapsed_time: float) -> None:
@@ -210,6 +215,7 @@ class ReplProgressFormatter:
             "{task.completed}/{task.total} [progress.percentage]{task.percentage:>3.0f}%",
             "Time elapsed:",
             TimeElapsedColumn(),
+            auto_refresh=False,
         )
         self.task = self.progress.add_task("Building packages...", total=num_packages)
         self.packages: list[PackageStatus] = []
@@ -610,7 +616,7 @@ def build_from_graph(
         Thread(target=builder, args=(n + 1,), daemon=True).start()
 
     num_built = len(already_built)
-    with Live(progress_formatter, console=console_stdout):
+    with Live(progress_formatter, console=console_stdout, auto_refresh=False) as live:
         while num_built < len(pkg_map):
             match built_queue.get():
                 case BuildError() as err:
@@ -625,6 +631,7 @@ def build_from_graph(
             num_built += 1
 
             progress_formatter.update_progress_bar()
+            live.refresh()
 
             for _dependent in pkg.host_dependents:
                 dependent = pkg_map[_dependent]

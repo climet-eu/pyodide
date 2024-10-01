@@ -24,6 +24,7 @@ SYMLINKS = {
     "lld",
     "ar",
     "gcc",
+    "g++",
     "ranlib",
     "strip",
     "gfortran",

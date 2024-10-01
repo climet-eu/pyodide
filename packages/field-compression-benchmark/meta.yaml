@@ -1,0 +1,40 @@
+package:
+  name: field-compression-benchmark
+  version: 0.0.9
+  top-level:
+    - fcbench
+source:
+  path: ./field-compression-benchmark
+  # TODO: include patches once fcbench is included from git or PyPi
+  # patches:
+  #   - patches/0001-codecs-build.patch
+build:
+  script: |
+    # Set up a more modern nightly toolchain with support for emscripten and wasm
+    export RUSTUP_TOOLCHAIN="nightly-2024-07-21"  # last 1.81 nightly
+    rustup toolchain install ${RUSTUP_TOOLCHAIN}
+    rustup target add wasm32-unknown-emscripten --toolchain ${RUSTUP_TOOLCHAIN}
+    rustup target add wasm32-unknown-unknown --toolchain ${RUSTUP_TOOLCHAIN}
+    rustup component add rust-src --toolchain ${RUSTUP_TOOLCHAIN}
+requirements:
+  executable:
+    - rustup
+  run:
+    - cfgrib  # 0.9.10.4
+    - dask  # 2024.2.1
+    - matplotlib  # 3.5.2
+    - netcdf4  # 1.6.5
+    - numcodecs  # 0.12.1
+    - numpy  # 1.26.4
+    - pint  # 0.23
+    - xarray  # 2023.12.0
+    - xeofs  # 2.3.1
+    - xhistogram  # 0.3.2
+    - zarr  # 2.17.0
+about:
+  home: https://github.com/juntyr/field-compression-benchmark
+  summary:
+    The suite compares the performance of various data compression methods with
+    different settings across a variety of variables and their derivatives from
+    different GRIB, NetCDF, or Zarr datasets.
+  license: MIT OR Apache-2.0

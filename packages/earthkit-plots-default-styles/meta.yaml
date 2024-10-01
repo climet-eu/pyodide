@@ -1,0 +1,13 @@
+package:
+  name: earthkit-plots-default-styles
+  version: 0.0.1
+  top-level:
+    - default
+source:
+  url: https://files.pythonhosted.org/packages/b9/0a/bc9a63cf0ab27a968534b5be2f833f99d95f1e728a40e0e872a2929942b2/earthkit_plots_default_styles-0.0.1-py3-none-any.whl
+  sha256: 252001c482ba4b501983001ae6e737d65b6e43bd6c3b26e8f403597d44ddb9be
+about:
+  home: https://github.com/ecmwf/earthkit-plots-default-styles/
+  PyPI: https://pypi.org/project/earthkit-plots-default-styles
+  summary: Default styles for use with earthkit-plots
+  license: Apache License Version 2.0

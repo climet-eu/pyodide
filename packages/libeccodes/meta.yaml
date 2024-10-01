@@ -1,0 +1,46 @@
+package:
+  name: libeccodes
+  version: 2.34.1
+
+source:
+  url: https://github.com/ecmwf/eccodes/archive/refs/tags/2.34.1.tar.gz
+  sha256: 256665de709d59a41f38f69513343b7895d4c325ab1fb775e6ac5becbc8a52e7
+  patches:
+    - patches/0001-32bit-support-hack.patch
+
+requirements:
+  host:
+    - libaec
+
+build:
+  type: shared_library
+  script: |
+    git clone --branch 3.7.0 --depth 1 https://github.com/ecmwf/ecbuild;
+
+    mkdir -p build;
+
+    cd build \
+        && emcmake cmake ../ \
+        -DCMAKE_INSTALL_PREFIX=${WASM_LIBRARY_DIR} \
+        -DBUILD_SHARED_LIBS=ON \
+        -DENABLE_NETCDF=OFF \
+        -DENABLE_JPG=ON \
+        -DENABLE_JPG_LIBOPENJPEG=OFF \
+        -DENABLE_JPG_LIBJASPER=OFF \
+        -DENABLE_PNG=ON \
+        -DENABLE_AEC=ON \
+        -DENABLE_FORTRAN=OFF \
+        -DENABLE_MEMFS=ON \
+        -DDISABLE_OS_CHECK=ON \
+        -DENABLE_TESTS=OFF \
+        -DENABLE_PRODUCT_GRIB=ON \
+        -DENABLE_PRODUCT_BUFR=ON \
+        -DENABLE_EXAMPLES=OFF \
+        -DENABLE_BUILD_TOOLS=OFF \
+        -DENABLE_INSTALL_ECCODES_DEFINITIONS=ON \
+        -DENABLE_INSTALL_ECCODES_SAMPLES=OFF;
+
+    emmake make -j ${PYODIDE_JOBS:-3};
+    emmake make -j ${PYODIDE_JOBS:-3} install;
+
+    cp -P ${WASM_LIBRARY_DIR}/lib/libeccodes.so ${DISTDIR}

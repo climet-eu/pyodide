@@ -1,0 +1,26 @@
+package:
+  name: ipython
+  version: 8.22.1
+  top-level:
+    - IPython
+source:
+  url: https://files.pythonhosted.org/packages/95/2c/9ef08ee0cc836f95bc2750e7c3f18790a90dff596d372cee4bcd2561ae1c/ipython-8.22.1.tar.gz
+  sha256: 39c6f9efc079fb19bfb0f17eee903978fe9a290b1b82d68196c641cecb76ea22
+  patches:
+    - patches/0001-jupyterlite-preload.patch
+requirements:
+  run:
+    - comm
+    - decorator
+    - jedi
+    - matplotlib-inline
+    - prompt_toolkit
+    - Pygments
+    - stack_data
+    - traitlets
+    - jupyterlite-preload
+about:
+  home: "https://ipython.org/"
+  PyPI: https://pypi.org/project/ipython
+  summary: "IPython: Productive Interactive Computing"
+  license: BSD-3-Clause

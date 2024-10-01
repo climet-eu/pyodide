@@ -1,0 +1,20 @@
+package:
+  name: earthkit-transforms
+  version: 0.3.3
+  top-level:
+    - earthkit.transforms
+source:
+  url: https://files.pythonhosted.org/packages/25/d1/fb3d77be2d41d6883b3d17116bc34edb3146d92f5a8cb70c590070c9e948/earthkit_transforms-0.3.3-py3-none-any.whl
+  sha256: 7ecec89c66ec36a02cdd8163a7240bdf86733d3bc5f26ab4e327636c9cf83693
+requirements:
+  run:
+    - xarray
+    - numpy
+    - earthkit-data
+    - geopandas
+    - rasterio
+about:
+  home: https://github.com/ecmwf/earthkit-transforms
+  PyPI: https://pypi.org/project/earthkit-transforms
+  summary: Aggregation tools for meteorological and climate data.
+  license: Apache License Version 2.0

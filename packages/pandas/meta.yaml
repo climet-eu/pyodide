@@ -1,13 +1,13 @@
 package:
   name: pandas
-  version: 1.5.3
+  version: 2.2.1
   tag:
     - min-scipy-stack
   top-level:
     - pandas
 source:
-  url: https://files.pythonhosted.org/packages/74/ee/146cab1ff6d575b54ace8a6a5994048380dc94879b0125b25e62edcb9e52/pandas-1.5.3.tar.gz
-  sha256: 74a3fd7e5a7ec052f183273dc7b0acd3a863edf7520f5d3a1765c04ffdb3b0b1
+  url: https://files.pythonhosted.org/packages/3d/59/2afa81b9fb300c90531803c0fd43ff4548074fa3e8d0f747ef63b3b5e77a/pandas-2.2.1.tar.gz
+  sha256: 0ab90f87093c13f3e8fa45b48ba9f39181046e8f3317d3aadb2fffbb1b978572
 build:
   cflags:
     -Werror=implicit-function-declaration -Werror=mismatched-parameter-types
@@ -20,6 +20,7 @@ requirements:
     - numpy
     - python-dateutil
     - pytz
+    - tzdata
 about:
   home: https://pandas.pydata.org
   PyPI: https://pypi.org/project/pandas

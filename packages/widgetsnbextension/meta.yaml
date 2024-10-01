@@ -1,0 +1,19 @@
+package:
+  name: widgetsnbextension
+  version: 4.0.7
+  top-level:
+    - widgetsnbextension
+source:
+  url: https://github.com/jupyterlite/pyodide-kernel/archive/refs/tags/v0.0.8.tar.gz
+  sha256: 3f64751d61c9f954415c87a72e44e7eb22511a8a0a8448d1011eb46fe5f9a495
+build:
+  script: |
+    cd ..
+    mv widgetsnbextension-4.0.7/packages/pyodide-kernel/py/widgetsnbextension4/widgetsnbextension .
+    rm -rf widgetsnbextension-4.0.7
+    mv widgetsnbextension widgetsnbextension-4.0.7
+about:
+  home: http://jupyter.org
+  PyPI: https://pypi.org/project/widgetsnbextension
+  summary: Jupyter interactive widgets for Jupyter Notebook
+  license: BSD 3-Clause License

@@ -1,0 +1,28 @@
+package:
+  name: eccodes
+  version: 1.7.0
+  top-level:
+    - eccodes
+    - gribapi
+source:
+  url: https://files.pythonhosted.org/packages/d7/b1/445b5976010f31d5a78e14f9a7cf92fadd9d24c82553d9598078746262d3/eccodes-1.7.0.tar.gz
+  sha256: 0f233009eac228b99be6e40e5f7cc175b477d322bd91c0dac6bf226f0222cb17
+  patches:
+    - patches/0001-shared-library-include.patch
+requirements:
+  run:
+    - attrs
+    - cffi
+    - findlibs
+    - numpy
+  host:
+    - libeccodes
+build:
+  vendor-sharedlib: true
+  script: |
+    cp ${WASM_LIBRARY_DIR}/lib/libeccodes.so gribapi/
+about:
+  home: https://github.com/ecmwf/eccodes-python
+  PyPI: https://pypi.org/project/eccodes
+  summary: Python interface to the ecCodes GRIB and BUFR decoder/encoder
+  license: Apache License Version 2.0

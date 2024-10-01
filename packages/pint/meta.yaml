@@ -1,0 +1,16 @@
+package:
+  name: pint
+  version: "0.23"
+  top-level:
+    - pint
+source:
+  url: https://files.pythonhosted.org/packages/76/1a/096c91c2006648fe28564e5884d59978962afe98de74b1c01bb5913d033f/Pint-0.23-py3-none-any.whl
+  sha256: df79b6b5f1beb7ed0cd55d91a0766fc55f972f757a9364e844958c05e8eb66f9
+requirements:
+  run:
+    - typing-extensions
+about:
+  home: https://github.com/hgrecco/pint
+  PyPI: https://pypi.org/project/pint
+  summary: Physical quantities module
+  license: BSD

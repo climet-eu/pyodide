@@ -1,0 +1,13 @@
+diff --git a/IPython/__init__.py b/IPython/__init__.py
+index b7235481f..679ee70d8 100644
+--- a/IPython/__init__.py
++++ b/IPython/__init__.py
+@@ -19,6 +19,8 @@
+ # Imports
+ #-----------------------------------------------------------------------------
+ 
++import jupyterlite_preload
++
+ import sys
+ 
+ #-----------------------------------------------------------------------------
