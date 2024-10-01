@@ -5,8 +5,8 @@ package:
 source:
   url: https://gitlab.dkrz.de/k202009/libaec/-/archive/v1.1.2/libaec-v1.1.2.tar.gz
   sha256: cde2097c6e0f18dbc4771930cebe907dfbdfcb7921f74d2594d46221581b6ef1
-  # patches:
-  #   - patches/0001-build-only-static-library.patch
+  patches:
+    - patches/0001-build-only-static-library.patch
 
 build:
   type: static_library
@@ -23,4 +23,3 @@ build:
     emmake make -j ${PYODIDE_JOBS:-3} install;
 
     cp -P ${WASM_LIBRARY_DIR}/lib/libaec.a ${DISTDIR}
-    rm ${WASM_LIBRARY_DIR}/lib/libaec.so
