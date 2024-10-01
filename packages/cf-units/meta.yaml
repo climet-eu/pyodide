@@ -1,0 +1,27 @@
+package:
+  name: cf-units
+  version: 3.3.0
+  top-level:
+    - cf_units
+source:
+  url: https://files.pythonhosted.org/packages/b6/d9/3e4014a228c23a4e10d106eead518d1708f9985f80e5bd3aa66d8268bf22/cf_units-3.3.0.tar.gz
+  sha256: 2327da492f30cf018a3f1b5950192ce9bb3332e50b1c7ac53f7543de7fa61fdb
+requirements:
+  host:
+    - libudunits2
+    - numpy
+  run:
+    - cftime
+    - numpy
+build:
+  script: |
+    export UDUNITS2_XML_PATH="/src/packages/.libs/share/udunits/udunits2.xml";
+    export CFLAGS="${CFLAGS} -I/src/packages/.libs/include";
+    export LDFLAGS="${CFLAGS} -L/src/packages/.libs/lib -lexpat";
+about:
+  home: https://github.com/SciTools/cf-units
+  PyPI: https://pypi.org/project/cf-units
+  summary:
+    Units of measure as required by the Climate and Forecast (CF) metadata
+    conventions
+  license: BSD

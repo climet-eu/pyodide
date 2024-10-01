@@ -1,0 +1,11 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "jupyterlite-preload"
+version = "0.0.0"
+
+dependencies = [
+    "pyodide-http == 0.2.1",
+]

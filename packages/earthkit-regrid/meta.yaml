@@ -1,0 +1,21 @@
+package:
+  name: earthkit-regrid
+  version: 0.3.5
+  top-level:
+    - earthkit.regrid
+source:
+  url: https://files.pythonhosted.org/packages/f9/b4/b7166eb6c671dffeaef75d6a18ecc09f6336f3b3257d25eaa143cac1d18a/earthkit_regrid-0.3.5.tar.gz
+  sha256: 6e9f8401b629346691eda162cefb25b80205c216a89a939345e4d4d8708d94ae
+  patches:
+    - patches/0001-no-caching.patch
+requirements:
+  run:
+    - filelock    # required
+    - multiurl    # required
+    - numpy       # required
+    - scipy       # required
+about:
+  home: https://github.com/ecmwf/earthkit-regrid
+  PyPI: https://pypi.org/project/earthkit-regrid
+  summary: ECMWF python regridding toolkit
+  license: Apache License 2.0

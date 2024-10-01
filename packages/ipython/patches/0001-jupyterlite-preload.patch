@@ -1,0 +1,39 @@
+diff --git a/IPython/__init__.py b/IPython/__init__.py
+index b7235481f..679ee70d8 100644
+--- a/IPython/__init__.py
++++ b/IPython/__init__.py
+@@ -19,6 +19,8 @@
+ # Imports
+ #-----------------------------------------------------------------------------
+ 
++import jupyterlite_preload
++
+ import sys
+ 
+ #-----------------------------------------------------------------------------
+diff --git a/IPython/core/interactiveshell.py b/IPython/core/interactiveshell.py
+index 07fb80776..a8778bbbe 100644
+--- a/IPython/core/interactiveshell.py
++++ b/IPython/core/interactiveshell.py
+@@ -680,6 +680,9 @@ def __init__(self, ipython_dir=None, profile_dir=None,
+         # `ipykernel.kernelapp`.
+         self.trio_runner = None
+ 
++        import jupyterlite_preload
++        jupyterlite_preload._finalize_with_ipython(self)
++
+     def get_ipython(self):
+         """Return the currently running IPython instance."""
+         return self
+diff --git a/pyproject.toml b/pyproject.toml
+index e973f03de..d518926fa 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -33,6 +33,7 @@ dependencies = [
+     "stack_data",
+     "traitlets>=5.13.0",
+     "typing_extensions>=4.6; python_version<'3.12'",
++    "jupyterlite-preload==0.0.0",
+ ]
+ dynamic = ["authors", "license", "version"]
+ 

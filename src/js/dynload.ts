@@ -1,5 +1,7 @@
 /* Handle dynamic library loading. */
 
+import { buf as crc32 } from "crc-32";
+
 import { PackageManagerAPI, PackageManagerModule } from "./types";
 
 import { createLock } from "./common/lock";
@@ -14,6 +16,8 @@ export class DynlibLoader {
   // don't know why we need it, but quite possibly bad stuff will happen without
   // it.
   private _lock = createLock();
+
+  private _dynlib_paths: Map<string, [string, Array<string>]> = new Map();
 
   constructor(api: PackageManagerAPI, pyodideModule: PackageManagerModule) {
     this.#api = api;
@@ -183,6 +187,55 @@ export class DynlibLoader {
     }
   }
 
+  public loadDynlibSync(lib: string, global: boolean, searchDirs?: string[]) {
+    this._lock.withLockSync(() => {
+      DEBUG &&
+        console.debug(`Loading a dynamic library ${lib} (global: ${global})`);
+
+      const fs = this.createDynlibFS(lib, searchDirs);
+      const localScope = global ? null : {};
+
+      try {
+        this.#module.loadDynamicLibrary(
+          lib,
+          {
+            loadAsync: false,
+            nodelete: true,
+            allowUndefined: true,
+            global,
+            fs,
+          },
+          localScope,
+        );
+
+        // Emscripten saves the list of loaded libraries in LDSO.loadedLibsByName.
+        // However, since emscripten dylink metadata only contains the name of the
+        // library not the full path, we need to update it manually in order to
+        // prevent loading same library twice.
+        if (this.#module.PATH.isAbs(lib)) {
+          const libName: string = this.#module.PATH.basename(lib);
+          const dso: any = this.#module.LDSO.loadedLibsByName[libName];
+          if (!dso) {
+            this.#module.LDSO.loadedLibsByName[libName] =
+              this.#module.LDSO.loadedLibsByName[lib];
+          }
+        }
+      } catch (e: any) {
+        if (
+          e &&
+          e.message &&
+          e.message.includes("need to see wasm magic number")
+        ) {
+          console.warn(
+            `Failed to load dynlib ${lib}. We probably just tried to load a linux .so file or something.`,
+          );
+          return;
+        }
+        throw e;
+      }
+    });
+  }
+
   /**
    * Load dynamic libraries inside a package.
    *
@@ -209,8 +262,62 @@ export class DynlibLoader {
     }.libs`;
 
     for (const path of dynlibPaths) {
-      await this.loadDynlib(path, false, [auditWheelLibDir]);
+      API.registerDynlib(path);
+      // await this.loadDynlib(path, false, [auditWheelLibDir]);
     }
+  }
+
+  public loadDynlibsFromPackageSync(
+    // TODO: Simplify the type of pkg after removing usage of this function in micropip.
+    pkg: { file_name: string },
+    dynlibPaths: string[],
+  ) {
+    // assume that shared libraries of a package are located in <package-name>.libs directory,
+    // following the convention of auditwheel.
+    const auditWheelLibDir = `${this.#api.sitepackages}/${
+      pkg.file_name.split("-")[0]
+    }.libs`;
+
+    for (const path of dynlibPaths) {
+      API.registerDynlib(path);
+      // this.loadDynlibSync(path, false, [auditWheelLibDir]);
+    }
+  }
+
+  public registerDynlib(path: string): void {
+    const name: string = this.#module.PATH.basename(path);
+    const paths = this._dynlib_paths.get(name);
+
+    if (paths === undefined) {
+      this._dynlib_paths.set(name, [path, []]);
+    } else {
+      const [_head, tail] = paths;
+      tail.push(path);
+    }
+  }
+
+  public lookupDynlibPath(name: string): string | undefined {
+    const paths = this._dynlib_paths.get(name);
+
+    if (paths === undefined) {
+      return undefined;
+    }
+
+    const [head, tail] = paths;
+
+    // only allow ambiguous dynlib path lookups iff *all* paths refer to the
+    // same dynlib (by checking if all files have the same CRC32 checksum)
+    if (tail.length !== 0) {
+      const headCrc32 = crc32(API.public_api.FS.readFile(head), 0);
+      for (const path of tail) {
+        const pathCrc32 = crc32(API.public_api.FS.readFile(path), 0);
+        if (pathCrc32 !== headCrc32) {
+          throw new Error(`ambiguous dynlib ${name}: ${head} vs ${tail.join(' vs ')}`);
+        }
+      }
+    }
+
+    return head;
   }
 }
 
@@ -221,4 +328,6 @@ if (typeof API !== "undefined" && typeof Module !== "undefined") {
   API.loadDynlib = singletonDynlibLoader.loadDynlib.bind(singletonDynlibLoader);
   API.loadDynlibsFromPackage =
     singletonDynlibLoader.loadDynlibsFromPackage.bind(singletonDynlibLoader);
+  API.registerDynlib = singletonDynlibLoader.registerDynlib.bind(singletonDynlibLoader);
+  API.lookupDynlibPath = singletonDynlibLoader.lookupDynlibPath.bind(singletonDynlibLoader);
 }

@@ -423,6 +423,7 @@ export interface API {
   config: ConfigType;
   packageIndexReady: Promise<void>;
   bootstrapFinalizedPromise: Promise<void>;
+  bootstrapFinalizedDone: boolean;
   setCdnUrl: (url: string) => void;
   typedArrayAsUint8Array: (buffer: TypedArray | ArrayBuffer) => Uint8Array;
   initializeStreams: (
@@ -481,6 +482,8 @@ export interface API {
     searchDirs?: string[] | undefined,
     readFileFunc?: (path: string) => Uint8Array,
   ) => Promise<void>;
+  registerDynlib(path: string): void;
+  lookupDynlibPath: (name: string) => string | undefined;
   // TODO: Remove this from the API after migrating micropip to use the `install` API instead.
   loadDynlibsFromPackage: (
     pkg: { file_name: string },

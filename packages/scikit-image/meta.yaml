@@ -19,14 +19,10 @@ requirements:
   host:
     - numpy
   run:
-    - packaging
     - numpy
     - scipy
-    - networkx
-    - Pillow
-    - imageio
-    - pywavelets
-    - lazy_loader
+    - pillow
+    - packaging
 
 about:
   home: https://scikit-image.org

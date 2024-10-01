@@ -1,3 +1,9 @@
+import { WordArray as CryptoWordArray, HashFn } from "crypto-es/lib/core";
+import { Base64 as CryptoBase64Encoding } from "crypto-es/lib/enc-base64";
+import { SHA256 } from "crypto-es/lib/sha256";
+import { SHA384 } from "crypto-es/lib/sha384";
+import { SHA512 } from "crypto-es/lib/sha512";
+
 import ErrorStackParser from "./vendor/stackframe/error-stack-parser";
 import {
   IN_NODE,
@@ -178,6 +184,43 @@ export async function loadBinaryFile(
     throw new Error(`Failed to load '${path}': request failed.`);
   }
   return new Uint8Array(await r.arrayBuffer());
+}
+
+export function loadBinaryFileSync(
+  path: string,
+  file_sub_resource_hash?: string | undefined,
+): Uint8Array {
+  const url = new URL(path, location as unknown as URL);
+
+  const request = new XMLHttpRequest();
+  request.open("GET", url, false);
+  request.responseType = "arraybuffer";
+  request.send();
+
+  const response = new Uint8Array(request.response);
+
+  if (file_sub_resource_hash !== undefined) {
+    const HASHERS: Record<string, HashFn> = {
+      sha256: SHA256,
+      sha384: SHA384,
+      sha512: SHA512,
+    };
+
+    const [algo, base64] = file_sub_resource_hash.split("-");
+    const hasher = HASHERS[algo];
+
+    if (hasher === undefined) {
+      throw new Error(`unsupported subresource integrity hash algorithm ${algo}`);
+    }
+
+    const hash = hasher(CryptoWordArray.create(response)).toString(CryptoBase64Encoding);
+
+    if (hash !== base64) {
+      throw new Error(`subresource integrity mismatch for ${url}, expected ${file_sub_resource_hash} but found ${algo}-${hash}`);
+    }
+  }
+
+  return response;
 }
 
 /**

@@ -16,7 +16,7 @@ build:
     -fwasm-exceptions
 requirements:
   run:
-    - numpy
+    - numpy  # required
   host:
     - geos
     - numpy

@@ -1,0 +1,12 @@
+diff --git a/python/pyproject.toml b/python/pyproject.toml
+index af3f793..2b8db91 100644
+--- a/python/pyproject.toml
++++ b/python/pyproject.toml
+@@ -49,6 +49,7 @@ classifiers  = [
+ maintainers = [
+     {name = "Apache Arrow Developers", email = "dev@arrow.apache.org"}
+ ]
++dependencies = ["pyodide-unix-timezones == 1.0.0"]
+ 
+ [project.urls]
+ Homepage = "https://arrow.apache.org/"

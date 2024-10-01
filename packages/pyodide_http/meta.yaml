@@ -1,0 +1,19 @@
+package:
+  name: pyodide_http
+  version: 0.2.1
+  top-level:
+    - pyodide_http
+source:
+  url: https://files.pythonhosted.org/packages/7b/ac/9c2134bdc4e2a4176f77a32f15afa4a064e8ea9d9b6ce88c16477e2c64cd/pyodide_http-0.2.1.tar.gz
+  sha256: 96afea01716c434025d70c45e255e28ac68ecddc196ddc2eafe8741c91661354
+  patches:
+    - patches/0001-cors-proxy.patch
+    - patches/0002-requires-jupyterlite-cors.patch
+requirements:
+  run:
+    - jupyterlite-cors
+about:
+  home: https://github.com/koenvo/pyodide-http
+  PyPI: https://pypi.org/project/pyodide-http
+  summary: Patch requests, urllib and urllib3 to make them work in Pyodide
+  license: MIT

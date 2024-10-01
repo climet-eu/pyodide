@@ -1,0 +1,25 @@
+package:
+  name: eccodes
+  version: 2.39.1
+  top-level:
+    - eccodes
+    - gribapi
+source:
+  url: https://github.com/ecmwf/eccodes-python/archive/refs/tags/2.39.1.tar.gz
+  sha256: 19721447fd7ccd34051cbcbbe890b87ac608c676d855edb44c98df154e243fc5
+  patches:
+    - patches/0001-package-shared-library.patch
+requirements:
+  run:
+    - cffi
+    - findlibs
+    - numpy
+  host:
+    - libeccodes
+build:
+  vendor-sharedlib: true
+about:
+  home: https://github.com/ecmwf/eccodes-python
+  PyPI: https://pypi.org/project/eccodes
+  summary: Python interface to the ecCodes GRIB and BUFR decoder/encoder
+  license: Apache License Version 2.0

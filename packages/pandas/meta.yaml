@@ -17,9 +17,9 @@ requirements:
   host:
     - numpy
   run:
-    - numpy
-    - python-dateutil
-    - pytz
+    - lzma             # required
+    - numpy            # required
+    - pyarrow          # required
 about:
   home: https://pandas.pydata.org
   PyPI: https://pypi.org/project/pandas

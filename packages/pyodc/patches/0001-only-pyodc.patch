@@ -1,0 +1,18 @@
+diff --git a/setup.py b/setup.py
+index 1ceb220..221829e 100644
+--- a/setup.py
++++ b/setup.py
+@@ -30,12 +30,8 @@ setuptools.setup(
+     author_email="software.support@ecmwf.int",
+     license="Apache License Version 2.0",
+     url="https://github.com/ecmwf/pyodc",
+-    packages=["pyodc", "codc"],
+-    package_data={"": ["*.h"]},
+-    include_package_data=True,
++    packages=["pyodc"],
+     install_requires=[
+-        "cffi",
+-        "findlibs>=0.0.5",
+         "pandas",
+     ],
+     extras_require={},

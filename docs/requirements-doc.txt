@@ -16,9 +16,9 @@ sphinx-autodoc-typehints>=1.21.7
 sphinx-design>=0.3.0
 pydantic
 # TODO: separate document for pyodide-build?
--e ./pyodide-build
+pyodide-build @ git+https://github.com/pyodide/pyodide-build@4e440bd83ec9cd3bf9eb9db243944a1b872b7983
 # Version should be consistent with packages/micropip/meta.yaml
-micropip==0.7.1
+micropip==0.9.0
 jinja2>=3.0
 ruamel.yaml
 sphinx-js @ git+https://github.com/pyodide/sphinx-js-fork@781dc61870a802222051bcc8f6b2a592cd5eec7b

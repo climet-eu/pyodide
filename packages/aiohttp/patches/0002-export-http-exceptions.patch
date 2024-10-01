@@ -1,0 +1,12 @@
+diff --git a/aiohttp/__init__.py b/aiohttp/__init__.py
+index 1da78e4..3399d34 100644
+--- a/aiohttp/__init__.py
++++ b/aiohttp/__init__.py
+@@ -3,6 +3,7 @@ __version__ = "3.11.10"
+ from typing import TYPE_CHECKING, Tuple
+ 
+ from . import hdrs as hdrs
++from . import http_exceptions as http_exceptions
+ from .client import (
+     BaseConnector,
+     ClientConnectionError,

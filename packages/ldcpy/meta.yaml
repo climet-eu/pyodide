@@ -1,0 +1,27 @@
+package:
+  name: ldcpy
+  version: "0.17"
+  top-level:
+    - ldcpy
+source:
+  url: https://files.pythonhosted.org/packages/78/e2/cca02bfcd503997b727e77e90660ddbab0cd14ba0bf65d111fd4d3dc8996/ldcpy-0.17.tar.gz
+  sha256: 9894e4276d83cccf35d9e606780e8147e0f9461688be4b87348e0dd36d7cb5ac
+  patches:
+    - patches/0001-no-nodejs.patch
+requirements:
+  run:
+    - Cartopy
+    - matplotlib
+    - netCDF4
+    - numpy
+    - scikit-image
+    - scipy
+    - pandas
+    - astropy
+    - ipython
+    - statsmodels
+about:
+  home: https://ldcpy.readthedocs.io
+  PyPI: https://pypi.org/project/ldcpy
+  summary: A library for lossy compression of netCDF files using xarray
+  license: Apache 2.0

@@ -1,0 +1,29 @@
+package:
+  name: earthkit-data
+  version: 0.11.4
+  top-level:
+    - earthkit.data
+source:
+  url: https://files.pythonhosted.org/packages/4a/56/ed72b8d129185c2cd06d834806afe9d49800d004a10f249a453e36fa0777/earthkit_data-0.11.4.tar.gz
+  sha256: 14abb50a647fccfbd2e14b5d5d9444ab51fced8d1a3afb011664fbfc62b50e9a
+  patches:
+    - patches/0001-no-pyfdb.patch
+requirements:
+  run:
+    - Cartopy           # optional
+    - eccodes           # required, not loaded immediately
+    - ecmwf-api-client  # optional
+    - filelock          # required, not loaded immediately
+    - hda               # optional
+    - lru-dict          # required, not loaded immediately
+    - multiurl          # required, not loaded immediately
+    - netCDF4           # required, not loaded immediately
+    - pandas            # required, not loaded immediately
+    # - pyfdb  # TODO   # optional
+    - pyodc             # optional
+    - PyYAML            # required
+about:
+  home: https://github.com/ecmwf/earthkit-data
+  PyPI: https://pypi.org/project/earthkit-data
+  summary: A format-agnostic Python interface for geospatial data
+  license: Apache License 2.0
