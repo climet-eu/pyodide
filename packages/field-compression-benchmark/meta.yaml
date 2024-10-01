@@ -4,10 +4,10 @@ package:
   top-level:
     - fcbench
 source:
-  path: ./field-compression-benchmark
-  # TODO: include patches once fcbench is included from git or PyPi
-  # patches:
-  #   - patches/0001-codecs-build.patch
+  url: https://files.pythonhosted.org/packages/fb/a3/ab6e6995e0649022e087acef5d80a0ee31ed8b213440b9e88d09bd36e386/field-compression-benchmark-0.0.9.tar.gz
+  sha256: 724e29c498b92670512519891a21817c717decfed8d1e0ba84a99a6c7dbdaff9
+  patches:
+    - patches/0001-codecs-build.patch
 build:
   script: |
     # Set up a more modern nightly toolchain with support for emscripten and wasm
