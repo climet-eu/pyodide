@@ -1,0 +1,13 @@
+diff --git a/earthkit/regrid/utils/caching.py b/earthkit/regrid/utils/caching.py
+index 328c551..8ea318a 100644
+--- a/earthkit/regrid/utils/caching.py
++++ b/earthkit/regrid/utils/caching.py
+@@ -39,7 +39,7 @@ CONNECTION = None
+ CACHE = None
+ 
+ SETTINGS = {
+-    "cache-policy": "user",
++    "cache-policy": "off",
+     "user-cache-directory": os.path.join(
+         tempfile.gettempdir(), f"earthkit-regrid-{getpass.getuser()}"
+     ),
