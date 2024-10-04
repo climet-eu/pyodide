@@ -8,8 +8,10 @@ source:
   sha256: 0376730eba485fee910a389c010dfd9125af68691e0a4d09cfa17766cdcc9a26
 requirements:
   run:
+    - cdsapi
     - cfgrib
     - eccodes
+    - ecmwf-api-client
     - dask
     - entrypoints
     - filelock

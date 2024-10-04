@@ -8,12 +8,15 @@ source:
   sha256: ea4d00e070dc47597ac8b3f1336ffa92c1d5e7beeb00f64ebd284802edff8dda
 requirements:
   run:
-    - earthkit-data
-    - Cartopy
-    - matplotlib
-    - pyyaml
-    - numpy
     - adjustText
+    - Cartopy
+    # - cf-units
+    - earthkit-data
+    - earthkit-regrid
+    - matplotlib
+    - numpy
+    - pyyaml
+    - scipy
 about:
   home: https://github.com/ecmwf/earthkit-maps
   PyPI: https://pypi.org/project/earthkit-maps

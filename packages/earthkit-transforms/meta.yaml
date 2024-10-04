@@ -8,11 +8,11 @@ source:
   sha256: 7ecec89c66ec36a02cdd8163a7240bdf86733d3bc5f26ab4e327636c9cf83693
 requirements:
   run:
-    - xarray
-    - numpy
     - earthkit-data
     - geopandas
+    - numpy
     - rasterio
+    - xarray
 about:
   home: https://github.com/ecmwf/earthkit-transforms
   PyPI: https://pypi.org/project/earthkit-transforms
