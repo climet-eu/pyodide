@@ -8,14 +8,15 @@ source:
   sha256: c36eb4a5267cae3da288453d0d0a9fbf43f1a1fb4f93396ec4fb575fa5cb66c0
 requirements:
   run:
+    - adjustText
+    - Cartopy
     - earthkit-data
     - earthkit-plots-default-styles
-    - Cartopy
-    - pint
     - matplotlib
-    - pyyaml
     - numpy
-    - adjustText
+    - pint
+    - pyyaml
+    - scipy
 about:
   home: https://github.com/ecmwf/earthkit-plots
   PyPI: https://pypi.org/project/earthkit-plots
