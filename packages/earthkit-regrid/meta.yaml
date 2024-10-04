@@ -10,8 +10,8 @@ source:
     - patches/0001-no-caching.patch
 requirements:
   run:
-    - multiurl
     - filelock
+    - multiurl
     - scipy
 about:
   home: https://github.com/ecmwf/earthkit-regrid
