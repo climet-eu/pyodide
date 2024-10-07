@@ -10,7 +10,7 @@ requirements:
   run:
     - adjustText
     - Cartopy
-    # - cf-units
+    - cf-units
     - earthkit-data
     - earthkit-regrid
     - matplotlib
