@@ -1,0 +1,19 @@
+package:
+  name: intake
+  version: 2.0.7
+  top-level:
+    - intake
+source:
+  url: https://files.pythonhosted.org/packages/6b/f9/2b6584495d6a864ab1a90b364bbdc72c1a9e86282ba1c310dc068de4dfe0/intake-2.0.7-py3-none-any.whl
+  sha256: 13eec0cc775abd964fca5f3800aa1e806e8afaef0f25685823c673bbbf11cf89
+requirements:
+  run:
+    - fsspec
+    - pyyaml
+    - platformdirs
+    - networkx
+about:
+  home: https://github.com/intake/intake
+  PyPI: https://pypi.org/project/intake
+  summary: Data catalog, search and load
+  license: MIT
