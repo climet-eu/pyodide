@@ -1,0 +1,21 @@
+diff --git a/lib/xml.c b/lib/xml.c
+index 3ee1a2d..2ab1cf3 100644
+--- a/lib/xml.c
++++ b/lib/xml.c
+@@ -2167,10 +2167,15 @@ default_udunits2_xml_path()
+             *strrchr(buf, sep) = 0; // "lib/.."
+ 
+             prefix = buf;
++#       elif defined(__EMSCRIPTEN__)
++            const char  sep = '/'; // Pathname component separator
++            char        buf[PATH_MAX];
++            const char  relXmlPathname[] = "share/udunits/udunits2.xml";
++            prefix = NULL;
+ #       endif
+ 
+         if (prefix == NULL) {
+-            strncpy(absXmlPathname, DEFAULT_UDUNITS2_XML_PATH,
++            strncpy(absXmlPathname, "/share/udunits/udunits2.xml",
+                     sizeof(absXmlPathname));
+         } // Use default pathname
+         else {
