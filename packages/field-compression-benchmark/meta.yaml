@@ -1,11 +1,11 @@
 package:
   name: field-compression-benchmark
-  version: 0.0.9
+  version: 0.0.10
   top-level:
     - fcbench
 source:
-  url: https://files.pythonhosted.org/packages/fb/a3/ab6e6995e0649022e087acef5d80a0ee31ed8b213440b9e88d09bd36e386/field-compression-benchmark-0.0.9.tar.gz
-  sha256: 724e29c498b92670512519891a21817c717decfed8d1e0ba84a99a6c7dbdaff9
+  url: https://files.pythonhosted.org/packages/50/0e/29c5bcc77c8b8684d9c5a66b1db5ba5fccd152ddd52612a20540610b6878/field-compression-benchmark-0.0.10.tar.gz
+  sha256: 85adf8622988f1363d4ffb26d93d45c90cbff1dab44ae50260ccccd9fe839331
   patches:
     - patches/0001-codecs-build.patch
 build:
@@ -18,7 +18,7 @@ build:
     rustup component add rust-src --toolchain ${RUSTUP_TOOLCHAIN}
 
     # Fetch the pre-built WASM codecs from one of the wheels
-    wget https://files.pythonhosted.org/packages/52/1c/4163cbf7501ee027f7b32b1b15e3a57963c21de96961ceab308d34c5660a/field_compression_benchmark-0.0.9-cp311-cp311-manylinux_2_28_x86_64.whl -O fcbench.zip
+    wget https://files.pythonhosted.org/packages/f5/f2/3c70fd2581ada66ffc3bdaea63c65689c38cb5539a1cb9e622bfa718331d/field_compression_benchmark-0.0.10-cp311-cp311-manylinux_2_28_x86_64.whl -O fcbench.zip
     unzip -j fcbench.zip fcbench/data/codecs/*.wasm -d data/codecs/
     rm fcbench.zip
 requirements:

@@ -1,11 +1,12 @@
 diff --git a/codecs/build/Cargo.toml b/codecs/build/Cargo.toml
-index 136736e9..ad5c6d39 100644
+index 1ade8438..df934e7d 100644
 --- a/codecs/build/Cargo.toml
 +++ b/codecs/build/Cargo.toml
-@@ -16,22 +16,22 @@ wasi-preview1-component-adapter-provider = { workspace = true }
+@@ -16,23 +16,23 @@ wasi-preview1-component-adapter-provider = { workspace = true }
  wit-component = { workspace = true }
  
  # list of all codecs we build
+-asinh-codec = { workspace = true }
 -bit-round-codec = { workspace = true }
 -fixed-offset-scale-codec = { workspace = true }
 -identity-codec = { workspace = true }
@@ -19,6 +20,7 @@ index 136736e9..ad5c6d39 100644
 -zfp-codec = { workspace = true }
 -zlib-codec = { workspace = true }
 -zstd-codec = { workspace = true }
++# asinh-codec = { workspace = true }
 +# bit-round-codec = { workspace = true }
 +# fixed-offset-scale-codec = { workspace = true }
 +# identity-codec = { workspace = true }
@@ -41,7 +43,7 @@ index 136736e9..ad5c6d39 100644
  [lints]
  workspace = true
 diff --git a/codecs/build/build.rs b/codecs/build/build.rs
-index 0c4865f3..fa9d5738 100644
+index ade77832..73e768a7 100644
 --- a/codecs/build/build.rs
 +++ b/codecs/build/build.rs
 @@ -5,14 +5,14 @@ use std::{
@@ -51,7 +53,7 @@ index 0c4865f3..fa9d5738 100644
 -#[cfg(not(target_arch = "wasm32"))]
 -use sz3_codec as _;
 -use ::{
--    bit_round_codec as _, fixed_offset_scale_codec as _, identity_codec as _,
+-    asinh_codec as _, bit_round_codec as _, fixed_offset_scale_codec as _, identity_codec as _,
 -    linear_quantize_codec as _, log_codec as _, random_projection_codec as _,
 -    reinterpret_codec as _, round_codec as _, swizzle_reshape_codec as _, uniform_noise_codec as _,
 -    zfp_codec as _, zlib_codec as _, zstd_codec as _,
@@ -59,7 +61,7 @@ index 0c4865f3..fa9d5738 100644
 +// #[cfg(not(target_arch = "wasm32"))]
 +// use sz3_codec as _;
 +// use ::{
-+//     bit_round_codec as _, fixed_offset_scale_codec as _, identity_codec as _,
++//     asinh_codec as _, bit_round_codec as _, fixed_offset_scale_codec as _, identity_codec as _,
 +//     linear_quantize_codec as _, log_codec as _, random_projection_codec as _,
 +//     reinterpret_codec as _, round_codec as _, swizzle_reshape_codec as _, uniform_noise_codec as _,
 +//     zfp_codec as _, zlib_codec as _, zstd_codec as _,
@@ -115,7 +117,7 @@ index 47ccdb44..67644654 100644
  [lints]
  workspace = true
 diff --git a/wasi/build/build.rs b/wasi/build/build.rs
-index 7a5032cb..40e01431 100644
+index 43c4a80e..072bff53 100644
 --- a/wasi/build/build.rs
 +++ b/wasi/build/build.rs
 @@ -5,10 +5,10 @@ use std::{
