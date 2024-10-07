@@ -12,6 +12,7 @@ requirements:
     - cfgrib
     - eccodes
     - ecmwf-api-client
+    - ecmwf-opendata
     - dask
     - entrypoints
     - filelock
