@@ -1,17 +1,15 @@
 package:
   name: earthkit
-  version: 0.6.2
+  version: 0.8.0
   top-level:
     - earthkit
 source:
-  url: https://files.pythonhosted.org/packages/5d/0c/757c585b05a441e161c6e0bc6b5fb794b331197c77980e4b4322e08424fa/earthkit-0.6.2-py3-none-any.whl
-  sha256: ba2b524acd3043d4abc0f5759c410251b2d61cefe9941a261ef33ee000862716
+  url: https://files.pythonhosted.org/packages/81/a8/cc01d4712243180247788746cbe4890e824c492bf063d5dfbb929f506613/earthkit-0.8.0-py3-none-any.whl
+  sha256: 2b16fdd2bb6ed1473b728cde6d6f845e5afc50ea20c9346b83a4a9d5d5df4226
 requirements:
   run:
-    - numpy
     - earthkit-data
     - earthkit-geo
-    - earthkit-maps
     - earthkit-meteo
     - earthkit-plots
     - earthkit-regrid
