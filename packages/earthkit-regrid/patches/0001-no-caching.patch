@@ -1,7 +1,7 @@
-diff --git a/src/earthkit/regrid/utils/caching.py b/src/earthkit/regrid/utils/caching.py
+diff --git a/earthkit/regrid/utils/caching.py b/earthkit/regrid/utils/caching.py
 index 328c551..8ea318a 100644
---- a/src/earthkit/regrid/utils/caching.py
-+++ b/src/earthkit/regrid/utils/caching.py
+--- a/earthkit/regrid/utils/caching.py
++++ b/earthkit/regrid/utils/caching.py
 @@ -39,7 +39,7 @@ CONNECTION = None
  CACHE = None
  
