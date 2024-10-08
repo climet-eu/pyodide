@@ -1,23 +1,28 @@
 package:
   name: earthkit-data
-  version: 0.7.0
+  version: 0.10.6
   top-level:
     - earthkit.data
 source:
-  url: https://files.pythonhosted.org/packages/98/69/bfafdd039f846cfbeba12f8f83cfc3a55b1b261c52bedb1b22c2468d28fc/earthkit_data-0.7.0-py3-none-any.whl
-  sha256: 0376730eba485fee910a389c010dfd9125af68691e0a4d09cfa17766cdcc9a26
+  url: https://files.pythonhosted.org/packages/ee/63/40da67c445115d071316041fba6ed47b2fd05205e416b9e7686b0c700c75/earthkit_data-0.10.6-py3-none-any.whl
+  sha256: 5955d80a9adcc9811fe123957b4754a3d1f572a7b1c558dd48f2cc8dc2ad1929
 requirements:
   run:
+    - cartopy
     - cdsapi
     - cfgrib
+    - dask
+    - earthkit-geo
+    - earthkit-meteo
     - eccodes
     - ecmwf-api-client
     - ecmwf-opendata
-    - dask
     - entrypoints
     - filelock
+    - geopandas
     - Jinja2
     - jsonschema
+    - lru-dict
     - markdown
     - multiurl
     - netcdf4
@@ -26,7 +31,6 @@ requirements:
     - pyyaml
     - tqdm
     - xarray
-    - earthkit-meteo
 about:
   home: https://github.com/ecmwf/earthkit-data
   PyPI: https://pypi.org/project/earthkit-data
