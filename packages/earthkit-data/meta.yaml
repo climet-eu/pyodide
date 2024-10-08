@@ -8,7 +8,7 @@ source:
   sha256: 5955d80a9adcc9811fe123957b4754a3d1f572a7b1c558dd48f2cc8dc2ad1929
 requirements:
   run:
-    - cartopy
+    - Cartopy
     - cdsapi
     - cfgrib
     - dask
