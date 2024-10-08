@@ -1,17 +1,18 @@
 package:
   name: earthkit-plots
-  version: 0.2.0
+  version: 0.2.3
   top-level:
     - earthkit.plots
 source:
-  url: https://files.pythonhosted.org/packages/23/58/15fdbde16e5155fc6895a1a07488bba66aa10a47b009d00cfaf55273b29b/earthkit_plots-0.2.0-py3-none-any.whl
-  sha256: c36eb4a5267cae3da288453d0d0a9fbf43f1a1fb4f93396ec4fb575fa5cb66c0
+  url: https://files.pythonhosted.org/packages/5b/25/1f03eb77aeff561bd7335b186c67f29644a7675f148aa7480cbe30acd091/earthkit_plots-0.2.3-py3-none-any.whl
+  sha256: cd2baf94d5e44343d862aa58b7735d58c503b8bd2df62cfdd94fd01d3767e38b
 requirements:
   run:
     - adjustText
     - Cartopy
     - earthkit-data
     - earthkit-plots-default-styles
+    - earthkit-regrid
     - matplotlib
     - numpy
     - pint
