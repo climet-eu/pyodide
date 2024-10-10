@@ -8,6 +8,7 @@ source:
   sha256: 85adf8622988f1363d4ffb26d93d45c90cbff1dab44ae50260ccccd9fe839331
   patches:
     - patches/0001-codecs-build.patch
+    - patches/0002-rust-emscripten-file-size.patch
 build:
   script: |
     # Set up a more modern nightly toolchain with support for emscripten and wasm
