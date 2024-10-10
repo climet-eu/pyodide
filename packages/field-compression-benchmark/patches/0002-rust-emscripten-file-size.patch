@@ -1,5 +1,5 @@
 diff --git a/codecs/frontend/src/loader.rs b/codecs/frontend/src/loader.rs
-index db45e0ee..ac958d09 100644
+index db45e0ee..c3ae00b8 100644
 --- a/codecs/frontend/src/loader.rs
 +++ b/codecs/frontend/src/loader.rs
 @@ -97,7 +97,20 @@ impl WasmCodecClassLoader {
@@ -20,7 +20,7 @@ index db45e0ee..ac958d09 100644
 +        let mut file = FileNoSize(file);
 +
 +        let mut wasm_component = Vec::new();
-+        std::io::Read::read_to_end(&mut file, &mut bytes)
++        std::io::Read::read_to_end(&mut file, &mut wasm_component)
              .map_err(|err| WasmCodecLoaderError::ReadWasmBinaryFile { source: err })?;
  
          Self::new_type(wasm_component, engine)
