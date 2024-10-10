@@ -8,7 +8,10 @@ source:
   sha256: 85adf8622988f1363d4ffb26d93d45c90cbff1dab44ae50260ccccd9fe839331
   patches:
     - patches/0001-codecs-build.patch
-    - patches/0002-rust-emscripten-file-size.patch
+    # we need to build std so that std's libc is compiled to check against the
+    #  Pyodide's emscripten version and not the one Rust was built on CI with
+    # see https://github.com/rust-lang/rust/issues/131467
+    - patches/0002-build-std.patch
 build:
   script: |
     # Set up a more modern nightly toolchain with support for emscripten and wasm
