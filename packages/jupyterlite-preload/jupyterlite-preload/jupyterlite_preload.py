@@ -4,6 +4,7 @@ import os
 def _patch():
     if getattr(os.chdir, "_patched", False):
         return
+    setattr(os.chdir, "_patched", True)
 
     import asyncio
     import importlib
