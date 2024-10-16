@@ -3,8 +3,6 @@ import importlib
 import sys
 from pathlib import Path
 
-from IPython.core.getipython import get_ipython
-
 import pyodide
 import pyodide_js
 
@@ -98,8 +96,3 @@ class PyodideMemoryMonitor:
                 f"(from {memory_before}) for this notebook",
                 file=sys.stderr,
             )
-
-monitor = PyodideMemoryMonitor()
-
-get_ipython().events.register("pre_run_cell", monitor.pre_run_cell)
-get_ipython().events.register("post_execute", monitor.post_execute_hook)
