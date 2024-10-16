@@ -12,7 +12,7 @@ index b7235481f..679ee70d8 100644
  
  #-----------------------------------------------------------------------------
 diff --git a/IPython/core/interactiveshell.py b/IPython/core/interactiveshell.py
-index 12c120625..76a5671fd 100644
+index 12c120625..27cb4b107 100644
 --- a/IPython/core/interactiveshell.py
 +++ b/IPython/core/interactiveshell.py
 @@ -680,6 +680,9 @@ def __init__(self, ipython_dir=None, profile_dir=None,
@@ -20,7 +20,7 @@ index 12c120625..76a5671fd 100644
          self.trio_runner = None
  
 +        import jupyterlite_preload
-+        jupyterlite_preload._patch()
++        jupyterlite_preload._finalize_with_ipython(self)
 +
      def get_ipython(self):
          """Return the currently running IPython instance."""
