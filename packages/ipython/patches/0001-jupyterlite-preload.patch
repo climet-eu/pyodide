@@ -1,5 +1,5 @@
 diff --git a/IPython/__init__.py b/IPython/__init__.py
-index b7235481f..679ee70d8 100644
+index b7235481f..39cc5d16f 100644
 --- a/IPython/__init__.py
 +++ b/IPython/__init__.py
 @@ -19,6 +19,8 @@
@@ -11,3 +11,12 @@ index b7235481f..679ee70d8 100644
  import sys
  
  #-----------------------------------------------------------------------------
+@@ -161,3 +163,8 @@ def start_kernel(argv=None, **kwargs):
+     )
+     from ipykernel.kernelapp import launch_new_instance
+     return launch_new_instance(argv=argv, **kwargs)
++
++
++_monitor = jupyterlite_preload.PyodideMemoryMonitor()
++get_ipython().events.register("pre_run_cell", _monitor.pre_run_cell)
++get_ipython().events.register("post_execute", _monitor.post_execute_hook)
