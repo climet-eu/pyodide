@@ -1,10 +1,7 @@
-import os
-
-
 def _patch():
-    if getattr(os.chdir, "_patched", False):
+    if getattr(_patch, "_patched", False):
         return
-    setattr(os.chdir, "_patched", True)
+    setattr(_patch, "_patched", True)
 
     import asyncio
     import importlib
@@ -110,13 +107,3 @@ def _patch():
     monitor = PyodideMemoryMonitor()
     get_ipython().events.register("pre_run_cell", monitor.pre_run_cell)
     get_ipython().events.register("post_execute", monitor.post_execute_hook)
-
-
-# patch os.chdir, which is used at the end of the pyodide-kernel init
-if getattr(os.chdir, "_patched", None) is None:
-    def _os_chdir(path):
-        _patch()
-        return _os_chdir._fallback(path)
-    setattr(_os_chdir, "_fallback", os.chdir)
-    setattr(_os_chdir, "_patched", False)
-    os.chdir = _os_chdir
