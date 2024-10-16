@@ -81,10 +81,6 @@ class PyodideMemoryMonitor:
             num /= 1024.0
         return f"{num:.1f}Yi{suffix}"
 
-
-    def pre_run_cell(self, *args, **kwargs):
-        self.update()
-
     def post_execute_hook(self, *args, **kwargs):
         memory_before = self.sizeof_fmt(self.memory)
         self.update()
@@ -94,11 +90,10 @@ class PyodideMemoryMonitor:
             print(
                 f"[pyodide]: Memory usage has grown to {memory_after} " +
                 f"(from {memory_before}) for this notebook",
-                file=sys.stderr,
+                file=sys.stderr if self.memory > 2**30 else sys.stdout,
             )
 
 
 def _finalize_with_ipython(ip):
     monitor = PyodideMemoryMonitor()
-    ip.events.register("pre_run_cell", monitor.pre_run_cell)
     ip.events.register("post_execute", monitor.post_execute_hook)
