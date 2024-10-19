@@ -1,0 +1,21 @@
+diff --git a/kerchunk/grib2.py b/kerchunk/grib2.py
+index e3a927b..2149508 100644
+--- a/kerchunk/grib2.py
++++ b/kerchunk/grib2.py
+@@ -23,6 +23,7 @@ import fsspec
+ import zarr
+ import xarray
+ import numpy as np
++import scipy as sp
+ 
+ from kerchunk.utils import class_factory, _encode_for_JSON
+ from kerchunk.codecs import GRIBCodec
+@@ -208,7 +209,7 @@ def scan_grib(
+                 vals = m["values"].reshape(shape)
+             else:
+                 # dummy array to match the required interface
+-                vals = np.empty(shape, dtype=native_type)
++                vals = sp.sparse.coo_array(shape, dtype=native_type)
+                 assert vals.size == data_size
+ 
+             attrs = {
