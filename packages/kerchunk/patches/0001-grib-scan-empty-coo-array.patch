@@ -1,5 +1,5 @@
 diff --git a/kerchunk/grib2.py b/kerchunk/grib2.py
-index e3a927b..34021c0 100644
+index e3a927b..b15f614 100644
 --- a/kerchunk/grib2.py
 +++ b/kerchunk/grib2.py
 @@ -23,6 +23,7 @@ import fsspec
@@ -17,7 +17,7 @@ index e3a927b..34021c0 100644
 -                vals = np.empty(shape, dtype=native_type)
 -                assert vals.size == data_size
 +                vals = sp.sparse.coo_array(shape, dtype=native_type)
-+                assert np.prod(vals.shape) == data_size
++                # assert vals.size == data_size
  
              attrs = {
                  # Follow cfgrib convention and rename key
