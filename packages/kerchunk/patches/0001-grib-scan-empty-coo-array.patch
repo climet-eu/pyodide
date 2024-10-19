@@ -1,5 +1,5 @@
 diff --git a/kerchunk/grib2.py b/kerchunk/grib2.py
-index e3a927b..b15f614 100644
+index e3a927b..0aa2ee6 100644
 --- a/kerchunk/grib2.py
 +++ b/kerchunk/grib2.py
 @@ -23,6 +23,7 @@ import fsspec
@@ -10,7 +10,19 @@ index e3a927b..b15f614 100644
  
  from kerchunk.utils import class_factory, _encode_for_JSON
  from kerchunk.codecs import GRIBCodec
-@@ -208,8 +209,8 @@ def scan_grib(
+@@ -103,7 +104,10 @@ def _store_array(store, z, data, var, inline_threshold, offset, size, attr):
+             overwrite=True,
+         )
+         store[f"{var}/" + ".".join(["0"] * len(shape))] = ["{{u}}", offset, size]
+-    d.attrs.update(attr)
++    d.attrs.update({
++        k: v.tolist() if isinstance(v, np.ndarray) else v
++        for k, v in attr.items()
++    })
+ 
+ 
+ def scan_grib(
+@@ -208,8 +212,8 @@ def scan_grib(
                  vals = m["values"].reshape(shape)
              else:
                  # dummy array to match the required interface
