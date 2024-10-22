@@ -1,6 +1,8 @@
 FROM node:20.11-bookworm-slim AS node-image
 FROM python:3.12.1-slim-bookworm
 
+# Kickstart caching the Pyodide Docker image build in CI
+
 # Requirements for building packages
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
