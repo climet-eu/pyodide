@@ -1,6 +1,8 @@
 FROM node:20.1.0-bullseye-slim AS node-image
 FROM python:3.11.3-slim-bullseye
 
+# Kickstart caching the Pyodide Docker image build in CI
+
 # Requirements for building packages
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
