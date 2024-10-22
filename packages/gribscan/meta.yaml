@@ -1,0 +1,22 @@
+package:
+  name: gribscan
+  version: 0.0.12
+  top-level:
+    - gribscan
+source:
+  url: https://files.pythonhosted.org/packages/86/59/7d44a18da76a12f316c956a5714509b1c39875ae7a35b3017e45a77ec0a6/gribscan-0.0.12.tar.gz
+  sha256: ceeeaf11bbcf7f7c99e14cbed77b65f67ecd9b0301e8f213b3a151575d3162d5
+  patches:
+    - patches/0001-no-aeccodec.patch
+requirements:
+  run:
+    - cfgrib
+    - eccodes
+    - numcodecs
+    - numpy
+    - scipy
+about:
+  home: https://github.com/gribscan/gribscan
+  PyPI: https://pypi.org/project/gribscan
+  summary: Create indices for GRIB files and provide an xarray interface.
+  license: MIT License
