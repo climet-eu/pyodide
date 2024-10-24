@@ -21,6 +21,7 @@ source:
   sha256: 4bf5abab8a36d20193c698b0f1fc282c1d083c94723902c447e5d2f1780936a3
 
   patches:
+    # meson < 1.6 in tools/constraints.txt
     - patches/0001-Fix-dstevr-in-special-lapack_defs.h.patch
     - patches/0002-int-to-string.patch
     - patches/0003-fix-fotran-files-minpack.patch
