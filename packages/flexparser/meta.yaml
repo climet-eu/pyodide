@@ -1,0 +1,16 @@
+package:
+  name: flexparser
+  version: 0.3.1
+  top-level:
+    - flexparser
+source:
+  url: https://files.pythonhosted.org/packages/a3/28/5ce78a4838bb9da1bd9f64bc79ba12ddbfcb4824a11ef41da6f05d3240ef/flexparser-0.3.1-py3-none-any.whl
+  sha256: 2e3e2936bec1f9277f777ef77297522087d96adb09624d4fe4240fd56885c013
+dependencies:
+  run:
+    - typing-extensions
+about:
+  home: null
+  PyPI: https://pypi.org/project/flexparser
+  summary: Parsing made fun ... using typing.
+  license: BSD-3-Clause

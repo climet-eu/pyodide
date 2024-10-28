@@ -1,27 +1,21 @@
 package:
   name: xeofs
-  version: 2.3.1
+  version: 3.0.3
   top-level:
     - xeofs
 source:
-  url: https://files.pythonhosted.org/packages/b0/7f/eeaec5d4963bbbefa4a7ab04a8af1f98fe353fd2d930670eca1778c57385/xeofs-2.3.1.tar.gz
-  sha256: 118b1ee332ebb8a60304b41c80fc2ece5023ff4bcec58f14e275e3ca295522c7
-  patches:
-    - patches/0001-xeofs-no-gwpca.patch
+  url: https://files.pythonhosted.org/packages/15/a8/31652f6a26f7b8e32c9fcf483038f29ae982679de7964cf6f9aac5e568c8/xeofs-3.0.3-py3-none-any.whl
+  sha256: ee23faff5ce6cb15e763f16289bd550f6d3695a506b7ee84f1b052b49a4f64b8
 requirements:
   run:
     - dask
-    - netcdf4
     - numpy
     - pandas
-    - pooch
     - scikit-learn
-    - statsmodels
     - tqdm
     - typing-extensions
     - xarray
     - xarray-datatree
-    - zarr
 about:
   home: https://github.com/nicrie/xeofs
   PyPI: https://pypi.org/project/xeofs
