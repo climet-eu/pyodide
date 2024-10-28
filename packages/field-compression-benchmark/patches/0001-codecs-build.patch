@@ -70,7 +70,7 @@ index ade77832..73e768a7 100644
  fn main() -> io::Result<()> {
      // Check for `clippy` and return early in this case
 diff --git a/fcbench/Cargo.toml b/fcbench/Cargo.toml
-index a0329180..856c21a9 100644
+index bc3393d1..c033e84d 100644
 --- a/fcbench/Cargo.toml
 +++ b/fcbench/Cargo.toml
 @@ -14,7 +14,7 @@ name = "fcbench"
