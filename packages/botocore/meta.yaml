@@ -1,11 +1,11 @@
 package:
   name: botocore
-  version: 1.35.23
+  version: 1.35.49
   top-level:
     - botocore
 source:
-  url: https://files.pythonhosted.org/packages/f8/81/90e1b82697d849e4a5e7e6dcf21ef7ba9fa902b98324849bd2956e6efac3/botocore-1.35.23-py3-none-any.whl
-  sha256: cab9ec4e0367b9f33f0bc02c5a29f587b0119ecffd6d125bacee085dcbc8817d
+  url: https://files.pythonhosted.org/packages/e3/3f/7c932ed4f6884b37e9a5bd3b37f88b35fa89491d635ab5b2cfeb8b800f95/botocore-1.35.49-py3-none-any.whl
+  sha256: aed4d3643afd702920792b68fbe712a8c3847993820d1048cd238a6469354da1
 requirements:
   run:
     - jmespath
