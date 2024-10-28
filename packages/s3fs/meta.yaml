@@ -1,11 +1,11 @@
 package:
   name: s3fs
-  version: 2024.2.0
+  version: 2024.10.0
   top-level:
     - s3fs
 source:
-  url: https://files.pythonhosted.org/packages/7c/76/efa5f84237620d5aa38e58285945b47449d8a94bf7037cae06f680b34c41/s3fs-2024.2.0-py3-none-any.whl
-  sha256: c140de37175c157cb662aa6ad7423365df732ac5f10ef5bf7b76078c6333a942
+  url: https://files.pythonhosted.org/packages/99/44/bb9ff095ae7b1b6908480f683b6ca6b71c2105d343a5e5cb25334b01f5fa/s3fs-2024.10.0-py3-none-any.whl
+  sha256: 7a2025d60d5b1a6025726b3a5e292a8e5aa713abc3b16fd1f81735181f7bb282
 requirements:
   run:
     - aiobotocore

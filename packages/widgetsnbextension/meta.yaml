@@ -1,11 +1,11 @@
 package:
   name: widgetsnbextension
-  version: 4.0.7
+  version: 4.0.13
   top-level:
     - widgetsnbextension
 source:
-  url: https://github.com/jupyterlite/pyodide-kernel/archive/refs/tags/v0.0.8.tar.gz
-  sha256: 3f64751d61c9f954415c87a72e44e7eb22511a8a0a8448d1011eb46fe5f9a495
+  url: https://files.pythonhosted.org/packages/56/fc/238c424fd7f4ebb25f8b1da9a934a3ad7c848286732ae04263661eb0fc03/widgetsnbextension-4.0.13.tar.gz
+  sha256: ffcb67bc9febd10234a362795f643927f4e0c05d9342c727b65d2384f8feacb6
 build:
   script: |
     cd ..

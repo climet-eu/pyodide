@@ -1,11 +1,11 @@
 package:
   name: earthkit-data
-  version: 0.10.6
+  version: 0.10.8
   top-level:
     - earthkit.data
 source:
-  url: https://files.pythonhosted.org/packages/ee/63/40da67c445115d071316041fba6ed47b2fd05205e416b9e7686b0c700c75/earthkit_data-0.10.6-py3-none-any.whl
-  sha256: 5955d80a9adcc9811fe123957b4754a3d1f572a7b1c558dd48f2cc8dc2ad1929
+  url: https://files.pythonhosted.org/packages/7a/ee/e67fdcf0c41fd3c4ab23ffceefdf4fcbadb375d9f7622db764ec51357f95/earthkit_data-0.10.8-py3-none-any.whl
+  sha256: 0f550f12f2855aa8cf58a0a91bdec47163cb73eeaf79247522756e4e4e657c27
 requirements:
   run:
     - Cartopy

@@ -1,11 +1,11 @@
 package:
   name: MetPy
-  version: 1.5.1
+  version: 1.6.3
   top-level:
     - metpy
 source:
-  url: https://files.pythonhosted.org/packages/6d/bf/9794cba86ef63644d41799d0dfe4031f430e937245a5f3f1e66508a6c8fb/MetPy-1.5.1-py3-none-any.whl
-  sha256: a654a1aae77422ad340c06daaa70bd34f0ca5325f4ff202796d2dce48e53e776
+  url: https://files.pythonhosted.org/packages/83/02/289311573657f4dd9832e04df2faa6989d2592036e2fb6990673251778c4/MetPy-1.6.3-py3-none-any.whl
+  sha256: 9946436197394d63647aac4310191028707bd644d4a8e41ee310d6d77c0f71f8
 requirements:
   run:
     - matplotlib

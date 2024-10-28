@@ -1,6 +1,6 @@
 package:
   name: sympy
-  version: "1.13.3"
+  version: 1.13.3
   top-level:
     - isympy
     - sympy

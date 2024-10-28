@@ -17,7 +17,7 @@ requirements:
     - prompt_toolkit
     - pure-eval
     - Pygments
-    - stack_data
+    - stack-data
     - traitlets
     - jupyterlite-preload
 about:

@@ -1,11 +1,11 @@
 package:
   name: adjustText
-  version: 1.1.1
+  version: 1.2.0
   top-level:
     - adjustText
 source:
-  url: https://files.pythonhosted.org/packages/e7/e9/83c53c56a3251bf92903d0ad817f0e73f98e42add91d585a9c26e67eac0b/adjustText-1.1.1-py3-none-any.whl
-  sha256: ad2285f4239cd6c172508d772b026a133806deed9779977dfbeadcf233454938
+  url: https://files.pythonhosted.org/packages/71/0d/baaa8e9f8c14e33f353419f7c7da4c270145626f043e98740e743ece6a8e/adjustText-1.2.0-py3-none-any.whl
+  sha256: 53212d5ea02b224ba56a1929d30264c8f6ea35d18a39f0fc351cff0bca66a214
 requirements:
   run:
     - numpy

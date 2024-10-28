@@ -1,11 +1,11 @@
 package:
   name: ipyfilite
-  version: 0.1.27
+  version: 0.1.30
   top-level:
     - ipyfilite
 source:
-  url: https://files.pythonhosted.org/packages/9e/6d/6fbfe3cf613507188327710775ef193312869c348d7c2001407eff67b712/ipyfilite-0.1.27-py3-none-any.whl
-  sha256: d12a003a0e366fabeb236e7b7e9beefe7051a962d617cded60f59e445a88a35c
+  url: https://files.pythonhosted.org/packages/39/e2/c37b62120f17f60c222f37456001b5a075d7aedefaa391846787ed496ced/ipyfilite-0.1.30-py3-none-any.whl
+  sha256: 18bcddf421a1dda62e6b375c25d42baf79c8951d940b90b230fa6b7000d0bde1
 requirements:
   run:
     - ipywidgets
