@@ -1,11 +1,11 @@
 diff --git a/aiohttp/__init__.py b/aiohttp/__init__.py
-index 8bc7a4aa..b6debab6 100644
+index e82e790b..c9621487 100644
 --- a/aiohttp/__init__.py
 +++ b/aiohttp/__init__.py
-@@ -214,3 +214,5 @@ try:
-     __all__ += ("GunicornWebWorker", "GunicornUVLoopWebWorker")
- except ImportError:  # pragma: no cover
-     pass
+@@ -238,3 +238,5 @@ def __getattr__(name: str) -> object:
+         return guv if name == "GunicornUVLoopWebWorker" else gw
+ 
+     raise AttributeError(f"module {__name__} has no attribute {name}")
 +
 +from . import patch
 diff --git a/aiohttp/patch.py b/aiohttp/patch.py
