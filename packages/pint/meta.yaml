@@ -8,6 +8,9 @@ source:
   sha256: d98667e46fd03a1b94694fbfa104ec30858684d8ab26952e2a348b48059089bb
 requirements:
   run:
+    - appdirs
+    - flexcache
+    - flexparser
     - typing-extensions
 about:
   home: https://github.com/hgrecco/pint
