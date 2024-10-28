@@ -10,7 +10,7 @@ about:
   home: https://github.com/certifi/python-certifi
   PyPI: https://pypi.org/project/certifi
   summary:
-    Certifi provides Mozilla’s carefully curated collection of Root Certificates
+    Certifi provides Mozilla's carefully curated collection of Root Certificates
     for validating the trustworthiness of SSL certificates while verifying the identity
     of TLS hosts.
   license: MPL-2.0
