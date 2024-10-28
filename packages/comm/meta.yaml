@@ -1,11 +1,11 @@
 package:
   name: comm
-  version: 0.2.1
+  version: 0.2.2
   top-level:
     - comm
 source:
-  url: https://files.pythonhosted.org/packages/6e/c1/e7335bd49aa3fa3bd453e34a4580b0076804f219897ad76d4d5aa4d8f22f/comm-0.2.1-py3-none-any.whl
-  sha256: 87928485c0dfc0e7976fd89fc1e187023cf587e7c353e4a9b417555b44adf021
+  url: https://files.pythonhosted.org/packages/e6/75/49e5bfe642f71f272236b5b2d2691cf915a7283cc0ceda56357b61daa538/comm-0.2.2-py3-none-any.whl
+  sha256: e6fb86cb70ff661ee8c9c14e7d36d6de3b4066f1441be4063df9c5009f0a64d3
 requirements:
   run:
     - traitlets

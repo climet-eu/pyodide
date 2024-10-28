@@ -1,11 +1,11 @@
 package:
   name: aiobotocore
-  version: 2.15.1
+  version: 2.15.2
   top-level:
     - aiobotocore
 source:
-  url: https://files.pythonhosted.org/packages/df/b8/a0fc9cf540d15f4962448c7ec097e99196b4ddd2a988d98b3d4236cbc89e/aiobotocore-2.15.1-py3-none-any.whl
-  sha256: 0f738cde74108553b753b24655094289a3c7ea0f0f179ed1c0f8cea488999a35
+  url: https://files.pythonhosted.org/packages/a4/57/6402242dde160d9ef9903487b4277443dc3da04615f6c4d3b48564a8ab57/aiobotocore-2.15.2-py3-none-any.whl
+  sha256: d4d3128b4b558e2b4c369bfa963b022d7e87303adb82eec623cec8aa77ae578a
 requirements:
   run:
     - botocore
