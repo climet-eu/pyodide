@@ -10,7 +10,7 @@ requirements:
   run:
     - aiobotocore
     - fsspec
-    - aiohttp # FIXME: requires >=3.9.2
+    - aiohttp
 about:
   home: http://github.com/fsspec/s3fs/
   PyPI: https://pypi.org/project/s3fs
