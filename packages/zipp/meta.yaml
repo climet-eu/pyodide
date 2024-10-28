@@ -1,13 +1,13 @@
 package:
   name: zipp
-  version: 3.17.0
+  version: 3.20.2
   top-level:
     - zipp
 source:
-  url: https://files.pythonhosted.org/packages/d9/66/48866fc6b158c81cc2bfecc04c480f105c6040e8b077bc54c634b4a67926/zipp-3.17.0-py3-none-any.whl
-  sha256: 0e923e726174922dce09c53c59ad483ff7bbb8e572e00c7f7c46b88556409f31
+  url: https://files.pythonhosted.org/packages/62/8b/5ba542fa83c90e09eac972fc9baca7a88e7e7ca4b221a89251954019308b/zipp-3.20.2-py3-none-any.whl
+  sha256: a817ac80d6cf4b23bf7f2828b7cabf326f15a001bea8b1f9b49631780ba28350
 about:
   home: https://github.com/jaraco/zipp
   PyPI: https://pypi.org/project/zipp
   summary: Backport of pathlib-compatible object wrapper for zip files
-  license: "MIT"
+  license: MIT
