@@ -1,11 +1,11 @@
 package:
   name: zarr
-  version: 2.17.0
+  version: 2.18.3
   top-level:
     - zarr
 source:
-  sha256: 6390a2b8af31babaab4c963efc45bf1da7f9500c9aafac193f84cf019a7c66b0
-  url: https://files.pythonhosted.org/packages/f0/b9/ea61804312f289910b712ab8de5b9811ed9c2bc2f091a41f372644c149f8/zarr-2.17.0.tar.gz
+  sha256: 2580d8cb6dd84621771a10d31c4d777dca8a27706a1a89b29f42d2d37e2df5ce
+  url: https://files.pythonhosted.org/packages/23/c4/187a21ce7cf7c8f00c060dd0e04c2a81139bb7b1ab178bba83f2e1134ce2/zarr-2.18.3.tar.gz
 requirements:
   run:
     - numpy
