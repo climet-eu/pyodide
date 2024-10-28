@@ -1,11 +1,11 @@
 package:
   name: field-compression-benchmark
-  version: 0.0.10
+  version: 0.0.11
   top-level:
     - fcbench
 source:
-  url: https://files.pythonhosted.org/packages/50/0e/29c5bcc77c8b8684d9c5a66b1db5ba5fccd152ddd52612a20540610b6878/field-compression-benchmark-0.0.10.tar.gz
-  sha256: 85adf8622988f1363d4ffb26d93d45c90cbff1dab44ae50260ccccd9fe839331
+  url: https://files.pythonhosted.org/packages/ce/71/aa5ee144425cedd2f00c14313b97d944ed5d9da71c34b71af450ea1957ac/field-compression-benchmark-0.0.11.tar.gz
+  sha256: f5d22e8565c75ac6c0934eb1e36fa4fbf724855ba087d0eda7a94c476b54f354
   patches:
     - patches/0001-codecs-build.patch
     # we need to build std so that std's libc is compiled to check against the
@@ -15,31 +15,31 @@ source:
 build:
   script: |
     # Set up a more modern nightly toolchain with support for emscripten and wasm
-    export RUSTUP_TOOLCHAIN="nightly-2024-07-21"  # last 1.81 nightly
+    export RUSTUP_TOOLCHAIN="nightly-2024-09-01"  # last 1.82 nightly
     rustup toolchain install ${RUSTUP_TOOLCHAIN}
     rustup target add wasm32-unknown-emscripten --toolchain ${RUSTUP_TOOLCHAIN}
     rustup target add wasm32-unknown-unknown --toolchain ${RUSTUP_TOOLCHAIN}
     rustup component add rust-src --toolchain ${RUSTUP_TOOLCHAIN}
 
     # Fetch the pre-built WASM codecs from one of the wheels
-    wget https://files.pythonhosted.org/packages/f5/f2/3c70fd2581ada66ffc3bdaea63c65689c38cb5539a1cb9e622bfa718331d/field_compression_benchmark-0.0.10-cp311-cp311-manylinux_2_28_x86_64.whl -O fcbench.zip
+    wget https://files.pythonhosted.org/packages/8b/1f/5369bf411f5d589514af85e60b19ef018c728341f832ea854aa39b0223eb/field_compression_benchmark-0.0.11-cp311-cp311-manylinux_2_28_x86_64.whl -O fcbench.zip
     unzip -j fcbench.zip fcbench/data/codecs/*.wasm -d data/codecs/
     rm fcbench.zip
 requirements:
   executable:
     - rustup
   run:
-    - cfgrib  # 0.9.10.4
-    - dask  # 2024.2.1
+    - cfgrib  # 0.9.14.1
+    - dask  # 2024.10.1
     - matplotlib  # 3.5.2
-    - netcdf4  # 1.6.5
-    - numcodecs  # 0.12.1
+    - netcdf4  # 1.7.2
+    - numcodecs  # 0.13.1
     - numpy  # 1.26.4
-    - pint  # 0.23
-    - xarray  # 2023.12.0
-    - xeofs  # 2.3.1
+    - pint  # 0.24.3
+    - xarray  # 2024.10.0
+    - xeofs  # 3.0.3
     - xhistogram  # 0.3.2
-    - zarr  # 2.17.0
+    - zarr  # 2.18.3
 about:
   home: https://github.com/juntyr/field-compression-benchmark
   summary:
