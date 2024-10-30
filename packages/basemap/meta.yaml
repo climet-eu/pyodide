@@ -12,12 +12,10 @@ requirements:
   run:
     - basemap-data
     - numpy
-    - cycler
-    - distutils
-    - pyparsing
     - matplotlib
     - pyproj
     - pyshp
+    - packaging
 
 build:
   vendor-sharedlib: true
