@@ -1,6 +1,6 @@
 package:
   name: tzdata
-  version: 2024.2
+  version: "2024.2"
   top-level:
     - tzdata
 source:
