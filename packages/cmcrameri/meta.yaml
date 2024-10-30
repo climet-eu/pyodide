@@ -1,6 +1,6 @@
 package:
   name: cmcrameri
-  version: 1.9
+  version: "1.9"
   top-level:
     - cmcrameri
 source:

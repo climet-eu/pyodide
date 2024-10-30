@@ -1,6 +1,6 @@
 package:
   name: packaging
-  version: 24.1
+  version: "24.1"
   top-level:
     - packaging
 source:

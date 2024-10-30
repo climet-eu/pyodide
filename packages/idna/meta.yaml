@@ -1,6 +1,6 @@
 package:
   name: idna
-  version: 3.10
+  version: "3.10"
   top-level:
     - idna
 source:
