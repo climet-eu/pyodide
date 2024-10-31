@@ -1,0 +1,22 @@
+From 7f49398df534c19624e6a3780f9c3e858838074d Mon Sep 17 00:00:00 2001
+From: Juniper Tyree <50025784+juntyr@users.noreply.github.com>
+Date: Thu, 31 Oct 2024 19:45:28 +0200
+Subject: [PATCH] Try unstructured grib on ValueError
+
+---
+ src/earthkit/plots/components/subplots.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/earthkit/plots/components/subplots.py b/src/earthkit/plots/components/subplots.py
+index a57ea7d..6ff4c7a 100644
+--- a/src/earthkit/plots/components/subplots.py
++++ b/src/earthkit/plots/components/subplots.py
+@@ -396,7 +396,7 @@ def _extract_plottables(
+                 mappable = getattr(style, method_name)(
+                     self.ax, x_values, y_values, z_values, **kwargs
+                 )
+-            except TypeError as err:
++            except (TypeError, ValueError) as err:
+                 if not grids.is_structured(x_values, y_values):
+                     x_values, y_values, z_values = grids.interpolate_unstructured(
+                         x_values,
