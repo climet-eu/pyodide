@@ -1,14 +1,8 @@
 diff --git a/fsspec/asyn.py b/fsspec/asyn.py
-index de41839..957afaa 100644
+index de41839..3895fd2 100644
 --- a/fsspec/asyn.py
 +++ b/fsspec/asyn.py
-@@ -12,13 +12,11 @@ from glob import has_magic
- from typing import TYPE_CHECKING, Iterable
- 
- from .callbacks import DEFAULT_CALLBACK
--from .exceptions import FSTimeoutError
- from .implementations.local import LocalFileSystem, make_path_posix, trailing_sep
- from .spec import AbstractBufferedFile, AbstractFileSystem
+@@ -18,7 +18,6 @@ from .spec import AbstractBufferedFile, AbstractFileSystem
  from .utils import glob_translate, is_exception, other_paths
  
  private = re.compile("_[^_]")
@@ -16,7 +10,7 @@ index de41839..957afaa 100644
  loop = [None]  # global event loop for any non-async instance
  _lock = None  # global lock placeholder
  get_running_loop = asyncio.get_running_loop
-@@ -43,7 +41,6 @@ def reset_lock():
+@@ -43,7 +42,6 @@ def reset_lock():
      """
      global _lock
  
@@ -24,7 +18,7 @@ index de41839..957afaa 100644
      loop[0] = None
      _lock = None
  
-@@ -69,40 +66,15 @@ def sync(loop, func, *args, timeout=None, **kwargs):
+@@ -69,40 +67,15 @@ def sync(loop, func, *args, timeout=None, **kwargs):
      >>> fsspec.asyn.sync(fsspec.asyn.get_loop(), func, *args,
                           timeout=timeout, **kwargs)
      """
@@ -72,7 +66,7 @@ index de41839..957afaa 100644
  
  
  def sync_wrapper(func, obj=None):
-@@ -144,10 +116,6 @@ def get_loop():
+@@ -144,10 +117,6 @@ def get_loop():
              if loop[0] is None:
                  with _selector_policy():
                      loop[0] = asyncio.new_event_loop()
@@ -83,7 +77,7 @@ index de41839..957afaa 100644
      return loop[0]
  
  
-@@ -232,43 +200,7 @@ async def _run_coros_in_chunks(
+@@ -232,43 +201,7 @@ async def _run_coros_in_chunks(
          If yes, you normally expect smaller batches.
      """
  
