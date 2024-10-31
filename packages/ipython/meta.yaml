@@ -1,11 +1,11 @@
 package:
   name: ipython
-  version: 8.22.1
+  version: 8.29.0
   top-level:
     - IPython
 source:
-  url: https://files.pythonhosted.org/packages/95/2c/9ef08ee0cc836f95bc2750e7c3f18790a90dff596d372cee4bcd2561ae1c/ipython-8.22.1.tar.gz
-  sha256: 39c6f9efc079fb19bfb0f17eee903978fe9a290b1b82d68196c641cecb76ea22
+  url: https://files.pythonhosted.org/packages/85/e0/a3f36dde97e12121106807d80485423ae4c5b27ce60d40d4ab0bab18a9db/ipython-8.29.0.tar.gz
+  sha256: 40b60e15b22591450eef73e40a027cf77bd652e757523eebc5bd7c7c498290eb
   patches:
     - patches/0001-jupyterlite-preload.patch
 requirements:
