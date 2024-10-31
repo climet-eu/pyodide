@@ -48,7 +48,10 @@ async def loadPackagesFromImports(
         if name in sys.modules:
             continue
 
-        spec = importlib.util.find_spec(name)
+        try:
+            spec = importlib.util.find_spec(name)
+        except ModuleNotFoundError:
+            spec = None
         if spec is not None and Path(spec.origin).parts[:2] == (
             "/", "drive",
         ):
