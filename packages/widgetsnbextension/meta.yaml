@@ -1,17 +1,17 @@
 package:
   name: widgetsnbextension
-  version: 4.0.13
+  version: 4.0.999
   top-level:
     - widgetsnbextension
 source:
-  url: https://files.pythonhosted.org/packages/56/fc/238c424fd7f4ebb25f8b1da9a934a3ad7c848286732ae04263661eb0fc03/widgetsnbextension-4.0.13.tar.gz
-  sha256: ffcb67bc9febd10234a362795f643927f4e0c05d9342c727b65d2384f8feacb6
+  url: https://github.com/jupyterlite/pyodide-kernel/archive/refs/tags/v0.4.2.tar.gz
+  sha256: 301fd865014638baa25e276279530e0d3db3ea0fcfa3ee0bf18031a92c47916f
 build:
   script: |
     cd ..
-    mv widgetsnbextension-4.0.13/packages/pyodide-kernel/py/widgetsnbextension4/widgetsnbextension .
-    rm -rf widgetsnbextension-4.0.13
-    mv widgetsnbextension widgetsnbextension-4.0.13
+    mv widgetsnbextension-4.0.999/packages/pyodide-kernel/py/widgetsnbextension4/widgetsnbextension .
+    rm -rf widgetsnbextension-4.0.999
+    mv widgetsnbextension widgetsnbextension-4.0.999
 about:
   home: http://jupyter.org
   PyPI: https://pypi.org/project/widgetsnbextension
