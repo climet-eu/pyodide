@@ -1,11 +1,11 @@
 package:
   name: numcodecs
-  version: 0.12.1
+  version: 0.13.1
   top-level:
     - numcodecs
 source:
-  sha256: 05d91a433733e7eef268d7e80ec226a0232da244289614a8f3826901aec1098e
-  url: https://files.pythonhosted.org/packages/b7/1b/1f1d880e29e719c7c6205065d1afbc91114c0d91935ac419faa43e5e08b0/numcodecs-0.12.1.tar.gz
+  sha256: a3cf37881df0898f3a9c0d4477df88133fe85185bffe57ba31bcc2fa207709bc
+  url: https://files.pythonhosted.org/packages/85/56/8895a76abe4ec94ebd01eeb6d74f587bc4cddd46569670e1402852a5da13/numcodecs-0.13.1.tar.gz
   patches:
     - patches/fixblosc.patch
     - patches/fixzlib.patch
