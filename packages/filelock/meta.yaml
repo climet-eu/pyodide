@@ -1,11 +1,11 @@
 package:
   name: filelock
-  version: 3.13.4
+  version: 3.16.1
   top-level:
     - filelock
 source:
-  url: https://files.pythonhosted.org/packages/38/ff/877f1dbe369a2b9920e2ada3c9ab81cf6fe8fa2dce45f40cad510ef2df62/filelock-3.13.4.tar.gz
-  sha256: d13f466618bfde72bd2c18255e269f72542c6e70e7bac83a0232d6b1cc5c8cf4
+  url: https://files.pythonhosted.org/packages/9d/db/3ef5bb276dae18d6ec2124224403d1d67bccdbefc17af4cc8f553e341ab1/filelock-3.16.1.tar.gz
+  sha256: c249fbfcd5db47e5e2d6d62198e565475ee65e4831e2561c8e313fa7eb961435
   patches:
     - patches/0001-fcntl-lock-check.patch
 about:
