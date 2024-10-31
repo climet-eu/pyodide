@@ -1,11 +1,11 @@
 package:
   name: earthkit-plots
-  version: 0.2.3
+  version: 0.2.4
   top-level:
     - earthkit.plots
 source:
-  url: https://files.pythonhosted.org/packages/5b/25/1f03eb77aeff561bd7335b186c67f29644a7675f148aa7480cbe30acd091/earthkit_plots-0.2.3-py3-none-any.whl
-  sha256: cd2baf94d5e44343d862aa58b7735d58c503b8bd2df62cfdd94fd01d3767e38b
+  url: https://files.pythonhosted.org/packages/03/cb/d7b42b9f02d84e6d2473bdae2278af29e4fc87b72a5ac6233695f85e256d/earthkit_plots-0.2.4-py3-none-any.whl
+  sha256: 63425126a98e2fb226f65c6fa2ddc4b83cd9da4e8ab408827b85588a667dfce2
 requirements:
   run:
     - adjustText
