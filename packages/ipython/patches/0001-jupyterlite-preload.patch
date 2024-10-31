@@ -12,7 +12,7 @@ index b7235481f..679ee70d8 100644
  
  #-----------------------------------------------------------------------------
 diff --git a/IPython/core/interactiveshell.py b/IPython/core/interactiveshell.py
-index 12c120625..27cb4b107 100644
+index 07fb80776..a8778bbbe 100644
 --- a/IPython/core/interactiveshell.py
 +++ b/IPython/core/interactiveshell.py
 @@ -680,6 +680,9 @@ def __init__(self, ipython_dir=None, profile_dir=None,
