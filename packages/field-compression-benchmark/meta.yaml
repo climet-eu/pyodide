@@ -22,18 +22,18 @@ build:
     rustup component add rust-src --toolchain ${RUSTUP_TOOLCHAIN}
 
     # Fetch the pre-built WASM codecs from one of the wheels
-    wget https://files.pythonhosted.org/packages/8b/1f/5369bf411f5d589514af85e60b19ef018c728341f832ea854aa39b0223eb/field_compression_benchmark-0.0.11-cp311-cp311-manylinux_2_28_x86_64.whl -O fcbench.zip
+    wget https://files.pythonhosted.org/packages/bf/81/2195efad7636f8c785bb4be69e25768eb4840568cc3de1a28136150921c0/field_compression_benchmark-0.0.11-cp312-cp312-manylinux_2_28_x86_64.whl -O fcbench.zip
     unzip -j fcbench.zip fcbench/data/codecs/*.wasm -d data/codecs/
     rm fcbench.zip
 requirements:
   executable:
     - rustup
   run:
-    - cfgrib  # 0.9.14.1
-    - dask  # 2024.10.1
+    - cfgrib  # 0.9.14.1  # FIXME
+    - dask  # 2024.10.0
     - matplotlib  # 3.5.2
     - netcdf4  # 1.7.2
-    - numcodecs  # 0.13.1
+    - numcodecs  # 0.13.1  # FIXME
     - numpy  # 1.26.4
     - pint  # 0.24.3
     - xarray  # 2024.10.0
