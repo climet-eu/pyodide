@@ -1,11 +1,11 @@
 package:
   name: antlr4-python3-runtime
-  version: 4.13.2
+  version: 4.7.2
   top-level:
     - antlr4
 source:
-  url: https://files.pythonhosted.org/packages/33/5f/2cdf6f7aca3b20d3f316e9f505292e1f256a32089bd702034c29ebde6242/antlr4_python3_runtime-4.13.2.tar.gz
-  sha256: 909b647e1d2fc2b70180ac586df3933e38919c85f98ccc656a96cd3f25ef3916
+  url: https://files.pythonhosted.org/packages/29/14/8ac135ec7cc9db3f768e2d032776718c6b23f74e63543f0974b4873500b2/antlr4-python3-runtime-4.7.2.tar.gz
+  sha256: 168cdcec8fb9152e84a87ca6fd261b3d54c8f6358f42ab3b813b14a7193bb50b
 about:
   home: https://github.com/parrt/antlr4-python3
   PyPI: https://pypi.org/project/antlr4-python3-runtime
