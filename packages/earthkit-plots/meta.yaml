@@ -4,8 +4,10 @@ package:
   top-level:
     - earthkit.plots
 source:
-  url: https://files.pythonhosted.org/packages/03/cb/d7b42b9f02d84e6d2473bdae2278af29e4fc87b72a5ac6233695f85e256d/earthkit_plots-0.2.4-py3-none-any.whl
-  sha256: 63425126a98e2fb226f65c6fa2ddc4b83cd9da4e8ab408827b85588a667dfce2
+  url: https://files.pythonhosted.org/packages/72/fe/8dbb3268eccd2f4ab13d8a2c41836e4f37b68a111f5d009d19f3323f3ff8/earthkit_plots-0.2.4.tar.gz
+  sha256: cfa924fc4b3ace65ffa81cc54ec98fd819d32540cb9845d833c25a1b97106241
+  patches:
+    - patches/0001-unstructured-grid.patch
 requirements:
   run:
     - adjustText
