@@ -1,0 +1,13 @@
+package:
+  name: propcache
+  version: 0.2.0
+  top-level:
+    - propcache
+source:
+  url: https://files.pythonhosted.org/packages/3d/b6/e6d98278f2d49b22b4d033c9f792eda783b9ab2094b041f013fc69bcde87/propcache-0.2.0-py3-none-any.whl
+  sha256: 2ccc28197af5313706511fab3a8b66dcd6da067a1331372c82ea1cb74285e036
+about:
+  home: https://github.com/aio-libs/propcache
+  PyPI: https://pypi.org/project/propcache
+  summary: Accelerated property cache
+  license: Apache-2.0
