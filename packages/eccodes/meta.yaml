@@ -5,8 +5,10 @@ package:
     - eccodes
     - gribapi
 source:
-  url: https://files.pythonhosted.org/packages/38/20/1228499507b9e08eae0604cc9ec5598a84a873aeaebeb4855710eb81c771/eccodes-2.38.3.tar.gz
-  sha256: 8dc76ab217199761dd6f93aee65eadf3a1e9f5760fee488f9f0643463ee8bc78
+  url: https://github.com/ecmwf/eccodes-python/archive/refs/tags/2.38.3.tar.gz
+  sha256: 59868edb2b7c8afbf0784780f12761e44f686a7e5e8e2fb2bb7ad9772b7d53b5
+  patches:
+    - patches/0001-package-shared-library.patch
 requirements:
   run:
     - attrs
@@ -17,8 +19,6 @@ requirements:
     - libeccodes
 build:
   vendor-sharedlib: true
-  script: |
-    cp ${WASM_LIBRARY_DIR}/lib/libeccodes.so eccodes/copying/
 about:
   home: https://github.com/ecmwf/eccodes-python
   PyPI: https://pypi.org/project/eccodes

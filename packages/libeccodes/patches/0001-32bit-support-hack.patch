@@ -1,5 +1,5 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 84f1ab2dc..2ec3a10f5 100644
+index 84f1ab2dc..b5f88c57c 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -74,10 +74,10 @@ ecbuild_debug("ECCODES_BIG_ENDIAN=${ECCODES_BIG_ENDIAN}")
@@ -17,6 +17,15 @@ index 84f1ab2dc..2ec3a10f5 100644
  
  ###############################################################################
  # some variables/options of this project
+@@ -444,8 +444,6 @@ if( HAVE_BUILD_TOOLS )
+ endif()
+ add_subdirectory( fortran )
+ 
+-add_subdirectory( tests )
+-add_subdirectory( examples )
+ add_subdirectory( data )
+ add_subdirectory( samples )
+ add_subdirectory( ifs_samples ) # must come after samples
 diff --git a/src/accessor/grib_accessor_class_data_g1second_order_general_extended_packing.cc b/src/accessor/grib_accessor_class_data_g1second_order_general_extended_packing.cc
 index f78bb1806..2cdbef0eb 100644
 --- a/src/accessor/grib_accessor_class_data_g1second_order_general_extended_packing.cc
