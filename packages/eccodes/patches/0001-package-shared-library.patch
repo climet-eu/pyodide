@@ -1,0 +1,21 @@
+diff --git a/setup.py b/setup.py
+index fa94ff2..7dc6224 100644
+--- a/setup.py
++++ b/setup.py
+@@ -37,13 +37,11 @@ def parse_version_from(path):
+ 
+ 
+ # for the binary wheel
+-libdir = os.path.realpath("install/lib")
+-incdir = os.path.realpath("install/include")
++libdir = os.path.realpath("/src/packages/.libs/lib")
++incdir = os.path.realpath("/src/packages/.libs/include")
+ libs = ["eccodes"]
+ 
+-if "--binary-wheel" in sys.argv:
+-    sys.argv.remove("--binary-wheel")
+-
++if True:
+     # https://setuptools.pypa.io/en/latest/userguide/ext_modules.html
+     ext_modules = [
+         setuptools.Extension(
