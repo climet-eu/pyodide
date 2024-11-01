@@ -1,86 +1,79 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index f60682739..45b5624c8 100644
+index 84f1ab2dc..2ec3a10f5 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -66,9 +66,9 @@ ecbuild_debug("ECCODES_LITTLE_ENDIAN=${ECCODES_LITTLE_ENDIAN}")
+@@ -74,10 +74,10 @@ ecbuild_debug("ECCODES_BIG_ENDIAN=${ECCODES_BIG_ENDIAN}")
+ ecbuild_debug("ECCODES_LITTLE_ENDIAN=${ECCODES_LITTLE_ENDIAN}")
  ecbuild_info("Operating system=${CMAKE_SYSTEM} (${EC_OS_BITS} bits)")
  
- # Only support 64 bit operating systems
+-# Only support 64 bit operating systems
 -if( NOT EC_OS_BITS EQUAL "64" )
 -    ecbuild_critical( "Operating system ${CMAKE_SYSTEM} (${EC_OS_BITS} bits) -- ecCodes only supports 64 bit platforms" )
 -endif()
++# # Only support 64 bit operating systems
 +# if( NOT EC_OS_BITS EQUAL "64" )
 +#     ecbuild_critical( "Operating system ${CMAKE_SYSTEM} (${EC_OS_BITS} bits) -- ecCodes only supports 64 bit platforms" )
 +# endif()
  
  ###############################################################################
  # some variables/options of this project
-@@ -427,7 +427,7 @@ if( HAVE_BUILD_TOOLS )
- endif()
- add_subdirectory( fortran )
- 
--add_subdirectory( tests )
-+# add_subdirectory( tests )
- add_subdirectory( examples )
- add_subdirectory( data )
- add_subdirectory( samples )
-diff --git a/src/grib_accessor_class_data_g1second_order_general_extended_packing.cc b/src/grib_accessor_class_data_g1second_order_general_extended_packing.cc
-index d337dba48..5c888355b 100644
---- a/src/grib_accessor_class_data_g1second_order_general_extended_packing.cc
-+++ b/src/grib_accessor_class_data_g1second_order_general_extended_packing.cc
-@@ -184,6 +184,17 @@ grib_accessor_class* grib_accessor_class_data_g1second_order_general_extended_pa
+diff --git a/src/accessor/grib_accessor_class_data_g1second_order_general_extended_packing.cc b/src/accessor/grib_accessor_class_data_g1second_order_general_extended_packing.cc
+index f78bb1806..2cdbef0eb 100644
+--- a/src/accessor/grib_accessor_class_data_g1second_order_general_extended_packing.cc
++++ b/src/accessor/grib_accessor_class_data_g1second_order_general_extended_packing.cc
+@@ -19,7 +19,7 @@ grib_accessor_class* grib_accessor_class_data_g1second_order_general_extended_pa
  #define MAX_NUMBER_OF_GROUPS 65534
- #define EFDEBUG 0
+ #define EFDEBUG              0
  
-+static const size_t nbits[32]={
-+    0x1, 0x2, 0x4, 0x8,
-+    0x10, 0x20, 0x40, 0x80,
-+    0x100, 0x200, 0x400, 0x800,
-+    0x1000, 0x2000, 0x4000, 0x8000,
-+    0x10000, 0x20000, 0x40000, 0x80000,
-+    0x100000, 0x200000, 0x400000, 0x800000,
-+    0x1000000, 0x2000000, 0x4000000, 0x8000000,
-+    0x10000000, 0x20000000, 0x40000000, 0x80000000,
-+};
-+/*
- static const unsigned long nbits[64] = {
+-static const unsigned long nbits[64] = {
++static const unsigned long nbits[32] = {
      0x1, 0x2, 0x4, 0x8,
      0x10, 0x20, 0x40, 0x80,
-@@ -202,6 +213,7 @@ static const unsigned long nbits[64] = {
-     0x100000000000000, 0x200000000000000, 0x400000000000000, 0x800000000000000,
-     0x1000000000000000, 0x2000000000000000, 0x4000000000000000, 0x8000000000000000
+     0x100, 0x200, 0x400, 0x800,
+@@ -27,15 +27,7 @@ static const unsigned long nbits[64] = {
+     0x10000, 0x20000, 0x40000, 0x80000,
+     0x100000, 0x200000, 0x400000, 0x800000,
+     0x1000000, 0x2000000, 0x4000000, 0x8000000,
+-    0x10000000, 0x20000000, 0x40000000, 0x80000000,
+-    0x100000000, 0x200000000, 0x400000000, 0x800000000,
+-    0x1000000000, 0x2000000000, 0x4000000000, 0x8000000000,
+-    0x10000000000, 0x20000000000, 0x40000000000, 0x80000000000,
+-    0x100000000000, 0x200000000000, 0x400000000000, 0x800000000000,
+-    0x1000000000000, 0x2000000000000, 0x4000000000000, 0x8000000000000,
+-    0x10000000000000, 0x20000000000000, 0x40000000000000, 0x80000000000000,
+-    0x100000000000000, 0x200000000000000, 0x400000000000000, 0x800000000000000,
+-    0x1000000000000000, 0x2000000000000000, 0x4000000000000000, 0x8000000000000000
++    0x10000000, 0x20000000, 0x40000000, 0x80000000
  };
-+*/
  
- static long number_of_bits(grib_handle* h, unsigned long x)
- {
-diff --git a/src/grib_accessor_class_second_order_bits_per_value.cc b/src/grib_accessor_class_second_order_bits_per_value.cc
-index 74c4b4c05..507fb4f3e 100644
---- a/src/grib_accessor_class_second_order_bits_per_value.cc
-+++ b/src/grib_accessor_class_second_order_bits_per_value.cc
-@@ -111,6 +111,17 @@ grib_accessor_class* grib_accessor_class_second_order_bits_per_value = &_grib_ac
+ long number_of_bits(grib_handle* h, unsigned long x)
+diff --git a/src/accessor/grib_accessor_class_second_order_bits_per_value.cc b/src/accessor/grib_accessor_class_second_order_bits_per_value.cc
+index 8d5f4b99f..849a6d22b 100644
+--- a/src/accessor/grib_accessor_class_second_order_bits_per_value.cc
++++ b/src/accessor/grib_accessor_class_second_order_bits_per_value.cc
+@@ -15,7 +15,7 @@ grib_accessor_class_second_order_bits_per_value_t _grib_accessor_class_second_or
+ grib_accessor_class* grib_accessor_class_second_order_bits_per_value = &_grib_accessor_class_second_order_bits_per_value;
  
- /* END_CLASS_IMP */
  
-+static const size_t nbits[32]={
-+    0x1, 0x2, 0x4, 0x8,
-+    0x10, 0x20, 0x40, 0x80,
-+    0x100, 0x200, 0x400, 0x800,
-+    0x1000, 0x2000, 0x4000, 0x8000,
-+    0x10000, 0x20000, 0x40000, 0x80000,
-+    0x100000, 0x200000, 0x400000, 0x800000,
-+    0x1000000, 0x2000000, 0x4000000, 0x8000000,
-+    0x10000000, 0x20000000, 0x40000000, 0x80000000,
-+};
-+/*
- static const size_t nbits[64] = {
+-static const size_t nbits[64] = {
++static const size_t nbits[32] = {
      0x1, 0x2, 0x4, 0x8,
      0x10, 0x20, 0x40, 0x80,
-@@ -129,6 +140,7 @@ static const size_t nbits[64] = {
-     0x100000000000000, 0x200000000000000, 0x400000000000000, 0x800000000000000,
-     0x1000000000000000, 0x2000000000000000, 0x4000000000000000, 0x8000000000000000
+     0x100, 0x200, 0x400, 0x800,
+@@ -23,15 +23,7 @@ static const size_t nbits[64] = {
+     0x10000, 0x20000, 0x40000, 0x80000,
+     0x100000, 0x200000, 0x400000, 0x800000,
+     0x1000000, 0x2000000, 0x4000000, 0x8000000,
+-    0x10000000, 0x20000000, 0x40000000, 0x80000000,
+-    0x100000000, 0x200000000, 0x400000000, 0x800000000,
+-    0x1000000000, 0x2000000000, 0x4000000000, 0x8000000000,
+-    0x10000000000, 0x20000000000, 0x40000000000, 0x80000000000,
+-    0x100000000000, 0x200000000000, 0x400000000000, 0x800000000000,
+-    0x1000000000000, 0x2000000000000, 0x4000000000000, 0x8000000000000,
+-    0x10000000000000, 0x20000000000000, 0x40000000000000, 0x80000000000000,
+-    0x100000000000000, 0x200000000000000, 0x400000000000000, 0x800000000000000,
+-    0x1000000000000000, 0x2000000000000000, 0x4000000000000000, 0x8000000000000000
++    0x10000000, 0x20000000, 0x40000000, 0x80000000
  };
-+*/
  
  static int number_of_bits(size_t x, long* result)
- {
