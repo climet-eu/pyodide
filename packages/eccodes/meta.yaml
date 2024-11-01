@@ -1,14 +1,12 @@
 package:
   name: eccodes
-  version: 1.7.0
+  version: 2.38.3
   top-level:
     - eccodes
     - gribapi
 source:
-  url: https://files.pythonhosted.org/packages/d7/b1/445b5976010f31d5a78e14f9a7cf92fadd9d24c82553d9598078746262d3/eccodes-1.7.0.tar.gz
-  sha256: 0f233009eac228b99be6e40e5f7cc175b477d322bd91c0dac6bf226f0222cb17
-  patches:
-    - patches/0001-shared-library-include.patch
+  url: https://files.pythonhosted.org/packages/38/20/1228499507b9e08eae0604cc9ec5598a84a873aeaebeb4855710eb81c771/eccodes-2.38.3.tar.gz
+  sha256: 8dc76ab217199761dd6f93aee65eadf3a1e9f5760fee488f9f0643463ee8bc78
 requirements:
   run:
     - attrs
@@ -20,7 +18,7 @@ requirements:
 build:
   vendor-sharedlib: true
   script: |
-    cp ${WASM_LIBRARY_DIR}/lib/libeccodes.so gribapi/
+    cp ${WASM_LIBRARY_DIR}/lib/libeccodes.so eccodes/copying/
 about:
   home: https://github.com/ecmwf/eccodes-python
   PyPI: https://pypi.org/project/eccodes
