@@ -1,0 +1,13 @@
+package:
+  name: fastprogress
+  version: 1.0.3
+  top-level:
+    - fastprogress
+source:
+  url: https://files.pythonhosted.org/packages/a7/8f/213223fdee199c55db81e2d0c669f30e8285c5be2526c4ed924de39247da/fastprogress-1.0.3-py3-none-any.whl
+  sha256: 6dfea88f7a4717b0a8d6ee2048beae5dbed369f932a368c5dd9caff34796f7c5
+about:
+  home: https://github.com/fastai/fastprogress
+  PyPI: https://pypi.org/project/fastprogress
+  summary: A nested progress with plotting options for fastai
+  license: Apache Software License 2.0
