@@ -1,0 +1,26 @@
+package:
+  name: intake-xarray
+  version: 0.7.0
+  top-level:
+    - intake_xarray
+source:
+  # FIXME: Upgrade to PyPi artifact once released
+  url: https://github.com/martindurant/intake-xarray/archive/cca0fac1a5a21415d156013831853169a5e170f3.tar.gz
+  sha256: bd4d409173d18de6f00cec00008903d032e1685725e3bfffed7a446c32868c91
+  patches:
+    - patches/0001-versioneer.patch
+requirements:
+  run:
+    - dask
+    - fsspec
+    - intake
+    - msgpack
+    - netcdf4
+    - requests
+    - xarray
+    - zarr
+about:
+  home: https://github.com/intake/intake-xarray
+  PyPI: https://pypi.org/project/intake-xarray
+  summary: xarray plugins for Intake
+  license: BSD
