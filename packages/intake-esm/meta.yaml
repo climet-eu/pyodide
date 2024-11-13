@@ -4,8 +4,11 @@ package:
   top-level:
     - intake_esm
 source:
-  url: https://files.pythonhosted.org/packages/8a/8d/b6d3553ea70d8c876f893958a8e58883adbd14f4e9a976957a2adb7cd152/intake_esm-2024.2.6-py3-none-any.whl
-  sha256: e87b40a3bcb6e68e5f5cb6b892deb468b727569e66dafd0194b244521cfaf1de
+  # FIXME: Upgrade to PyPi artifact once released
+  url: https://github.com/intake/intake-esm/archive/9db6ad637c5995174aa532069934b81101153a72.tar.gz
+  sha256: 283d9e40a7226929bd7a15395a21339cace80075b6ba70be43611beacf271798
+  patches:
+    - patches/0001-fallback-version.patch
 requirements:
   run:
     - dask
