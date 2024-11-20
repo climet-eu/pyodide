@@ -12,15 +12,30 @@ def cors_url(url: str) -> str:
     url_origin = js.URL.new(url).origin
 
     if cors_origins.get(url_origin, None) is None:
-        xhr = js.XMLHttpRequest.new()
-        xhr.responseType = "arraybuffer"
-        xhr.open("HEAD", url, False)
+        # try HEAD first but fall back to GET if it's unsupported
+        for method in ["HEAD", "GET"]:
+            xhr = js.XMLHttpRequest.new()
+            xhr.responseType = "arraybuffer"
+            xhr.open(method, url, False)
 
-        try:
-            xhr.send()
-        except Exception:
-            cors_origins[url_origin] = False
+            try:
+                xhr.send()
+            except Exception:
+                # CORS preflight might have raised an exception
+                cors_origins[url_origin] = False
+                break
+            else:
+                if xhr.status >= 200 and xhr.status <= 399:
+                    # request succeeded
+                    cors_origins[url_origin] = True
+                    break
+                if xhr.status == 403:  # forbidden
+                    # CORS preflight request might return FORBIDDEN
+                    cors_origins[url_origin] = False
+                    break
 
+        # print a warning when CORS proxying is first enabled for an origin
+        if cors_origins.get(url_origin, None) is False:
             print(
                 f"""
 [CORS]: The origin {url_origin} does not support Cross-Origin Resource Sharing.
@@ -34,11 +49,9 @@ def cors_url(url: str) -> str:
 """.strip(),
                 file=sys.stderr,
             )
-        else:
-            cors_origins[url_origin] = True
 
-    if not cors_origins[url_origin]:
-        # proxy cross-origin requests if necessary
+    # proxy requests if necessary
+    if cors_origins.get(url_origin, None) is False:
         url = f"https://cors.climet.eu/{url}"
 
     return url
