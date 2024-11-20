@@ -29,7 +29,7 @@ def cors_url(url: str) -> str:
                     # request succeeded
                     cors_origins[url_origin] = True
                     break
-                if xhr.status == 403:  # forbidden
+                if xhr.status == 403 or xhr.status == 0:  # forbidden
                     # CORS preflight request might return FORBIDDEN
                     cors_origins[url_origin] = False
                     break
