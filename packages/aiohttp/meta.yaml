@@ -16,6 +16,7 @@ requirements:
     - attrs
     - charset-normalizer
     - frozenlist
+    - jupyterlite-cors
     - multidict
     - yarl
 

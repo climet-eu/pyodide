@@ -10,15 +10,16 @@ index e82e790b..c9621487 100644
 +from . import patch
 diff --git a/aiohttp/patch.py b/aiohttp/patch.py
 new file mode 100644
-index 00000000..25647f84
+index 00000000..78e8cbfa
 --- /dev/null
 +++ b/aiohttp/patch.py
-@@ -0,0 +1,294 @@
+@@ -0,0 +1,281 @@
 +from collections.abc import Iterable
 +from contextlib import suppress
 +from io import BytesIO
 +from typing import Any
 +
++from jupyterlite_cors import cors_status, cors_url
 +from multidict import CIMultiDict, istr
 +from yarl import URL
 +
@@ -31,8 +32,6 @@ index 00000000..25647f84
 +    __slots__ = ("_bytesio", "_jsresp", "_exception")
 +
 +    def __init__(self, _jsresp):
-+        # self._bytesio = None
-+        # self._jsresp = _jsresp
 +        self._bytesio = BytesIO(_jsresp)
 +        self._jsresp = None
 +        self._exception = None
@@ -212,14 +211,7 @@ index 00000000..25647f84
 +            if real_timeout.total is not None:
 +                xhr.timeout = int(real_timeout.total * 1000)
 +
-+            url = str(req.url)
-+            same_origin = js.URL.new(url).origin == js.location.origin
-+
-+            # use a CORS proxy for cross-origin requests
-+            if not same_origin:
-+                url = f"https://cors.climet.eu/{url}"
-+
-+            xhr.open(req.method, url, False)
++            xhr.open(req.method, cors_url(str(req.url)), False)
 +            for name, value in headers.items():
 +                if name.lower() not in ("user-agent", "accept-encoding"):
 +                    xhr.setRequestHeader(name, value)
@@ -229,12 +221,7 @@ index 00000000..25647f84
 +            from email.parser import Parser
 +            headers = dict(Parser().parsestr(xhr.getAllResponseHeaders()))
 +            body = xhr.response.to_py().tobytes()
-+            status = xhr.status
-+
-+            # redirect codes 301, 302, 303, 307, and 308 are hidden in 2xx codes
-+            #  by the proxy since browsers follow redirects automatically
-+            if (not same_origin) and (status in [251, 252, 253, 257, 258]):
-+                status += 50
++            status = cors_status(str(req.url), xhr.status)
 +
 +            resp.version = version
 +            resp.status = status
