@@ -57,10 +57,8 @@ def cors_url(url: str) -> str:
     return url
 
 
-def cors_status(url: str, status: int) -> int:
-    url_origin = js.URL.new(url).origin
-
-    if not cors_origins.get(url_origin, True):
+def cors_status(cors_url: str, status: int) -> int:
+    if cors_url.startswith(CORS_URL):
         # redirect codes 301, 302, 303, 307, and 308 are hidden in 2xx codes by
         #  the proxy since browsers follow redirects automatically
         if status in [251, 252, 253, 257, 258]:
