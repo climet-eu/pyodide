@@ -10,10 +10,10 @@ index e82e790b..c9621487 100644
 +from . import patch
 diff --git a/aiohttp/patch.py b/aiohttp/patch.py
 new file mode 100644
-index 00000000..78e8cbfa
+index 00000000..2cfcc582
 --- /dev/null
 +++ b/aiohttp/patch.py
-@@ -0,0 +1,281 @@
+@@ -0,0 +1,283 @@
 +from collections.abc import Iterable
 +from contextlib import suppress
 +from io import BytesIO
@@ -211,7 +211,9 @@ index 00000000..78e8cbfa
 +            if real_timeout.total is not None:
 +                xhr.timeout = int(real_timeout.total * 1000)
 +
-+            xhr.open(req.method, cors_url(str(req.url)), False)
++            req_cors_url = cors_url(str(req.url))
++
++            xhr.open(req.method, req_cors_url, False)
 +            for name, value in headers.items():
 +                if name.lower() not in ("user-agent", "accept-encoding"):
 +                    xhr.setRequestHeader(name, value)
@@ -221,7 +223,7 @@ index 00000000..78e8cbfa
 +            from email.parser import Parser
 +            headers = dict(Parser().parsestr(xhr.getAllResponseHeaders()))
 +            body = xhr.response.to_py().tobytes()
-+            status = cors_status(str(req.url), xhr.status)
++            status = cors_status(req_cors_url, xhr.status)
 +
 +            resp.version = version
 +            resp.status = status

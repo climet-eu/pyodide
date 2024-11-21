@@ -10,7 +10,7 @@ index 409d511..5a43b4f 100644
 \ No newline at end of file
 +- [Panel](https://github.com/holoviz/panel) - included since 0.14.1 (can be disabled) when running Panel in the Browser using WASM. [Read more](https://panel.holoviz.org/user_guide/Running_in_Webassembly.html#handling-http-requests)
 diff --git a/pyodide_http/_core.py b/pyodide_http/_core.py
-index 1cb711d..7956b53 100644
+index 1cb711d..84c4b9f 100644
 --- a/pyodide_http/_core.py
 +++ b/pyodide_http/_core.py
 @@ -2,6 +2,7 @@ import json
@@ -30,18 +30,17 @@ index 1cb711d..7956b53 100644
      if request.params:
          from js import URLSearchParams
  
-@@ -128,3 +129,13 @@ def send(request: Request, stream: bool = False) -> Response:
+@@ -128,3 +129,12 @@ def send(request: Request, stream: bool = False) -> Response:
          body = xhr.response.encode("ISO-8859-15")
  
      return Response(status_code=xhr.status, headers=headers, body=body)
 +
 +
 +def send(request: Request, stream: bool = False) -> Response:
-+    url = request.url
-+    request.url = cors_url(url)
++    request.url = cors_url(request.url)
 +
 +    response = _send(request, stream)
-+    response.status_code = cors_status(url, response.status_code)
++    response.status_code = cors_status(request.url, response.status_code)
 +
 +    return response
 diff --git a/pyodide_http/_requests.py b/pyodide_http/_requests.py
