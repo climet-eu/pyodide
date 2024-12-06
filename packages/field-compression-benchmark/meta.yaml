@@ -21,6 +21,8 @@ build:
     rustup target add wasm32-unknown-unknown --toolchain ${RUSTUP_TOOLCHAIN}
     rustup component add rust-src --toolchain ${RUSTUP_TOOLCHAIN}
 
+    export RUSTFLAGS="--remap-path-prefix=$(rustc --print=sysroot)/lib/rustlib/src/rust=/rust/1.83"
+
     # Fetch the pre-built WASM codecs from one of the wheels
     wget https://files.pythonhosted.org/packages/59/be/dc5d1b22ebc1d32ebdd29ac6ccd00ca7a9b684412b70d7ea0e6013aec3ae/field_compression_benchmark-0.0.12-cp312-cp312-manylinux_2_28_x86_64.whl -O fcbench.zip
     unzip -j fcbench.zip fcbench/data/codecs/*.wasm -d data/codecs/
