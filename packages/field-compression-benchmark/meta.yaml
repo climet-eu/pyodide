@@ -1,11 +1,11 @@
 package:
   name: field-compression-benchmark
-  version: 0.0.11
+  version: 0.0.12
   top-level:
     - fcbench
 source:
-  url: https://files.pythonhosted.org/packages/ce/71/aa5ee144425cedd2f00c14313b97d944ed5d9da71c34b71af450ea1957ac/field-compression-benchmark-0.0.11.tar.gz
-  sha256: f5d22e8565c75ac6c0934eb1e36fa4fbf724855ba087d0eda7a94c476b54f354
+  url: https://files.pythonhosted.org/packages/5b/ba/7da86c10a40d864505264364f4945b2178cf9b95dd0a53ea5ca17963bb98/field-compression-benchmark-0.0.12.tar.gz
+  sha256: be114bfadc3d5f3a351abb70071be3320ab45dcd94057233422a287011346d6b
   patches:
     - patches/0001-codecs-build.patch
     # we need to build std so that std's libc is compiled to check against the
@@ -15,14 +15,14 @@ source:
 build:
   script: |
     # Set up a more modern nightly toolchain with support for emscripten and wasm
-    export RUSTUP_TOOLCHAIN="nightly-2024-09-01"  # last 1.82 nightly
+    export RUSTUP_TOOLCHAIN="nightly-2024-10-13"  # last 1.83 nightly
     rustup toolchain install ${RUSTUP_TOOLCHAIN}
     rustup target add wasm32-unknown-emscripten --toolchain ${RUSTUP_TOOLCHAIN}
     rustup target add wasm32-unknown-unknown --toolchain ${RUSTUP_TOOLCHAIN}
     rustup component add rust-src --toolchain ${RUSTUP_TOOLCHAIN}
 
     # Fetch the pre-built WASM codecs from one of the wheels
-    wget https://files.pythonhosted.org/packages/bf/81/2195efad7636f8c785bb4be69e25768eb4840568cc3de1a28136150921c0/field_compression_benchmark-0.0.11-cp312-cp312-manylinux_2_28_x86_64.whl -O fcbench.zip
+    wget https://files.pythonhosted.org/packages/59/be/dc5d1b22ebc1d32ebdd29ac6ccd00ca7a9b684412b70d7ea0e6013aec3ae/field_compression_benchmark-0.0.12-cp312-cp312-manylinux_2_28_x86_64.whl -O fcbench.zip
     unzip -j fcbench.zip fcbench/data/codecs/*.wasm -d data/codecs/
     rm fcbench.zip
 requirements:

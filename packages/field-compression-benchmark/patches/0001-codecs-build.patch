@@ -1,14 +1,15 @@
 diff --git a/codecs/build/Cargo.toml b/codecs/build/Cargo.toml
-index 1ade8438..df934e7d 100644
+index 729c0003..85ba931b 100644
 --- a/codecs/build/Cargo.toml
 +++ b/codecs/build/Cargo.toml
-@@ -16,23 +16,23 @@ wasi-preview1-component-adapter-provider = { workspace = true }
+@@ -16,24 +16,24 @@ wasi-preview1-component-adapter-provider = { workspace = true }
  wit-component = { workspace = true }
  
  # list of all codecs we build
 -asinh-codec = { workspace = true }
 -bit-round-codec = { workspace = true }
 -fixed-offset-scale-codec = { workspace = true }
+-fourier-network-codec = { workspace = true }
 -identity-codec = { workspace = true }
 -linear-quantize-codec = { workspace = true }
 -log-codec = { workspace = true }
@@ -23,6 +24,7 @@ index 1ade8438..df934e7d 100644
 +# asinh-codec = { workspace = true }
 +# bit-round-codec = { workspace = true }
 +# fixed-offset-scale-codec = { workspace = true }
++# fourier-network-codec = { workspace = true }
 +# identity-codec = { workspace = true }
 +# linear-quantize-codec = { workspace = true }
 +# log-codec = { workspace = true }
@@ -43,34 +45,36 @@ index 1ade8438..df934e7d 100644
  [lints]
  workspace = true
 diff --git a/codecs/build/build.rs b/codecs/build/build.rs
-index ade77832..73e768a7 100644
+index 85739826..5d2130ba 100644
 --- a/codecs/build/build.rs
 +++ b/codecs/build/build.rs
-@@ -5,14 +5,14 @@ use std::{
+@@ -5,15 +5,15 @@ use std::{
      process::Command,
  };
  
 -#[cfg(not(target_arch = "wasm32"))]
 -use sz3_codec as _;
 -use ::{
--    asinh_codec as _, bit_round_codec as _, fixed_offset_scale_codec as _, identity_codec as _,
--    linear_quantize_codec as _, log_codec as _, random_projection_codec as _,
--    reinterpret_codec as _, round_codec as _, swizzle_reshape_codec as _, uniform_noise_codec as _,
--    zfp_codec as _, zlib_codec as _, zstd_codec as _,
+-    asinh_codec as _, bit_round_codec as _, fixed_offset_scale_codec as _,
+-    fourier_network_codec as _, identity_codec as _, linear_quantize_codec as _, log_codec as _,
+-    random_projection_codec as _, reinterpret_codec as _, round_codec as _,
+-    swizzle_reshape_codec as _, uniform_noise_codec as _, zfp_codec as _, zlib_codec as _,
+-    zstd_codec as _,
 -};
 +// #[cfg(not(target_arch = "wasm32"))]
 +// use sz3_codec as _;
 +// use ::{
-+//     asinh_codec as _, bit_round_codec as _, fixed_offset_scale_codec as _, identity_codec as _,
-+//     linear_quantize_codec as _, log_codec as _, random_projection_codec as _,
-+//     reinterpret_codec as _, round_codec as _, swizzle_reshape_codec as _, uniform_noise_codec as _,
-+//     zfp_codec as _, zlib_codec as _, zstd_codec as _,
++//     asinh_codec as _, bit_round_codec as _, fixed_offset_scale_codec as _,
++//     fourier_network_codec as _, identity_codec as _, linear_quantize_codec as _, log_codec as _,
++//     random_projection_codec as _, reinterpret_codec as _, round_codec as _,
++//     swizzle_reshape_codec as _, uniform_noise_codec as _, zfp_codec as _, zlib_codec as _,
++//     zstd_codec as _,
 +// };
  
  fn main() -> io::Result<()> {
      // Check for `clippy` and return early in this case
 diff --git a/fcbench/Cargo.toml b/fcbench/Cargo.toml
-index bc3393d1..c033e84d 100644
+index dc0893a7..0ae537c1 100644
 --- a/fcbench/Cargo.toml
 +++ b/fcbench/Cargo.toml
 @@ -14,7 +14,7 @@ name = "fcbench"
@@ -96,7 +100,7 @@ index af8660b7..76dc2bd5 100644
  mod benchmark;
  pub mod compressor;
 diff --git a/wasi/build/Cargo.toml b/wasi/build/Cargo.toml
-index 47ccdb44..67644654 100644
+index b00ee400..b612ab1a 100644
 --- a/wasi/build/Cargo.toml
 +++ b/wasi/build/Cargo.toml
 @@ -15,11 +15,11 @@ scratch = { workspace = true }
