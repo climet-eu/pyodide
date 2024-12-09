@@ -1,13 +1,11 @@
 package:
   name: earthkit-plots
-  version: 0.2.4
+  version: 0.2.8
   top-level:
     - earthkit.plots
 source:
-  url: https://files.pythonhosted.org/packages/72/fe/8dbb3268eccd2f4ab13d8a2c41836e4f37b68a111f5d009d19f3323f3ff8/earthkit_plots-0.2.4.tar.gz
-  sha256: cfa924fc4b3ace65ffa81cc54ec98fd819d32540cb9845d833c25a1b97106241
-  patches:
-    - patches/0001-unstructured-grid.patch
+  url: https://files.pythonhosted.org/packages/da/9c/9c247fc992805204a1aa6128f12f89ba2e4895b2c8e8619406f70ece61c9/earthkit_plots-0.2.8-py3-none-any.whl
+  sha256: 16d3e191aae3448b2c6cbdfd0fa2722bb5675bd8cc7913024e2e70812cdb5b76
 requirements:
   run:
     - adjustText
@@ -18,6 +16,7 @@ requirements:
     - matplotlib
     - numpy
     - pint
+    - plotly
     - pyyaml
     - scipy
 about:
