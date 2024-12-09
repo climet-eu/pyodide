@@ -1,0 +1,29 @@
+package:
+  name: pyicon-diagnostics
+  version: 0.3.6
+  top-level:
+    - pyicon
+source:
+  url: https://files.pythonhosted.org/packages/76/f7/ec301ad4e7d1d9c5a0edb98a39e7d63cae19452be8fcca39786a09a35cab/pyicon_diagnostics-0.3.6-py3-none-any.whl
+  sha256: 7aa5af42897e1281361291a395c38b4251449fbc99bf0f1f6a33939f8cd199a0
+requirements:
+  run:
+    - numpy
+    - matplotlib
+    - netcdf4
+    - xarray
+    - zarr
+    - pandas
+    - cmocean
+    - scipy
+    - ipywidgets
+    - healpy
+    - cftime
+    - Cartopy
+    - dask
+
+about:
+  home: https://gitlab.dkrz.de/m300602/pyicon
+  PyPI: https://pypi.org/project/pyicon-diagnostics
+  summary: Diagnostic python software package for ICON
+  license: MIT
