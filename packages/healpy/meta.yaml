@@ -1,0 +1,32 @@
+package:
+  name: healpy
+  version: 1.18.0
+  top-level:
+    - healpy
+source:
+  url: https://files.pythonhosted.org/packages/7f/d2/239fb1bd8b75049bae1a64152d22108400fa4aba06859f3199935646c36f/healpy-1.18.0.tar.gz
+  sha256: 6a12fd8f804c8a6d193dc43d1dcdf636808830e1ccc0aa7c53d83e394bb15289
+requirements:
+  run:
+    - numpy
+    - astropy
+    - matplotlib
+    - scipy
+  executable:
+    - gfortran
+build:
+  cflags: |
+    -DgFortran
+    -I$(WASM_LIBRARY_DIR)/include
+  script: |
+    set -x
+    git clone https://github.com/hoodmane/f2c.git --depth 1
+    (cd f2c/src && cp makefile.u makefile && sed -i "s/gram.c:/gram.c1:/" makefile && make)
+    export F2C_PATH=$(pwd)/f2c/src/f2c
+  cross-script: |
+    export CXXFLAGS="$CXXFLAGS -sRELOCATABLE=1"
+about:
+  home: https://github.com/healpy/healpy
+  PyPI: https://pypi.org/project/healpy
+  summary: Healpix tools package for Python
+  license: GPL-2.0-only
