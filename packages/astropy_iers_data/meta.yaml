@@ -1,13 +1,13 @@
 package:
   name: astropy_iers_data
-  version: 0.2024.4.22.0.29.50
+  version: 0.2024.12.9.0.36.21
   top-level:
     - astropy_iers_data
 source:
-  url: https://files.pythonhosted.org/packages/35/81/c52d438edab8a3567fa265a10bf02598aac082cf89223072a45ed40f5c3c/astropy_iers_data-0.2024.4.22.0.29.50-py3-none-any.whl
-  sha256: 2986299dbeb0e4a5f1703d2aa6bba7a2fc860963e34bb2adf58f29bf79336ab5
+  url: https://files.pythonhosted.org/packages/7a/61/e60f37243022bcad482e0141f7c03ec6f3a69cd6076418aff71e9b32f6d3/astropy_iers_data-0.2024.12.9.0.36.21.tar.gz
+  sha256: b8c235b5420702a8e28bb43d94e634aa4bead38d9e72dea03fd0a22b1057817d
 about:
-  home: ""
+  home: https://github.com/astropy/astropy-iers-data
   PyPI: https://pypi.org/project/astropy_iers_data
   summary: IERS Earth Rotation and Leap Second tables for the astropy core package
   license: BSD-3-Clause
