@@ -1,14 +1,11 @@
 package:
   name: intake-xarray
-  version: 0.7.0
+  version: 2.0.0
   top-level:
     - intake_xarray
 source:
-  # FIXME: Upgrade to PyPi artifact once released
-  url: https://github.com/martindurant/intake-xarray/archive/cca0fac1a5a21415d156013831853169a5e170f3.tar.gz
-  sha256: bd4d409173d18de6f00cec00008903d032e1685725e3bfffed7a446c32868c91
-  patches:
-    - patches/0001-versioneer.patch
+  url: https://files.pythonhosted.org/packages/9d/d9/a33d0c2ad75bd0f67929411883fb251f9c72f12880744a4ee5b8331cb35b/intake_xarray-2.0.0-py3-none-any.whl
+  sha256: 9693cf8524a7cd63bb7c734e65aafd97e0f1abbbaf4f9bf9a57e86d8882ea339
 requirements:
   run:
     - dask
