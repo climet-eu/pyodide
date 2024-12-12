@@ -15,7 +15,6 @@ requirements:
     - jedi
     - matplotlib-inline
     - prompt_toolkit
-    - pure-eval
     - Pygments
     - stack-data
     - traitlets

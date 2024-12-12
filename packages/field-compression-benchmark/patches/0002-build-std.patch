@@ -1,6 +1,6 @@
 diff --git a/.cargo/config.toml b/.cargo/config.toml
 new file mode 100644
-index 00000000..1962fafc
+index 0000000..1962faf
 --- /dev/null
 +++ b/.cargo/config.toml
 @@ -0,0 +1,5 @@

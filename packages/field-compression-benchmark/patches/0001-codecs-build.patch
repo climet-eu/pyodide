@@ -1,5 +1,5 @@
 diff --git a/codecs/build/Cargo.toml b/codecs/build/Cargo.toml
-index 729c0003..85ba931b 100644
+index 729c000..85ba931 100644
 --- a/codecs/build/Cargo.toml
 +++ b/codecs/build/Cargo.toml
 @@ -16,24 +16,24 @@ wasi-preview1-component-adapter-provider = { workspace = true }
@@ -45,7 +45,7 @@ index 729c0003..85ba931b 100644
  [lints]
  workspace = true
 diff --git a/codecs/build/build.rs b/codecs/build/build.rs
-index 85739826..5d2130ba 100644
+index 8573982..5d2130b 100644
 --- a/codecs/build/build.rs
 +++ b/codecs/build/build.rs
 @@ -5,15 +5,15 @@ use std::{
@@ -74,7 +74,7 @@ index 85739826..5d2130ba 100644
  fn main() -> io::Result<()> {
      // Check for `clippy` and return early in this case
 diff --git a/fcbench/Cargo.toml b/fcbench/Cargo.toml
-index dc0893a7..0ae537c1 100644
+index 5d70ed2..4c053ca 100644
 --- a/fcbench/Cargo.toml
 +++ b/fcbench/Cargo.toml
 @@ -14,7 +14,7 @@ name = "fcbench"
@@ -87,7 +87,7 @@ index dc0893a7..0ae537c1 100644
  core-benchmark = { workspace = true }
  core-compressor = { workspace = true }
 diff --git a/fcbench/src/lib.rs b/fcbench/src/lib.rs
-index af8660b7..76dc2bd5 100644
+index af8660b..76dc2bd 100644
 --- a/fcbench/src/lib.rs
 +++ b/fcbench/src/lib.rs
 @@ -3,7 +3,7 @@
@@ -100,7 +100,7 @@ index af8660b7..76dc2bd5 100644
  mod benchmark;
  pub mod compressor;
 diff --git a/wasi/build/Cargo.toml b/wasi/build/Cargo.toml
-index b00ee400..b612ab1a 100644
+index b00ee40..b612ab1 100644
 --- a/wasi/build/Cargo.toml
 +++ b/wasi/build/Cargo.toml
 @@ -15,11 +15,11 @@ scratch = { workspace = true }
@@ -121,7 +121,7 @@ index b00ee400..b612ab1a 100644
  [lints]
  workspace = true
 diff --git a/wasi/build/build.rs b/wasi/build/build.rs
-index 43c4a80e..072bff53 100644
+index 43c4a80..072bff5 100644
 --- a/wasi/build/build.rs
 +++ b/wasi/build/build.rs
 @@ -5,10 +5,10 @@ use std::{
