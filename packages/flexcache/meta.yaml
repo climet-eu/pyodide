@@ -10,7 +10,7 @@ requirements:
   run:
     - typing-extensions
 about:
-  home: ""
+  home: https://github.com/hgrecco/flexcache
   PyPI: https://pypi.org/project/flexcache
   summary: Saves and loads to the cache a transformed versions of a source object.
   license: BSD

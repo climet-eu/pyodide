@@ -5,8 +5,8 @@ package:
     - eccodes
     - gribapi
 source:
-  url: https://files.pythonhosted.org/packages/bd/fa/4a1216ef706152bb99694b84cd09cc5883314c410409dbc2ec92273d0883/eccodes-2.39.1.tar.gz
-  sha256: c9e4695e1cbfa3a85c548cd6a3073e2277d71413529a89b0ea62b0f299416e20
+  url: https://github.com/ecmwf/eccodes-python/archive/refs/tags/2.39.1.tar.gz
+  sha256: 19721447fd7ccd34051cbcbbe890b87ac608c676d855edb44c98df154e243fc5
   patches:
     - patches/0001-package-shared-library.patch
 requirements:
