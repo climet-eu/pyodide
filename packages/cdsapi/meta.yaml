@@ -1,11 +1,11 @@
 package:
   name: cdsapi
-  version: 0.7.4
+  version: 0.7.5
   top-level:
     - cdsapi
 source:
-  url: https://files.pythonhosted.org/packages/82/e5/e342d83c7cb3768c4563b02c3af157cf628e8a632fb9ae9605b145feb0ba/cdsapi-0.7.4-py2.py3-none-any.whl
-  sha256: 5f70b40e8e777ae956deb6a13d1a3c8d8f099bada91919228adb27c34464144a
+  url: https://files.pythonhosted.org/packages/4e/c4/49f01f1382d449581d5d3db0fa49ccc23a1b4f91d615108b631c7cff40cd/cdsapi-0.7.5-py2.py3-none-any.whl
+  sha256: 8586b837aea89ceeae379b388fbb0ace0a19b94b221f731c65632417007f69fb
 requirements:
   run:
     - cads-api-client

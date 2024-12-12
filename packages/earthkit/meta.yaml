@@ -1,11 +1,11 @@
 package:
   name: earthkit
-  version: 0.8.0
+  version: 0.9.1
   top-level:
     - earthkit
 source:
-  url: https://files.pythonhosted.org/packages/81/a8/cc01d4712243180247788746cbe4890e824c492bf063d5dfbb929f506613/earthkit-0.8.0-py3-none-any.whl
-  sha256: 2b16fdd2bb6ed1473b728cde6d6f845e5afc50ea20c9346b83a4a9d5d5df4226
+  url: https://files.pythonhosted.org/packages/6c/c3/19abe0c506dfc962404770bf295bbe427f912044e012acbc2ab91b96db1f/earthkit-0.9.1-py3-none-any.whl
+  sha256: 6901bafc182fb1ee8b6d2c28ab69e1158510cf6dcbbc78bf24b7f5fd3c81d6fc
 requirements:
   run:
     - earthkit-data

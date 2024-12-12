@@ -1,11 +1,11 @@
 package:
   name: earthkit-geo
-  version: 0.2.0
+  version: 0.3.0
   top-level:
     - earthkit.geo
 source:
-  url: https://files.pythonhosted.org/packages/4f/26/f35e93f6805acc28a23210c9b6491660a5475a8a4fda23a9293d83027d63/earthkit_geo-0.2.0-py3-none-any.whl
-  sha256: f10aab0929fadb50f1bdecdd61d0e958e20ce1ba768f8bd8c870b9e9d657c92e
+  url: https://files.pythonhosted.org/packages/78/84/cbe3a0786a4fc102b8a844ebc2f67237c25a568b451b74c1ddcb912983d6/earthkit_geo-0.3.0-py3-none-any.whl
+  sha256: 4ea310b66f734a6dea29d8f44031fefc7bfa75de446409e0c7c8ca318c500659
 requirements:
   run:
     - pyproj

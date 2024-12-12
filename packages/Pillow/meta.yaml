@@ -1,11 +1,11 @@
 package:
   name: Pillow
-  version: 10.2.0
+  version: 11.0.0
   top-level:
     - PIL
 source:
-  sha256: e87f0b2c78157e12d7686b27d63c070fd65d994e8ddae6f328e0dcf4a0cd007e
-  url: https://files.pythonhosted.org/packages/f8/3e/32cbd0129a28686621434cbf17bb64bf1458bfb838f1f668262fefce145c/pillow-10.2.0.tar.gz
+  sha256: 72bacbaf24ac003fea9bff9837d1eedb6088758d41e100c1552930151f677739
+  url: https://files.pythonhosted.org/packages/a5/26/0d95c04c868f6bdb0c447e3ee2de5564411845e36a858cfd63766bc7b563/pillow-11.0.0.tar.gz
   patches:
     - patches/0001-Enable-image-formats.patch
 build:

@@ -1,11 +1,11 @@
 package:
   name: yarl
-  version: 1.16.0
+  version: 1.18.3
   top-level:
     - yarl
 source:
-  url: https://files.pythonhosted.org/packages/23/52/e9766cc6c2eab7dd1e9749c52c9879317500b46fb97d4105223f86679f93/yarl-1.16.0.tar.gz
-  sha256: b6f687ced5510a9a2474bbae96a4352e5ace5fa34dc44a217b0537fec1db00b4
+  url: https://files.pythonhosted.org/packages/b7/9d/4b94a8e6d2b51b599516a5cb88e5bc99b4d8d4583e468057eaa29d5f0918/yarl-1.18.3.tar.gz
+  sha256: ac1801c45cbf77b6c99242eeff4fffb5e4e73a800b5c4ad4fc0be5def634d2e1
 requirements:
   run:
     - idna

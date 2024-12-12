@@ -1,11 +1,11 @@
 package:
   name: earthkit-meteo
-  version: 0.1.1
+  version: 0.3.0
   top-level:
     - earthkit.meteo
 source:
-  url: https://files.pythonhosted.org/packages/60/fb/841e0cd2c0adda8319183e3ffb8c2a69ded2d089b92bf81368e7082bc6a4/earthkit_meteo-0.1.1-py3-none-any.whl
-  sha256: 6ee6f391d6a3ff20a45953eb2bbc873041abf7eb0220b23581e9ee21d9cbb730
+  url: https://files.pythonhosted.org/packages/72/6c/b809322ae3405803e5957fa4ea495955689a300a107f0727c70f91f29865/earthkit_meteo-0.3.0-py3-none-any.whl
+  sha256: 2aec3ff6a505dcb129fbbafc7b20d7868420c82eb7e7229c7d7679a87b2efcd4
 requirements:
   run:
     - numpy

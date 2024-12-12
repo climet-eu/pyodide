@@ -1,11 +1,11 @@
 package:
   name: dask
-  version: 2024.10.0
+  version: 2024.12.0
   top-level:
     - dask
 source:
-  url: https://files.pythonhosted.org/packages/85/ec/0fa1997dd7070a336063663a1305e6967b7c906bd7907f2435c5ad049b0e/dask-2024.10.0-py3-none-any.whl
-  sha256: 1ddc27c7967e134b4f8296a488521485a5ac4927cc63e2abfa0b24227b93217f
+  url: https://files.pythonhosted.org/packages/3a/46/9ea782eb1accabad0931d80818fcf8b286bdd1b457ae9c718f039430c489/dask-2024.12.0-py3-none-any.whl
+  sha256: e038e87b9f06e7927b81ecde6cf2b49aa699bb902fec11abba5697cb48baeb8d
 test:
   imports:
     - dask

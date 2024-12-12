@@ -1,8 +1,8 @@
 diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
-index 7abf455..a0a43aa 100644
+index f9c3031..6012fc4 100644
 --- a/src/CMakeLists.txt
 +++ b/src/CMakeLists.txt
-@@ -11,41 +11,25 @@ target_include_directories(aec
+@@ -11,20 +11,12 @@ target_include_directories(aec
    "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/../include>"
    "$<INSTALL_INTERFACE:include>")
  
@@ -18,15 +18,16 @@ index 7abf455..a0a43aa 100644
 -target_link_libraries(aec_shared PUBLIC aec)
 -set_target_properties(aec_shared
 -  PROPERTIES
--  VERSION 0.1.2
+-  VERSION 0.1.3
 -  SOVERSION 0
 -  OUTPUT_NAME aec
 +  OUTPUT_NAME $<IF:$<BOOL:${MSVC}>,aec-static,aec>
    PUBLIC_HEADER ${CMAKE_CURRENT_BINARY_DIR}/../include/libaec.h)
  
  # Wrapper for compatibility with szip
- add_library(sz OBJECT sz_compat.c)
- target_link_libraries(sz PUBLIC aec)
+@@ -33,21 +25,13 @@ target_link_libraries(sz PUBLIC aec)
+ 
+ set(libaec_COMPILE_DEFINITIONS "LIBAEC_BUILD;LIBAEC_SHARED")
  
 -# Create both static and shared szip library.
 +# Create the static szip library.
@@ -49,9 +50,9 @@ index 7abf455..a0a43aa 100644
  
  # Simple executable for testing and benchmarking.
  add_executable(graec graec.c)
-@@ -71,4 +55,4 @@ if(UNIX)
-     DEPENDS graec utime)
- endif()
+@@ -75,4 +59,4 @@ set_target_properties(aec sz
+   PROPERTIES
+   COMPILE_DEFINITIONS "${libaec_COMPILE_DEFINITIONS}")
  
 -install(TARGETS aec_static aec_shared sz_static sz_shared)
 +install(TARGETS aec_static sz_static)

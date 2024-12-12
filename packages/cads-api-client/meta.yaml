@@ -1,11 +1,11 @@
 package:
   name: cads-api-client
-  version: 1.4.7
+  version: 1.5.4
   top-level:
     - cads_api_client
 source:
-  url: https://files.pythonhosted.org/packages/2c/a3/a07a73dc272a7950db2bb769684f103cb440ef36efeb43f305d49abc1af2/cads_api_client-1.4.7-py3-none-any.whl
-  sha256: a0b59908eba7d2f029a384ff7ec94014552333ea47169d067f650686d2c75c19
+  url: https://files.pythonhosted.org/packages/59/2a/30210f8b55d14247c698d53a90c6707b540aa76022342777ef0a18660a19/cads_api_client-1.5.4-py3-none-any.whl
+  sha256: fe557f5ef726b34c5cb4aa2c73379ac207c521b25bb08069806cc0519278a488
 requirements:
   run:
     - attrs

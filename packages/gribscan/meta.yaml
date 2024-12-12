@@ -1,11 +1,11 @@
 package:
   name: gribscan
-  version: 0.0.12
+  version: 0.0.13
   top-level:
     - gribscan
 source:
-  url: https://files.pythonhosted.org/packages/86/59/7d44a18da76a12f316c956a5714509b1c39875ae7a35b3017e45a77ec0a6/gribscan-0.0.12.tar.gz
-  sha256: ceeeaf11bbcf7f7c99e14cbed77b65f67ecd9b0301e8f213b3a151575d3162d5
+  url: https://files.pythonhosted.org/packages/75/81/15135410fdd62d79476056842d4279e67b4fbec88deb3a37d21c6d7e27c0/gribscan-0.0.13.tar.gz
+  sha256: eea3502a26dd8789606788a0e1be94a8601bde32773c0fa565f155c9b4e2fd23
   patches:
     - patches/0001-no-aeccodec.patch
 requirements:

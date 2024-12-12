@@ -1,11 +1,11 @@
 package:
   name: xeofs
-  version: 3.0.3
+  version: 3.0.4
   top-level:
     - xeofs
 source:
-  url: https://files.pythonhosted.org/packages/15/a8/31652f6a26f7b8e32c9fcf483038f29ae982679de7964cf6f9aac5e568c8/xeofs-3.0.3-py3-none-any.whl
-  sha256: ee23faff5ce6cb15e763f16289bd550f6d3695a506b7ee84f1b052b49a4f64b8
+  url: https://files.pythonhosted.org/packages/00/df/6d625138c0059086cd599de01e28d14a5c0d0963525baf00690ce154fcf9/xeofs-3.0.4-py3-none-any.whl
+  sha256: 3343faf9ab01aa092b8642964355165ceb290a9473627f04c75b4a8361cbdcb2
 requirements:
   run:
     - dask
@@ -15,7 +15,6 @@ requirements:
     - tqdm
     - typing-extensions
     - xarray
-    - xarray-datatree
 about:
   home: https://github.com/nicrie/xeofs
   PyPI: https://pypi.org/project/xeofs

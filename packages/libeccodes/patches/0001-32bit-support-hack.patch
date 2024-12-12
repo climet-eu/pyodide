@@ -1,5 +1,5 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 84f1ab2dc..b5f88c57c 100644
+index 05bd336..7c0fd60 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -74,10 +74,10 @@ ecbuild_debug("ECCODES_BIG_ENDIAN=${ECCODES_BIG_ENDIAN}")
@@ -17,7 +17,7 @@ index 84f1ab2dc..b5f88c57c 100644
  
  ###############################################################################
  # some variables/options of this project
-@@ -444,8 +444,6 @@ if( HAVE_BUILD_TOOLS )
+@@ -447,8 +447,6 @@ if( HAVE_BUILD_TOOLS )
  endif()
  add_subdirectory( fortran )
  
@@ -27,10 +27,10 @@ index 84f1ab2dc..b5f88c57c 100644
  add_subdirectory( samples )
  add_subdirectory( ifs_samples ) # must come after samples
 diff --git a/src/accessor/grib_accessor_class_data_g1second_order_general_extended_packing.cc b/src/accessor/grib_accessor_class_data_g1second_order_general_extended_packing.cc
-index f78bb1806..2cdbef0eb 100644
+index 2ee15e4..b3b9b4f 100644
 --- a/src/accessor/grib_accessor_class_data_g1second_order_general_extended_packing.cc
 +++ b/src/accessor/grib_accessor_class_data_g1second_order_general_extended_packing.cc
-@@ -19,7 +19,7 @@ grib_accessor_class* grib_accessor_class_data_g1second_order_general_extended_pa
+@@ -17,7 +17,7 @@ grib_accessor* grib_accessor_data_g1second_order_general_extended_packing = &_gr
  #define MAX_NUMBER_OF_GROUPS 65534
  #define EFDEBUG              0
  
@@ -39,7 +39,7 @@ index f78bb1806..2cdbef0eb 100644
      0x1, 0x2, 0x4, 0x8,
      0x10, 0x20, 0x40, 0x80,
      0x100, 0x200, 0x400, 0x800,
-@@ -27,15 +27,7 @@ static const unsigned long nbits[64] = {
+@@ -25,15 +25,7 @@ static const unsigned long nbits[64] = {
      0x10000, 0x20000, 0x40000, 0x80000,
      0x100000, 0x200000, 0x400000, 0x800000,
      0x1000000, 0x2000000, 0x4000000, 0x8000000,
@@ -57,19 +57,19 @@ index f78bb1806..2cdbef0eb 100644
  
  long number_of_bits(grib_handle* h, unsigned long x)
 diff --git a/src/accessor/grib_accessor_class_second_order_bits_per_value.cc b/src/accessor/grib_accessor_class_second_order_bits_per_value.cc
-index 8d5f4b99f..849a6d22b 100644
+index 1cdad15..bc51605 100644
 --- a/src/accessor/grib_accessor_class_second_order_bits_per_value.cc
 +++ b/src/accessor/grib_accessor_class_second_order_bits_per_value.cc
-@@ -15,7 +15,7 @@ grib_accessor_class_second_order_bits_per_value_t _grib_accessor_class_second_or
- grib_accessor_class* grib_accessor_class_second_order_bits_per_value = &_grib_accessor_class_second_order_bits_per_value;
- 
+@@ -14,7 +14,7 @@
+ grib_accessor_second_order_bits_per_value_t _grib_accessor_second_order_bits_per_value{};
+ grib_accessor* grib_accessor_second_order_bits_per_value = &_grib_accessor_second_order_bits_per_value;
  
 -static const size_t nbits[64] = {
 +static const size_t nbits[32] = {
      0x1, 0x2, 0x4, 0x8,
      0x10, 0x20, 0x40, 0x80,
      0x100, 0x200, 0x400, 0x800,
-@@ -23,15 +23,7 @@ static const size_t nbits[64] = {
+@@ -22,15 +22,7 @@ static const size_t nbits[64] = {
      0x10000, 0x20000, 0x40000, 0x80000,
      0x100000, 0x200000, 0x400000, 0x800000,
      0x1000000, 0x2000000, 0x4000000, 0x8000000,

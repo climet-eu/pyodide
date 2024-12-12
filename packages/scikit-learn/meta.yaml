@@ -1,13 +1,13 @@
 package:
   name: scikit-learn
-  version: 1.5.2
+  version: 1.6.0
   tag:
     - min-scipy-stack
   top-level:
     - sklearn
 source:
-  url: https://files.pythonhosted.org/packages/37/59/44985a2bdc95c74e34fef3d10cb5d93ce13b0e2a7baefffe1b53853b502d/scikit_learn-1.5.2.tar.gz
-  sha256: b4237ed7b3fdd0a4882792e68ef2545d5baa50aca3bb45aa7df468138ad8f94d
+  url: https://files.pythonhosted.org/packages/fa/19/5aa2002044afc297ecaf1e3517ed07bba4aece3b5613b5160c1212995fc8/scikit_learn-1.6.0.tar.gz
+  sha256: 9d58481f9f7499dff4196927aedd4285a0baec8caa3790efbe205f13de37dd6e
 
 build:
   cflags: -Wno-implicit-function-declaration

@@ -4,8 +4,8 @@ package:
   top-level:
     - widgetsnbextension
 source:
-  url: https://github.com/jupyterlite/pyodide-kernel/archive/refs/tags/v0.4.2.tar.gz
-  sha256: 301fd865014638baa25e276279530e0d3db3ea0fcfa3ee0bf18031a92c47916f
+  url: https://github.com/jupyterlite/pyodide-kernel/archive/refs/tags/v0.4.5.tar.gz
+  sha256: d1cd1bebc0796a55b54e30f6c275fa940de0b656afbc5c59cccf41cbcb346e9c
 build:
   script: |
     cd ..

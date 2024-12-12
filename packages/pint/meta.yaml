@@ -1,16 +1,16 @@
 package:
   name: pint
-  version: 0.24.3
+  version: 0.24.4
   top-level:
     - pint
 source:
-  url: https://files.pythonhosted.org/packages/3f/2b/abe15c62ef1aece41d0799f31ba97d298aad9c76bc31dd655c387c29f17a/Pint-0.24.3-py3-none-any.whl
-  sha256: d98667e46fd03a1b94694fbfa104ec30858684d8ab26952e2a348b48059089bb
+  url: https://files.pythonhosted.org/packages/b7/16/bd2f5904557265882108dc2e04f18abc05ab0c2b7082ae9430091daf1d5c/Pint-0.24.4-py3-none-any.whl
+  sha256: aa54926c8772159fcf65f82cc0d34de6768c151b32ad1deb0331291c38fe7659
 requirements:
   run:
-    - appdirs
     - flexcache
     - flexparser
+    - platformdirs
     - typing-extensions
 about:
   home: https://github.com/hgrecco/pint

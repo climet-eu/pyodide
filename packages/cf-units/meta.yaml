@@ -1,11 +1,11 @@
 package:
   name: cf-units
-  version: 3.2.0
+  version: 3.3.0
   top-level:
     - cf_units
 source:
-  url: https://files.pythonhosted.org/packages/5a/f4/1d9aa224fe8f70034e9ea524d1dac511b0976bae6a82d664bd4e84ed026c/cf-units-3.2.0.tar.gz
-  sha256: 88a9f140e4157fe4c2d322b5e079046c4c0a7d76cb4950c700a8363bc235074f
+  url: https://files.pythonhosted.org/packages/b6/d9/3e4014a228c23a4e10d106eead518d1708f9985f80e5bd3aa66d8268bf22/cf_units-3.3.0.tar.gz
+  sha256: 2327da492f30cf018a3f1b5950192ce9bb3332e50b1c7ac53f7543de7fa61fdb
 requirements:
   host:
     - libudunits2

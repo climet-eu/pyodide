@@ -1,5 +1,5 @@
 diff --git a/setup.py b/setup.py
-index fa94ff2..7dc6224 100644
+index 5a435e2..204f06f 100644
 --- a/setup.py
 +++ b/setup.py
 @@ -37,13 +37,11 @@ def parse_version_from(path):
