@@ -6,6 +6,13 @@ package:
 source:
   url: https://files.pythonhosted.org/packages/01/80/cce854d0921ff2f0a9fa831ba3ad3c65cee3a46711addf39a2af52df2cfd/rpds_py-0.22.3.tar.gz
   sha256: e32fee8ab45d3c2db6da19a5323bc3362237c8b653c70194414b892fd06a080d
+build:
+  script: |
+    # Set up a more modern nightly toolchain with support for emscripten and wasm
+    export RUSTUP_TOOLCHAIN="nightly-2024-10-13"  # last 1.83 nightly
+    rustup toolchain install ${RUSTUP_TOOLCHAIN}
+    rustup target add wasm32-unknown-emscripten --toolchain ${RUSTUP_TOOLCHAIN}
+    rustup component add rust-src --toolchain ${RUSTUP_TOOLCHAIN}
 requirements:
   executable:
     - rustup
