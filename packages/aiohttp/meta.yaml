@@ -8,9 +8,11 @@ source:
   sha256: b1fc6b45010a8d0ff9e88f9f2418c6fd408c99c211257334aff41597ebece42e
   patches:
     - patches/0001-pyodide-connection.patch
+    - patches/0002-export-http-exceptions.patch
 
 requirements:
   run:
+    - aiohappyeyeballs
     - aiosignal
     - async-timeout
     - attrs
