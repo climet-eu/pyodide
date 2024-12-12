@@ -13,6 +13,7 @@ requirements:
     - earthkit-meteo
     - earthkit-plots
     - earthkit-regrid
+    - earthkit-time
     - earthkit-transforms
 about:
   home: https://github.com/ecmwf/earthkit
