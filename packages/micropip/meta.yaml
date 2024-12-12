@@ -1,14 +1,16 @@
 package:
   name: micropip
-  version: 0.7.2
+  # FIXME: JupyterLite pyodide-kernel's piplite's query_package patch needs to
+  #        update its signature for v0.7.0
+  version: 0.6.1
   tag:
     - always
   top-level:
     - micropip
 
 source:
-  sha256: d2b63ea316a2a9dcbfeadd4f855d8cec7d54f65b3849e638a7cc627e6d35e4d5
-  url: https://files.pythonhosted.org/packages/5a/18/75709500db9e76e1191c410e6b19e04b7ba0fa9c51a188a7625b79f8caf7/micropip-0.7.2-py3-none-any.whl
+  sha256: 07df4b2e900385e43f432c5bc791343f9ef34927aa510a9bfce8ee111db4c2b4
+  url: https://files.pythonhosted.org/packages/f2/e1/a8a071bc65a3c2a61b5056096086dbe272205279a9bb110567dec242959e/micropip-0.6.1-py3-none-any.whl
 
 requirements:
   run:
