@@ -8,9 +8,8 @@ source:
   sha256: 8586b837aea89ceeae379b388fbb0ace0a19b94b221f731c65632417007f69fb
 requirements:
   run:
-    - cads-api-client
+    - datapi
     - requests
-    - setuptools
     - tqdm
 about:
   home: https://github.com/ecmwf/cdsapi

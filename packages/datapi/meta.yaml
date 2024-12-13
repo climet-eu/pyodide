@@ -1,0 +1,19 @@
+package:
+  name: datapi
+  version: 0.1.1
+  top-level:
+    - datapi
+source:
+  url: https://files.pythonhosted.org/packages/85/a2/8f4f500bfa3b407afdd3bd5987dd0d5f0b1dcfb9cfd88a95a753bd76c71a/datapi-0.1.1-py3-none-any.whl
+  sha256: 3c8e9c7c5a29b9b392633d9527266080868d3f411b78e05acac4cd9304599bd9
+requirements:
+  run:
+    - attrs
+    - multiurl
+    - requests
+    - typing-extensions
+about:
+  home: https://github.com/ecmwf-projects/datapi
+  PyPI: https://pypi.org/project/datapi
+  summary: ESEE Data Stores API Python Client
+  license: Apache License Version 2.0
