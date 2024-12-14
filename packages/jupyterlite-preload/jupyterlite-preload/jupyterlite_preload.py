@@ -84,7 +84,7 @@ def patch_pyodide_load_package():
         if getattr(options, "checkIntegrity", None) is None:
             options.checkIntegrity = True
 
-        return _loadPackage(names, options)
+        return await _loadPackage(names, options)
 
     pyodide_js.loadPackage = loadPackage
 
