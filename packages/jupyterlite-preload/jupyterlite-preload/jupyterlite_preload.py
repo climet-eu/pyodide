@@ -40,17 +40,38 @@ def patch_syncifiable_asyncio():
 
 
 def patch_pyodide_stdio():
+    pyodide.code.run_js(r"""
+        function pyodideStreamCallback() {
+            if (this.__jupyterlite_preload_stream_callback === undefined) {
+                this.__jupyterlite_preload_stream_callback =
+                    this.__jupyterlite_preload_pyodide.runPython(
+                        "import pyodide_kernel;" +
+                        "pyodide_kernel.sys.stdout.publish_stream_callback"
+                    );
+                delete this.__jupyterlite_preload_pyodide;
+            }
+            return this.__jupyterlite_preload_stream_callback;
+        }
+        this.__jupyterlite_preload_get_stream_callback = pyodideStreamCallback;
+    """)
+
+    js.__jupyterlite_preload_pyodide = pyodide_js
+
     pyodideStdout = pyodide.code.run_js(r"""
-    function pyodideStdout(message) {
-        console.log("[pyodide]:", message);
-    }
-    { batched: pyodideStdout }
+        function pyodideStdout(message) {
+            (this.__jupyterlite_preload_get_stream_callback())(
+                "stdout", "[pyodide]: " + message,
+            );
+        }
+        { batched: pyodideStdout }
     """)
     pyodideStderr = pyodide.code.run_js(r"""
-    function pyodideStderr(message) {
-        console.err("[pyodide]:", message);
-    }
-    { batched: pyodideStderr }
+        function pyodideStderr(message) {
+            (this.__jupyterlite_preload_get_stream_callback())(
+                "stderr", "[pyodide]: " + message,
+            );
+        }
+        { batched: pyodideStderr }
     """)
 
     pyodide_js.setStdout(pyodideStdout)
@@ -59,16 +80,35 @@ def patch_pyodide_stdio():
 
 def patch_pyodide_load_package():
     loadPackageMessage = pyodide.code.run_js(r"""
-    function loadPackageMessage(message) {
-        console.log("[micropip]:", message);
-    }
-    loadPackageMessage
+        function loadPackageMessage(message) {
+            // Reduce noise by ignoring
+            // "PACKAGE already loaded from CHANNEL channel"
+            // messages
+            if (
+                message.includes(" already loaded from ") &&
+                message.endsWith(" channel\n")
+            ) {
+                return;
+            }
+
+            // Reduce noise by ignoring "No new packages to load" messages
+            if (message === "No new packages to load\n") {
+                return;
+            }
+
+            (this.__jupyterlite_preload_get_stream_callback())(
+                "stdout", "[micropip]: " + message,
+            );
+        }
+        loadPackageMessage
     """)
     loadPackageError = pyodide.code.run_js(r"""
-    function loadPackageError(message) {
-        console.err("[micropip]:", message);
-    }
-    loadPackageError
+        function loadPackageError(message) {
+            (this.__jupyterlite_preload_get_stream_callback())(
+                "stderr", "[micropip]: " + message,
+            );
+        }
+        loadPackageError
     """)
 
     _loadPackage = pyodide_js.loadPackage
