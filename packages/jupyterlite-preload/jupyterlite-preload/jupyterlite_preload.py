@@ -41,7 +41,7 @@ def patch_syncifiable_asyncio():
 
 def patch_pyodide_stdio():
     pyodide.code.run_js(r"""
-        function pyodideStreamCallback() {
+        function jupyterLiteStreamWrite(stream, message) {
             if (this.__jupyterlite_preload_stream_callback === undefined) {
                 this.__jupyterlite_preload_stream_callback =
                     this.__jupyterlite_preload_pyodide.runPython(
@@ -50,25 +50,25 @@ def patch_pyodide_stdio():
                     );
                 delete this.__jupyterlite_preload_pyodide;
             }
-            return this.__jupyterlite_preload_stream_callback;
+            this.__jupyterlite_preload_stream_callback(stream, message);
         }
-        this.__jupyterlite_preload_get_stream_callback = pyodideStreamCallback;
+        this.__jupyterlite_preload_stream_write = jupyterLiteStreamWrite;
     """)
 
     js.__jupyterlite_preload_pyodide = pyodide_js
 
     pyodideStdout = pyodide.code.run_js(r"""
         function pyodideStdout(message) {
-            (this.__jupyterlite_preload_get_stream_callback())(
-                "stdout", "[pyodide]: " + message,
+            this.__jupyterlite_preload_stream_write(
+                "stdout", "[pyodide]: " + message + "\n",
             );
         }
         { batched: pyodideStdout }
     """)
     pyodideStderr = pyodide.code.run_js(r"""
         function pyodideStderr(message) {
-            (this.__jupyterlite_preload_get_stream_callback())(
-                "stderr", "[pyodide]: " + message,
+            this.__jupyterlite_preload_stream_write(
+                "stderr", "[pyodide]: " + message + "\n",
             );
         }
         { batched: pyodideStderr }
@@ -86,26 +86,26 @@ def patch_pyodide_load_package():
             // messages
             if (
                 message.includes(" already loaded from ") &&
-                message.endsWith(" channel\n")
+                message.endsWith(" channel")
             ) {
                 return;
             }
 
             // Reduce noise by ignoring "No new packages to load" messages
-            if (message === "No new packages to load\n") {
+            if (message === "No new packages to load") {
                 return;
             }
 
-            (this.__jupyterlite_preload_get_stream_callback())(
-                "stdout", "[micropip]: " + message,
+            this.__jupyterlite_preload_stream_write(
+                "stdout", "[micropip]: " + message + "\n",
             );
         }
         loadPackageMessage
     """)
     loadPackageError = pyodide.code.run_js(r"""
         function loadPackageError(message) {
-            (this.__jupyterlite_preload_get_stream_callback())(
-                "stderr", "[micropip]: " + message,
+            this.__jupyterlite_preload_stream_write(
+                "stderr", "[micropip]: " + message + "\n",
             );
         }
         loadPackageError
