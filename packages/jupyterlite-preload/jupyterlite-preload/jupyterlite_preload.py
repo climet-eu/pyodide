@@ -7,8 +7,6 @@ import js
 import pyodide
 import pyodide_js
 
-import ipyloglite
-
 import pyodide_http
 
 
@@ -59,6 +57,8 @@ def patch_pyodide_stdio():
 
     pyodideStdout = pyodide.code.run_js(r"""
         function pyodideStdout(message) {
+            console.log(message);
+
             this.__jupyterlite_preload_stream_write(
                 "stdout", "[pyodide]: " + message + "\n",
             );
@@ -67,6 +67,8 @@ def patch_pyodide_stdio():
     """)
     pyodideStderr = pyodide.code.run_js(r"""
         function pyodideStderr(message) {
+            console.error(message);
+
             this.__jupyterlite_preload_stream_write(
                 "stderr", "[pyodide]: " + message + "\n",
             );
@@ -81,6 +83,8 @@ def patch_pyodide_stdio():
 def patch_pyodide_load_package():
     loadPackageMessage = pyodide.code.run_js(r"""
         function loadPackageMessage(message) {
+            console.log(message);
+
             // Reduce noise by ignoring
             // "PACKAGE already loaded from CHANNEL channel"
             // messages
@@ -97,15 +101,17 @@ def patch_pyodide_load_package():
             }
 
             this.__jupyterlite_preload_stream_write(
-                "stdout", "[micropip]: " + message + "\n",
+                "stdout", "[pyodide]: " + message + "\n",
             );
         }
         loadPackageMessage
     """)
     loadPackageError = pyodide.code.run_js(r"""
         function loadPackageError(message) {
+            console.error(message);
+
             this.__jupyterlite_preload_stream_write(
-                "stderr", "[micropip]: " + message + "\n",
+                "stderr", "[pyodide]: " + message + "\n",
             );
         }
         loadPackageError

@@ -7,5 +7,4 @@ source:
   path: ./jupyterlite-preload
 requirements:
   run:
-    - ipyloglite  # 0.0.0
     - pyodide-http  # 0.2.1
