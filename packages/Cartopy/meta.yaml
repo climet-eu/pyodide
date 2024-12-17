@@ -14,21 +14,19 @@ test:
     - cartopy.crs
 requirements:
   host:
-    - geos
     - numpy
   run:
+    - numpy
+    - matplotlib
     - shapely
+    - packaging
     - pyshp
     - pyproj
-    - geos
-    - matplotlib
+    - Pillow
     - scipy
 
 build:
   vendor-sharedlib: true
-  script: |
-    # Put geos-config on the path
-    export PATH=$PATH:${WASM_LIBRARY_DIR}/bin/
 
 about:
   home: http://scitools.org.uk/cartopy
