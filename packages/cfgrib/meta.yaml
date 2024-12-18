@@ -1,13 +1,11 @@
 package:
   name: cfgrib
-  version: 0.9.14.1
+  version: 0.9.15.0
   top-level:
     - cfgrib
 source:
-  url: https://files.pythonhosted.org/packages/1c/d9/274599a790dfc384d0a06a849adfbed0c924ec5376eda189e503325e7e3f/cfgrib-0.9.14.1.tar.gz
-  sha256: a6e66e8a3d8f9823d3eef0c2c6ebca602d5bcc324f0baf4f3d13f68b0b40501e
-  patches:
-    - patches/0001-dataset-inferred-dtype.patch
+  url: https://files.pythonhosted.org/packages/7d/d7/96b4209c99f1fd6c19f502cebe8c91983c23331c380f3f521250f268ae8c/cfgrib-0.9.15.0-py3-none-any.whl
+  sha256: 469cfd25dc173863795e596263b3b6b5ea1402b1715f2b7b1d4b995b40b32c18
 requirements:
   run:
     - attrs
