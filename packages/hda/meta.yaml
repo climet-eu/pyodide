@@ -1,0 +1,17 @@
+package:
+  name: hda
+  version: "2.20"
+  top-level:
+    - hda
+source:
+  url: https://files.pythonhosted.org/packages/7b/2d/775e5e0369a86310c6b0873d3da6d4ba89692c08f2919850f35012b78cfd/hda-2.20.tar.gz
+  sha256: c1a709435abbf2dbba9648349c0da6949ba4270ed49c922c788af7431f8c13c2
+requirements:
+  run:
+    - requests
+    - tqdm
+about:
+  home: https://github.com/ecmwf/hda
+  PyPI: https://pypi.org/project/hda
+  summary: API to harmonised data access for DIAS/WEkEO
+  license: Apache 2.0

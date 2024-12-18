@@ -1,0 +1,19 @@
+package:
+  name: array-api-compat
+  version: 1.9.1
+  top-level:
+    - array_api_compat
+source:
+  url: https://files.pythonhosted.org/packages/13/1d/2b2d33635de5dbf5e703114c11f1129394e68be16cc4dc5ccc2021a17f7b/array_api_compat-1.9.1-py3-none-any.whl
+  sha256: 41a2703a662832d21619359ddddc5c0449876871f6c01e108c335f2a9432df94
+requirements:
+  run:
+    - dask
+    - numpy
+about:
+  home: https://data-apis.org/array-api-compat/
+  PyPI: https://pypi.org/project/array-api-compat
+  summary:
+    A wrapper around NumPy and other array libraries to make them compatible
+    with the Array API standard
+  license: MIT

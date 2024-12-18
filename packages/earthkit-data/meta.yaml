@@ -8,6 +8,7 @@ source:
   sha256: 490ca5a843e840753bfc2dc9b8b4e7366f4d9342f71995c866c7aea5c015fc27
 requirements:
   run:
+    - array-api-compat
     - Cartopy
     - cdsapi
     - cfgrib
@@ -20,6 +21,7 @@ requirements:
     - entrypoints
     - filelock
     - geopandas
+    - hda
     - Jinja2
     - jsonschema
     - lru-dict
