@@ -13,7 +13,6 @@ requirements:
     - earthkit-data
     - earthkit-plots-default-styles
     - earthkit-regrid
-    - healpy
     - matplotlib
     - numpy
     - pint

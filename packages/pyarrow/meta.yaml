@@ -45,7 +45,7 @@ about:
 requirements:
   run:
     - numpy
-    # - pandas
+    - pandas
     - pyodide-unix-timezones
   host:
     - numpy
