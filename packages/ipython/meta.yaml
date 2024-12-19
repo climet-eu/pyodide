@@ -10,7 +10,6 @@ source:
     - patches/0001-jupyterlite-preload.patch
 requirements:
   run:
-    - comm
     - decorator
     - jedi
     - matplotlib-inline

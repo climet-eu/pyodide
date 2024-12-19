@@ -8,6 +8,7 @@ source:
   sha256: 4ea310b66f734a6dea29d8f44031fefc7bfa75de446409e0c7c8ca318c500659
 requirements:
   run:
+    - cartopy
     - pyproj
     - scipy
 about:

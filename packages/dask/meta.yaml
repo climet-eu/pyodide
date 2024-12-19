@@ -13,8 +13,8 @@ requirements:
   run:
     - click
     - cloudpickle
-    - importlib_metadata
-    - Jinja2
+    - fsspec
+    - numpy
     - packaging
     - partd
     - pyyaml

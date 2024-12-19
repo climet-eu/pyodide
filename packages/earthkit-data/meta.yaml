@@ -30,6 +30,7 @@ requirements:
     - netcdf4
     - pandas
     - pdbufr
+    - polytope-client
     - pyyaml
     - tqdm
     - xarray

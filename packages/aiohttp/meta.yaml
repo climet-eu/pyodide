@@ -20,6 +20,7 @@ requirements:
     - frozenlist
     - jupyterlite-cors
     - multidict
+    - propcache
     - yarl
 
 about:
