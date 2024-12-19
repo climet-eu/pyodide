@@ -14,6 +14,7 @@ requirements:
     - click
     - cloudpickle
     - fsspec
+    - Jinja2
     - numpy
     - packaging
     - partd
