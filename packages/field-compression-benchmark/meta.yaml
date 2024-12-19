@@ -1,11 +1,11 @@
 package:
   name: field-compression-benchmark
-  version: 0.0.14
+  version: 0.0.15
   top-level:
     - fcbench
 source:
-  url: https://files.pythonhosted.org/packages/5e/5f/570354d75b18899153d12467a738b243744008d7b3c33b88b16898acfce5/field-compression-benchmark-0.0.14.tar.gz
-  sha256: ecbfa66c76ac79132aeb0191948071bc870660d9eb88deeab816ca50157b8cd2
+  url: https://files.pythonhosted.org/packages/61/e6/ca4334622e7c3f59c03516532e32a6502b6114a232384a4157b8e0e32851/field-compression-benchmark-0.0.15.tar.gz
+  sha256: 62fe49014fcad6bea8e621dcd633f49ffa512d6da35e215c9d5bc25f035cb32c
   patches:
     - patches/0001-codecs-build.patch
     # we need to build std so that std's libc is compiled to check against the
@@ -24,14 +24,14 @@ build:
     export RUSTFLAGS="--remap-path-prefix=$(rustc --print=sysroot)/lib/rustlib/src/rust=/rust/1.83"
 
     # Fetch the pre-built WASM codecs from one of the wheels
-    wget https://files.pythonhosted.org/packages/82/11/5769e11ec32d8878a4efbb21ea64450580abfcec061152f35330a35a7e73/field_compression_benchmark-0.0.14-cp312-cp312-manylinux_2_28_x86_64.whl -O fcbench.zip
+    wget https://files.pythonhosted.org/packages/97/df/9a1118529f0c42b8488aee4695ac496a519a831498ca90def4133f40fb18/field_compression_benchmark-0.0.15-cp312-cp312-manylinux_2_28_x86_64.whl -O fcbench.zip
     unzip -j fcbench.zip fcbench/data/codecs/*.wasm -d data/codecs/
     rm fcbench.zip
 requirements:
   executable:
     - rustup
   run:
-    - cfgrib  # 0.9.14.1
+    - cfgrib  # 0.9.15.0
     - dask  # 2024.12.0
     - netcdf4  # 1.7.2
     - numcodecs  # 0.13.1
