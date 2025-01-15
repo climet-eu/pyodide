@@ -180,6 +180,20 @@ export async function loadBinaryFile(
   return new Uint8Array(await r.arrayBuffer());
 }
 
+export function loadBinaryFileSync(
+  path: string,
+  file_sub_resource_hash?: string | undefined,
+): Uint8Array {
+  const url = new URL(path, location as unknown as URL);
+
+  const request = new XMLHttpRequest();
+  request.open("GET", url, false);
+  request.responseType = "arraybuffer";
+  request.send();
+
+  return new Uint8Array(request.response);
+}
+
 /**
  * Currently loadScript is only used once to load `pyodide.asm.js`.
  * @param url

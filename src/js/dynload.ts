@@ -182,6 +182,57 @@ export class DynlibLoader {
     }
   }
 
+  public loadDynlibSync(lib: string, global: boolean, searchDirs?: string[]) {
+    // const releaseDynlibLock = await this._lock();
+
+    DEBUG &&
+      console.debug(`Loading a dynamic library ${lib} (global: ${global})`);
+
+    const fs = this.createDynlibFS(lib, searchDirs);
+    const localScope = global ? null : {};
+
+    try {
+      this.#module.loadDynamicLibrary(
+        lib,
+        {
+          loadAsync: false,
+          nodelete: true,
+          allowUndefined: true,
+          global,
+          fs,
+        },
+        localScope,
+      );
+
+      // Emscripten saves the list of loaded libraries in LDSO.loadedLibsByName.
+      // However, since emscripten dylink metadata only contains the name of the
+      // library not the full path, we need to update it manually in order to
+      // prevent loading same library twice.
+      if (this.#module.PATH.isAbs(lib)) {
+        const libName: string = this.#module.PATH.basename(lib);
+        const dso: any = this.#module.LDSO.loadedLibsByName[libName];
+        if (!dso) {
+          this.#module.LDSO.loadedLibsByName[libName] =
+            this.#module.LDSO.loadedLibsByName[lib];
+        }
+      }
+    } catch (e: any) {
+      if (
+        e &&
+        e.message &&
+        e.message.includes("need to see wasm magic number")
+      ) {
+        console.warn(
+          `Failed to load dynlib ${lib}. We probably just tried to load a linux .so file or something.`,
+        );
+        return;
+      }
+      throw e;
+    } // finally {
+    //   releaseDynlibLock();
+    // }
+  }
+
   /**
    * Load dynamic libraries inside a package.
    *
@@ -209,6 +260,22 @@ export class DynlibLoader {
 
     for (const path of dynlibPaths) {
       await this.loadDynlib(path, false, [auditWheelLibDir]);
+    }
+  }
+
+  public loadDynlibsFromPackageSync(
+    // TODO: Simplify the type of pkg after removing usage of this function in micropip.
+    pkg: { file_name: string },
+    dynlibPaths: string[],
+  ) {
+    // assume that shared libraries of a package are located in <package-name>.libs directory,
+    // following the convention of auditwheel.
+    const auditWheelLibDir = `${this.#api.sitepackages}/${
+      pkg.file_name.split("-")[0]
+    }.libs`;
+
+    for (const path of dynlibPaths) {
+      this.loadDynlibSync(path, false, [auditWheelLibDir]);
     }
   }
 }

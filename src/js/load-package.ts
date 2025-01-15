@@ -19,6 +19,7 @@ import {
 import {
   nodeFsPromisesMod,
   loadBinaryFile,
+  loadBinaryFileSync,
   resolvePath,
   initNodeModules,
   ensureDirNode,
@@ -276,6 +277,110 @@ export class PackageManager {
     }
   }
 
+  public loadPackageSync(
+    names: string | PyProxy | Array<string>,
+    options: {
+      messageCallback?: (message: string) => void;
+      errorCallback?: (message: string) => void;
+      checkIntegrity?: boolean;
+    } = {
+      checkIntegrity: true,
+    },
+  ): Array<PackageData> {
+    const loadedPackageData = new Set<InternalPackageData>();
+    const { messageCallback, errorCallback } = options;
+    const pkgNames = toStringArray(names);
+
+    const toLoad = this.recursiveDependencies(pkgNames, errorCallback);
+
+    for (const [_, { name, normalizedName, channel }] of toLoad) {
+      const loadedChannel = this.getLoadedPackageChannel(name);
+      if (!loadedChannel) continue;
+
+      toLoad.delete(normalizedName);
+      // If uri is from the default channel, we assume it was added as a
+      // dependency, which was previously overridden.
+      if (loadedChannel === channel || channel === this.defaultChannel) {
+        this.logStdout(
+          `${name} already loaded from ${loadedChannel}`,
+          messageCallback,
+        );
+      } else {
+        this.logStderr(
+          `URI mismatch, attempting to load package ${name} from ${channel} ` +
+            `while it is already loaded from ${loadedChannel}. To override a dependency, ` +
+            `load the custom package first.`,
+          errorCallback,
+        );
+      }
+    }
+
+    if (toLoad.size === 0) {
+      this.logStdout("No new packages to load", messageCallback);
+      return [];
+    }
+
+    const packageNames = Array.from(toLoad.values(), ({ name }) => name)
+      .sort()
+      .join(", ");
+    const failed = new Map<string, Error>();
+    // const releaseLock = await this._lock();
+    // try {
+      this.logStdout(`Loading ${packageNames}`, messageCallback);
+      for (const [_, pkg] of toLoad) {
+        if (this.getLoadedPackageChannel(pkg.name)) {
+          // Handle the race condition where the package was loaded between when
+          // we did dependency resolution and when we acquired the lock.
+          toLoad.delete(pkg.normalizedName);
+          continue;
+        }
+
+        pkg.installPromise = this.downloadAndInstall(
+          pkg,
+          toLoad,
+          loadedPackageData,
+          failed,
+          options.checkIntegrity,
+        );
+      }
+
+      await Promise.all(
+        Array.from(toLoad.values()).map(({ installPromise }) => installPromise),
+      );
+
+      // Warning: this sounds like it might not do anything important, but it
+      // fills in the GOT. There can be segfaults if we leave it out.
+      // See https://github.com/emscripten-core/emscripten/issues/22052
+      // TODO: Fix Emscripten so this isn't needed
+      this.#module.reportUndefinedSymbols();
+      if (loadedPackageData.size > 0) {
+        const successNames = Array.from(loadedPackageData, (pkg) => pkg.name)
+          .sort()
+          .join(", ");
+        this.logStdout(`Loaded ${successNames}`, messageCallback);
+      }
+
+      if (failed.size > 0) {
+        const failedNames = Array.from(failed.keys()).sort().join(", ");
+        this.logStdout(`Failed to load ${failedNames}`, messageCallback);
+        for (const [name, err] of failed) {
+          this.logStderr(
+            `The following error occurred while loading ${name}:`,
+            errorCallback,
+          );
+          this.logStderr(err.message, errorCallback);
+        }
+      }
+
+      // We have to invalidate Python's import caches, or it won't
+      // see the new files.
+      this.#api.importlib.invalidate_caches();
+      return Array.from(loadedPackageData, filterPackageData);
+    // } finally {
+    //   releaseLock();
+    // }
+  }
+
   /**
    * Recursively add a package and its dependencies to toLoad.
    * A helper function for recursiveDependencies.
@@ -429,6 +534,53 @@ export class PackageManager {
     return binary;
   }
 
+  private downloadPackageSync(
+    pkg: PackageLoadMetadata,
+    checkIntegrity: boolean = true,
+  ): Uint8Array {
+    const installBaseUrl = IN_NODE
+      ? this.#api.config.packageCacheDir
+      : this.#api.config.indexURL;
+    // await ensureDirNode(installBaseUrl);
+
+    let fileName, uri, fileSubResourceHash;
+    if (pkg.channel === this.defaultChannel) {
+      if (!(pkg.normalizedName in this.#api.lockfile_packages)) {
+        throw new Error(`Internal error: no entry for package named ${name}`);
+      }
+      const lockfilePackage = this.#api.lockfile_packages[pkg.normalizedName];
+      fileName = lockfilePackage.file_name;
+
+      uri = resolvePath(fileName, installBaseUrl);
+      fileSubResourceHash = "sha256-" + base16ToBase64(lockfilePackage.sha256);
+    } else {
+      uri = pkg.channel;
+      fileSubResourceHash = undefined;
+    }
+
+    if (!checkIntegrity) {
+      fileSubResourceHash = undefined;
+    }
+    // try {
+      return loadBinaryFileSync(uri, fileSubResourceHash);
+    // } catch (e) {
+    //   if (!IN_NODE || pkg.channel !== this.defaultChannel) {
+    //     throw e;
+    //   }
+    // }
+    // console.log(
+    //   `Didn't find package ${fileName} locally, attempting to load from ${this.cdnURL}`,
+    // );
+    // // If we are IN_NODE, download the package from the cdn, then stash it into
+    // // the node_modules directory for future use.
+    // let binary = await loadBinaryFile(this.cdnURL + fileName);
+    // console.log(
+    //   `Package ${fileName} loaded from ${this.cdnURL}, caching the wheel in node_modules for future use.`,
+    // );
+    // await nodeFsPromisesMod.writeFile(uri, binary);
+    // return binary;
+  }
+
   /**
    * Install the package into the file system.
    * @param metadata The package metadata
@@ -452,6 +604,31 @@ export class PackageManager {
     );
 
     await this.#installer.install(
+      buffer,
+      filename,
+      installDir,
+      INSTALLER,
+      metadata.channel === this.defaultChannel ? "pyodide" : metadata.channel,
+    );
+  }
+
+  private installPackageSync(
+    metadata: PackageLoadMetadata,
+    buffer: Uint8Array,
+  ) {
+    let pkg = this.#api.lockfile_packages[metadata.normalizedName];
+    if (!pkg) {
+      pkg = metadata.packageData;
+    }
+
+    const filename = pkg.file_name;
+
+    // This Python helper function unpacks the buffer and lists out any .so files in it.
+    const installDir: string = this.#api.package_loader.get_install_dir(
+      pkg.install_dir,
+    );
+
+    this.#installer.installSync(
       buffer,
       filename,
       installDir,
@@ -496,6 +673,45 @@ export class PackageManager {
       await Promise.all(installPromiseDependencies);
 
       await this.installPackage(pkg, buffer);
+
+      loaded.add(pkg.packageData);
+      loadedPackages[pkg.name] = pkg.channel;
+    } catch (err: any) {
+      failed.set(pkg.name, err);
+      // We don't throw error when loading a package fails, but just report it.
+      // pkg.done.reject(err);
+    } finally {
+      pkg.done.resolve();
+    }
+  }
+
+  // TODO: needs to be called once dependencies have already been installed
+  //       so needs a topological sort
+  private downloadAndInstallSync(
+    pkg: PackageLoadMetadata,
+    toLoad: Map<string, PackageLoadMetadata>,
+    loaded: Set<InternalPackageData>,
+    failed: Map<string, Error>,
+    checkIntegrity: boolean = true,
+  ) {
+    if (loadedPackages[pkg.name] !== undefined) {
+      return;
+    }
+
+    try {
+      const buffer = this.downloadPackageSync(pkg, checkIntegrity);
+      // const installPromiseDependencies = pkg.depends.map((dependency) => {
+      //   return toLoad.has(dependency)
+      //     ? toLoad.get(dependency)!.done
+      //     : Promise.resolve();
+      // });
+      // Can't install until bootstrap is finalized.
+      // await this.#api.bootstrapFinalizedPromise;
+
+      // wait until all dependencies are installed
+      // await Promise.all(installPromiseDependencies);
+
+      this.installPackageSync(pkg, buffer);
 
       loaded.add(pkg.packageData);
       loadedPackages[pkg.name] = pkg.channel;
