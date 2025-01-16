@@ -786,6 +786,14 @@ export class PackageManager {
   public logStderr(message: string, logger?: (message: string) => void) {
     logger ? logger(message) : this.stderr(message);
   }
+
+  public setStdout(logger: (message: string) => void) {
+    this.stdout = logger;
+  }
+
+  public setStderr(logger: (message: string) => void) {
+    this.stderr = logger;
+  }
 }
 
 function filterPackageData({
@@ -820,6 +828,8 @@ export function toStringArray(str: string | PyProxy | string[]): string[] {
 
 export let loadPackage: typeof PackageManager.prototype.loadPackage;
 export let loadPackageSync: typeof PackageManager.prototype.loadPackageSync;
+export let loadPackageSetStdout: typeof PackageManager.prototype.setStdout;
+export let loadPackageSetStderr: typeof PackageManager.prototype.setStderr;
 export let loadedPackages: typeof PackageManager.prototype.loadedPackages;
 
 if (typeof API !== "undefined" && typeof Module !== "undefined") {
@@ -829,6 +839,13 @@ if (typeof API !== "undefined" && typeof Module !== "undefined") {
     singletonPackageManager,
   );
   loadPackageSync = singletonPackageManager.loadPackageSync.bind(
+    singletonPackageManager,
+  );
+
+  loadPackageSetStdout = singletonPackageManager.setStdout.bind(
+    singletonPackageManager,
+  );
+  loadPackageSetStderr = singletonPackageManager.setStderr.bind(
     singletonPackageManager,
   );
 

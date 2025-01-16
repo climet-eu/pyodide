@@ -1,7 +1,6 @@
 import asyncio
 import importlib
 import sys
-from pathlib import Path
 
 import js
 import pyodide
@@ -35,6 +34,17 @@ def patch_syncifiable_asyncio():
 
     asyncio.gather = asyncio_gather
     asyncio.sleep = asyncio_sleep
+
+
+class PyodidePackageFinder(importlib.abc.MetaPathFinder):
+    def find_spec(self, fullname, path, target=None):
+        if path is None and fullname in pyodide_js._api._import_name_to_package_name:
+            pyodide_js.loadPackageSync(pyodide_js._api._import_name_to_package_name[fullname])
+        return None
+
+
+def patch_import_loader():
+    sys.meta_path.insert(0, PyodidePackageFinder())
 
 
 def patch_pyodide_stdio():
@@ -80,7 +90,7 @@ def patch_pyodide_stdio():
     pyodide_js.setStderr(pyodideStderr)
 
 
-def patch_pyodide_load_package():
+def patch_pyodide_load_package_stdio():
     loadPackageMessage = pyodide.code.run_js(r"""
         function loadPackageMessage(message) {
             console.log(message);
@@ -117,53 +127,8 @@ def patch_pyodide_load_package():
         loadPackageError
     """)
 
-    _loadPackage = pyodide_js.loadPackage
-
-    async def loadPackage(names, options=None):
-        if options is None:
-            options = js.Object.new()
-
-        if getattr(options, "messageCallback", None) is None:
-            options.messageCallback = loadPackageMessage
-        if getattr(options, "errorCallback", None) is None:
-            options.errorCallback = loadPackageError
-        if getattr(options, "checkIntegrity", None) is None:
-            options.checkIntegrity = True
-
-        return await _loadPackage(names, options)
-
-    pyodide_js.loadPackage = loadPackage
-
-    async def loadPackagesFromImports(
-        code: str,
-        options=None,
-    ):
-        if options is None:
-            options = js.Object.new()
-
-        imports = set()
-
-        for name in pyodide.code.find_imports(code):
-            if name in sys.modules:
-                continue
-
-            try:
-                spec = importlib.util.find_spec(name)
-            except ModuleNotFoundError:
-                spec = None
-            if spec is not None and Path(spec.origin).parts[:2] == (
-                "/",
-                "drive",
-            ):
-                with open(spec.origin, "r") as f:
-                    await loadPackagesFromImports(f.read(), options=options)
-
-            if name in pyodide_js._api._import_name_to_package_name:
-                imports.add(pyodide_js._api._import_name_to_package_name[name])
-
-        return await loadPackage(list(imports), options=options)
-
-    pyodide_js.loadPackagesFromImports = loadPackagesFromImports
+    pyodide_js.loadPackageSetStdout(loadPackageMessage)
+    pyodide_js.loadPackageSetStderr(loadPackageError)
 
 
 def patch_all():
@@ -174,8 +139,9 @@ def patch_all():
     pyodide_http.patch_all()
 
     patch_syncifiable_asyncio()
+    patch_import_loader()
     patch_pyodide_stdio()
-    patch_pyodide_load_package()
+    patch_pyodide_load_package_stdio()
 
 
 class PyodideMemoryMonitor:
