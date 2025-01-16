@@ -344,18 +344,13 @@ export class PackageManager {
         nameToIndex.set(pkg.normalizedName, i);
       }
 
-      const edges: Array<[number, number]> = [];
+      const adj: Array<Array<number>> = Array.from({ length: V }, () => []);
       for (const [i, pkg] of nodes.entries()) {
-        for (const dep in pkg.depends) {
+        for (const dep of pkg.depends) {
           if (nameToIndex.has(dep)) {
-            edges.push([i, nameToIndex.get(dep)!]);
+            adj[i].push(nameToIndex.get(dep)!);
           }
         }
-      }
-
-      const adj: Array<Array<number>> = Array.from({ length: V }, () => []);
-      for (const [i, j] of edges) {
-          adj[i].push(j);
       }
 
       // https://www.geeksforgeeks.org/topological-sorting/
@@ -386,9 +381,6 @@ export class PackageManager {
       }
 
       const sorted: Array<PackageLoadMetadata> = topologicalSort(adj, V).map((i) => nodes[i]);
-
-      console.log(packageNames);
-      console.log(Array.from(sorted, ({ name }) => name).join(", "));
 
       for (const pkg of sorted) {
         this.downloadAndInstallSync(pkg, loadedPackageData, failed, options.checkIntegrity);
@@ -834,6 +826,9 @@ if (typeof API !== "undefined" && typeof Module !== "undefined") {
   const singletonPackageManager = new PackageManager(API, Module);
 
   loadPackage = singletonPackageManager.loadPackage.bind(
+    singletonPackageManager,
+  );
+  loadPackageSync = singletonPackageManager.loadPackageSync.bind(
     singletonPackageManager,
   );
 
