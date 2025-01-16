@@ -334,19 +334,65 @@ export class PackageManager {
           toLoad.delete(pkg.normalizedName);
           continue;
         }
-
-        pkg.installPromise = this.downloadAndInstall(
-          pkg,
-          toLoad,
-          loadedPackageData,
-          failed,
-          options.checkIntegrity,
-        );
       }
 
-      await Promise.all(
-        Array.from(toLoad.values()).map(({ installPromise }) => installPromise),
-      );
+      const nodes = Array.from(toLoad.values());
+      const V = nodes.length;
+
+      const nameToIndex = new Map<string, number>;
+      for (const [i, pkg] of nodes.entries()) {
+        nameToIndex.set(pkg.normalizedName, i);
+      }
+
+      const edges: Array<[number, number]> = [];
+      for (const [i, pkg] of nodes.entries()) {
+        for (const dep in pkg.depends) {
+          if (nameToIndex.has(dep)) {
+            edges.push([i, nameToIndex.get(dep)!]);
+          }
+        }
+      }
+
+      const adj: Array<Array<number>> = Array.from({ length: V }, () => []);
+      for (const [i, j] of edges) {
+          adj[i].push(j);
+      }
+
+      // https://www.geeksforgeeks.org/topological-sorting/
+      function topologicalSortUtil(v: number, adj: Array<Array<number>>, visited: Array<Boolean>, stack: Array<number>) {
+        visited[v] = true;
+
+        for (let i of adj[v]) {
+          if (!visited[i]) {
+            topologicalSortUtil(i, adj, visited, stack);
+          }
+        }
+
+        stack.push(v);
+      }
+
+      // https://www.geeksforgeeks.org/topological-sorting/
+      function topologicalSort(adj: Array<Array<number>>, V: number): Array<number> {
+        const stack: Array<number> = [];
+        const visited = new Array(V).fill(false);
+
+        for (let i = 0; i < V; i++) {
+          if (!visited[i]) {
+            topologicalSortUtil(i, adj, visited, stack);
+          }
+        }
+
+        return stack;
+      }
+
+      const sorted: Array<PackageLoadMetadata> = topologicalSort(adj, V).map((i) => nodes[i]);
+
+      console.log(packageNames);
+      console.log(Array.from(sorted, ({ name }) => name).join(", "));
+
+      for (const pkg of sorted) {
+        this.downloadAndInstallSync(pkg, loadedPackageData, failed, options.checkIntegrity);
+      }
 
       // Warning: this sounds like it might not do anything important, but it
       // fills in the GOT. There can be segfaults if we leave it out.
@@ -689,7 +735,6 @@ export class PackageManager {
   //       so needs a topological sort
   private downloadAndInstallSync(
     pkg: PackageLoadMetadata,
-    toLoad: Map<string, PackageLoadMetadata>,
     loaded: Set<InternalPackageData>,
     failed: Map<string, Error>,
     checkIntegrity: boolean = true,
@@ -782,6 +827,7 @@ export function toStringArray(str: string | PyProxy | string[]): string[] {
 }
 
 export let loadPackage: typeof PackageManager.prototype.loadPackage;
+export let loadPackageSync: typeof PackageManager.prototype.loadPackageSync;
 export let loadedPackages: typeof PackageManager.prototype.loadedPackages;
 
 if (typeof API !== "undefined" && typeof Module !== "undefined") {
