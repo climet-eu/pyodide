@@ -275,6 +275,7 @@ export class DynlibLoader {
     }.libs`;
 
     for (const path of dynlibPaths) {
+      console.debug(`load dynlib ${path} sync at ${auditWheelLibDir}`);
       this.loadDynlibSync(path, false, [auditWheelLibDir]);
     }
   }
