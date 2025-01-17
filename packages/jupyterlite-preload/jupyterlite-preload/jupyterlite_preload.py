@@ -47,18 +47,13 @@ class PyodidePackageFinder(importlib.abc.MetaPathFinder):
             return None
 
         package_name = pyodide_js._api._import_name_to_package_name[fullname]
+        pkg = getattr(pyodide_js._api.lockfile_packages, package_name)
 
         # no need to load an already-loaded package
-        if getattr(pyodide_js.loadedPackages, package_name, None) is not None:
+        if getattr(pyodide_js.loadedPackages, pkg.name, None) is not None:
             return None
 
-        # we only load the package itself
-        # its dependencies will be loaded lazily on import as well
-        options = js.Object.new()
-        options.checkIntegrity = True
-        options.loadPackageDependencies = False
-
-        pyodide_js.loadPackageSync(package_name, options)
+        pyodide_js.loadPackageSync(package_name)
 
         # the package is now installed and can be loaded as usual
         return None
