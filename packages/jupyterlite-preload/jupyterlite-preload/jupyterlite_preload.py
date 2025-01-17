@@ -65,10 +65,22 @@ def patch_import_loader():
 def patch_pyodide_stdio():
     pyodide.code.run_js(r"""
         function jupyterLiteStreamWrite(stream, message) {
-            // do nothing, this will be replaced with the proper callback later
+            let publish_stream_callback = undefined;
+            try {
+                publish_stream_callback = self.__jupyterlite_preload_pyodide.runPython(
+                    "import sys; sys.stdout.publish_stream_callback",
+                );
+            } catch {}
+
+            if (publish_stream_callback !== undefined) {
+                self.__jupyterlite_preload_stream_write = publish_stream_callback;
+                delete self.__jupyterlite_preload_pyodide;
+            }
         }
         self.__jupyterlite_preload_stream_write = jupyterLiteStreamWrite;
     """)
+
+    js.__jupyterlite_preload_pyodide = pyodide_js
 
     pyodideStdout = pyodide.code.run_js(r"""
         function pyodideStdout(message) {
