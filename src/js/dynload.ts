@@ -259,7 +259,7 @@ export class DynlibLoader {
     }.libs`;
 
     for (const path of dynlibPaths) {
-      await this.loadDynlib(path, false, [auditWheelLibDir]);
+      // await this.loadDynlib(path, false, [auditWheelLibDir]);
     }
   }
 
@@ -275,7 +275,7 @@ export class DynlibLoader {
     }.libs`;
 
     for (const path of dynlibPaths) {
-      this.loadDynlibSync(path, false, [auditWheelLibDir]);
+      // this.loadDynlibSync(path, false, [auditWheelLibDir]);
     }
   }
 }
