@@ -50,8 +50,15 @@ class PyodidePackageFinder(importlib.abc.MetaPathFinder):
         if fullname not in pyodide_js._api._import_name_to_package_name:
             return None
 
+        # we only load the package itself
+        # its dependencies will be loaded lazily on import as well
+        options = js.Object.new()
+        options.checkIntegrity = True
+        options.loadPackageDependencies = False
+
         pyodide_js.loadPackageSync(
             pyodide_js._api._import_name_to_package_name[fullname],
+            options,
         )
 
         # the package is now installed and can be loaded as usual
