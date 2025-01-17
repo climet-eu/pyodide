@@ -50,26 +50,16 @@ def patch_import_loader():
 def patch_pyodide_stdio():
     pyodide.code.run_js(r"""
         function jupyterLiteStreamWrite(stream, message) {
-            if (this.__jupyterlite_preload_stream_callback === undefined) {
-                this.__jupyterlite_preload_stream_callback =
-                    this.__jupyterlite_preload_pyodide.runPython(
-                        "import pyodide_kernel;" +
-                        "pyodide_kernel.sys.stdout.publish_stream_callback"
-                    );
-                delete this.__jupyterlite_preload_pyodide;
-            }
-            this.__jupyterlite_preload_stream_callback(stream, message);
+            // do nothing, this will be replaced with the proper callback later
         }
-        this.__jupyterlite_preload_stream_write = jupyterLiteStreamWrite;
+        self.__jupyterlite_preload_stream_write = jupyterLiteStreamWrite;
     """)
-
-    js.__jupyterlite_preload_pyodide = pyodide_js
 
     pyodideStdout = pyodide.code.run_js(r"""
         function pyodideStdout(message) {
             console.log(message);
 
-            this.__jupyterlite_preload_stream_write(
+            self.__jupyterlite_preload_stream_write(
                 "stdout", "[pyodide]: " + message + "\n",
             );
         }
@@ -79,7 +69,7 @@ def patch_pyodide_stdio():
         function pyodideStderr(message) {
             console.error(message);
 
-            this.__jupyterlite_preload_stream_write(
+            self.__jupyterlite_preload_stream_write(
                 "stderr", "[pyodide]: " + message + "\n",
             );
         }
@@ -89,10 +79,8 @@ def patch_pyodide_stdio():
     pyodide_js.setStdout(pyodideStdout)
     pyodide_js.setStderr(pyodideStderr)
 
-
-def patch_pyodide_load_package_stdio():
-    loadPackageMessage = pyodide.code.run_js(r"""
-        function loadPackageMessage(message) {
+    loadPackageStdout = pyodide.code.run_js(r"""
+        function loadPackageStdout(message) {
             console.log(message);
 
             // Reduce noise by ignoring
@@ -110,25 +98,25 @@ def patch_pyodide_load_package_stdio():
                 return;
             }
 
-            this.__jupyterlite_preload_stream_write(
+            self.__jupyterlite_preload_stream_write(
                 "stdout", "[pyodide]: " + message + "\n",
             );
         }
-        loadPackageMessage
+        loadPackageStdout
     """)
-    loadPackageError = pyodide.code.run_js(r"""
-        function loadPackageError(message) {
+    loadPackageStderr = pyodide.code.run_js(r"""
+        function loadPackageStderr(message) {
             console.error(message);
 
-            this.__jupyterlite_preload_stream_write(
+            self.__jupyterlite_preload_stream_write(
                 "stderr", "[pyodide]: " + message + "\n",
             );
         }
-        loadPackageError
+        loadPackageStderr
     """)
 
-    pyodide_js.loadPackageSetStdout(loadPackageMessage)
-    pyodide_js.loadPackageSetStderr(loadPackageError)
+    pyodide_js.loadPackageSetStdout(loadPackageStdout)
+    pyodide_js.loadPackageSetStderr(loadPackageStderr)
 
 
 def patch_all():
@@ -141,7 +129,6 @@ def patch_all():
     patch_syncifiable_asyncio()
     patch_import_loader()
     patch_pyodide_stdio()
-    patch_pyodide_load_package_stdio()
 
 
 class PyodideMemoryMonitor:
@@ -178,3 +165,5 @@ patch_all()
 def _finalize_with_ipython(ip):
     monitor = PyodideMemoryMonitor()
     ip.events.register("post_execute", monitor.post_execute_hook)
+
+    js.__jupyterlite_preload_stream_write = sys.stdout.publish_stream_callback
