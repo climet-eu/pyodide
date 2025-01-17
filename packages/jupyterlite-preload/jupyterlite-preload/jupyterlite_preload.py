@@ -146,7 +146,7 @@ class PyodideMemoryMonitor:
             num /= 1024.0
         return f"{num:.1f}Yi{suffix}"
 
-    def post_execute_hook(self, *args, **kwargs):
+    def post_execute_hook(self):
         memory_before = self.sizeof_fmt(self.memory)
         self.update()
         memory_after = self.sizeof_fmt(self.memory)
@@ -164,6 +164,18 @@ patch_all()
 
 def _finalize_with_ipython(ip):
     monitor = PyodideMemoryMonitor()
-    ip.events.register("post_execute", monitor.post_execute_hook)
 
-    js.__jupyterlite_preload_stream_write = sys.stdout.publish_stream_callback
+
+    def pre_execute_hook(*args, **kwargs):
+        try:
+            js.__jupyterlite_preload_stream_write = sys.stdout.publish_stream_callback
+        except AttributeError:
+            pass
+
+
+    def post_execute_hook(*args, **kwargs):
+        monitor.post_execute_hook()
+
+
+    ip.events.register("pre_execute", pre_execute_hook)
+    ip.events.register("post_execute", post_execute_hook)
