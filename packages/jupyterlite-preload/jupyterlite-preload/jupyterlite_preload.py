@@ -38,8 +38,23 @@ def patch_syncifiable_asyncio():
 
 class PyodidePackageFinder(importlib.abc.MetaPathFinder):
     def find_spec(self, fullname, path, target=None):
-        if path is None and fullname in pyodide_js._api._import_name_to_package_name:
-            pyodide_js.loadPackageSync(pyodide_js._api._import_name_to_package_name[fullname])
+        # no need to load an already-loaded packages
+        if fullname in sys.modules:
+            return None
+
+        # we only support loading top-level packages
+        if path is not None:
+            return None
+
+        # we can only load packages in the Pyodide distribution
+        if fullname not in pyodide_js._api._import_name_to_package_name:
+            return None
+
+        pyodide_js.loadPackageSync(
+            pyodide_js._api._import_name_to_package_name[fullname],
+        )
+
+        # the package is now installed and can be loaded as usual
         return None
 
 
