@@ -280,9 +280,13 @@ If you updated the Pyodide version, make sure you also updated the 'indexURL' pa
   // Disable further loading of Emscripten file_packager stuff.
   Module.locateFile = (path) => {
     const dynlib = API.lookupDynlibPath(path);
-    console.log(`try to look up dynlib ${path}: ${dynlib}`);
     if (dynlib !== undefined) {
-      return dynlib;
+      const binary = API.public_api.FS.readFile(dynlib);
+      const blob = new Blob([binary], {type: "application/octet-stream"});
+      const url = URL.createObjectURL(blob);
+      console.debug(`found dynlib ${path}: ${dynlib} of size ${binary.length}, load at ${url}`);
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      return url;
     }
     throw new Error(`Didn't expect to load any more file_packager files but asked to find ${path}!`);
   };

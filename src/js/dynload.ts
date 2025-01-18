@@ -287,15 +287,11 @@ export class DynlibLoader {
     const name: string = this.#module.PATH.basename(path);
     if (this._dynlib_paths.has(name)) {
       console.warn(`duplicate dynlib ${name}: ${path} vs ${this._dynlib_paths.get(name)}`);
-    } else {
-      console.log(`register dynlib ${name}: ${path}`);
     }
     this._dynlib_paths.set(name, path);
-    console.debug("set dynlib paths:", this._dynlib_paths);
   }
 
   public lookupDynlibPath(name: string): string | undefined {
-    console.debug("lookup dynlib paths:", this._dynlib_paths);
     return this._dynlib_paths.get(name);
   }
 }
