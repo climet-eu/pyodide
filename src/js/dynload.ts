@@ -291,11 +291,13 @@ export class DynlibLoader {
         console.log(`register dynlib ${libName}: ${path}`);
       }
       this._dynlib_paths.set(libName, path);
+      console.debug("set dynlib paths:", this._dynlib_paths);
       // this.loadDynlibSync(path, false, [auditWheelLibDir]);
     }
   }
 
   public lookupDynlibPath(name: string): string | undefined {
+    console.debug("lookup dynlib paths:", this._dynlib_paths);
     return this._dynlib_paths.get(name);
   }
 }
