@@ -281,6 +281,7 @@ If you updated the Pyodide version, make sure you also updated the 'indexURL' pa
   }
   // Disable further loading of Emscripten file_packager stuff.
   Module.locateFile = (path) => {
+    console.log(`try to look up dynlib ${path}: ${DYNLIB_PATHS.get(path)}`);
     if (DYNLIB_PATHS.has(path)) {
       return DYNLIB_PATHS.get(path)!;
     }

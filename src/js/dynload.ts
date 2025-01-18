@@ -264,6 +264,8 @@ export class DynlibLoader {
       const libName: string = this.#module.PATH.basename(path);
       if (DYNLIB_PATHS.has(libName)) {
         console.warn(`duplicate dynlib ${libName}: ${path} vs ${DYNLIB_PATHS.get(libName)}`);
+      } else {
+        console.log(`register dynlib ${libName}: ${path}`);
       }
       DYNLIB_PATHS.set(libName, path);
       // await this.loadDynlib(path, false, [auditWheelLibDir]);
@@ -285,6 +287,8 @@ export class DynlibLoader {
       const libName: string = this.#module.PATH.basename(path);
       if (DYNLIB_PATHS.has(libName)) {
         console.warn(`duplicate dynlib ${libName}: ${path} vs ${DYNLIB_PATHS.get(libName)}`);
+      } else {
+        console.log(`register dynlib ${libName}: ${path}`);
       }
       DYNLIB_PATHS.set(libName, path);
       // this.loadDynlibSync(path, false, [auditWheelLibDir]);
