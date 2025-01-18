@@ -12,6 +12,8 @@ import {
 import { createSettings } from "./emscripten-settings";
 import { version } from "./version";
 
+import { DYNLIB_PATHS } from "./dynload";
+
 import type { PyodideInterface } from "./api.js";
 import type { TypedArray, Module, PackageData } from "./types";
 import type { EmscriptenSettings } from "./emscripten-settings";
@@ -278,7 +280,10 @@ If you updated the Pyodide version, make sure you also updated the 'indexURL' pa
 `);
   }
   // Disable further loading of Emscripten file_packager stuff.
-  Module.locateFile = (...path) => {
+  Module.locateFile = (path) => {
+    if (DYNLIB_PATHS.has(path)) {
+      return DYNLIB_PATHS.get(path)!;
+    }
     throw new Error(`Didn't expect to load any more file_packager files but asked to find ${path}!`);
   };
 

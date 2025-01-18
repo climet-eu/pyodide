@@ -5,6 +5,8 @@ import { PackageManagerAPI, PackageManagerModule } from "./types";
 import { createLock } from "./common/lock";
 import { LoadDynlibFS, ReadFileType, InternalPackageData } from "./types";
 
+export const DYNLIB_PATHS: Map<string, string> = new Map();
+
 export class DynlibLoader {
   #api: PackageManagerAPI;
   #module: PackageManagerModule;
@@ -259,6 +261,11 @@ export class DynlibLoader {
     }.libs`;
 
     for (const path of dynlibPaths) {
+      const libName: string = this.#module.PATH.basename(path);
+      if (DYNLIB_PATHS.has(libName)) {
+        console.warn(`duplicate dynlib ${libName}: ${path} vs ${DYNLIB_PATHS.get(libName)}`);
+      }
+      DYNLIB_PATHS.set(libName, path);
       // await this.loadDynlib(path, false, [auditWheelLibDir]);
     }
   }
@@ -275,6 +282,11 @@ export class DynlibLoader {
     }.libs`;
 
     for (const path of dynlibPaths) {
+      const libName: string = this.#module.PATH.basename(path);
+      if (DYNLIB_PATHS.has(libName)) {
+        console.warn(`duplicate dynlib ${libName}: ${path} vs ${DYNLIB_PATHS.get(libName)}`);
+      }
+      DYNLIB_PATHS.set(libName, path);
       // this.loadDynlibSync(path, false, [auditWheelLibDir]);
     }
   }
