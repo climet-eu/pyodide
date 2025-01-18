@@ -5,8 +5,6 @@ import { PackageManagerAPI, PackageManagerModule } from "./types";
 import { createLock } from "./common/lock";
 import { LoadDynlibFS, ReadFileType, InternalPackageData } from "./types";
 
-export const DYNLIB_PATHS: Map<string, string> = new Map();
-
 export class DynlibLoader {
   #api: PackageManagerAPI;
   #module: PackageManagerModule;
@@ -15,6 +13,8 @@ export class DynlibLoader {
   // don't know why we need it, but quite possibly bad stuff will happen without
   // it.
   private _lock = createLock();
+
+  private _dynlib_paths: Map<string, string> = new Map();
 
   constructor(api: PackageManagerAPI, pyodideModule: PackageManagerModule) {
     this.#api = api;
@@ -262,12 +262,12 @@ export class DynlibLoader {
 
     for (const path of dynlibPaths) {
       const libName: string = this.#module.PATH.basename(path);
-      if (DYNLIB_PATHS.has(libName)) {
-        console.warn(`duplicate dynlib ${libName}: ${path} vs ${DYNLIB_PATHS.get(libName)}`);
+      if (this._dynlib_paths.has(libName)) {
+        console.warn(`duplicate dynlib ${libName}: ${path} vs ${this._dynlib_paths.get(libName)}`);
       } else {
         console.log(`register dynlib ${libName}: ${path}`);
       }
-      DYNLIB_PATHS.set(libName, path);
+      this._dynlib_paths.set(libName, path);
       // await this.loadDynlib(path, false, [auditWheelLibDir]);
     }
   }
@@ -285,14 +285,18 @@ export class DynlibLoader {
 
     for (const path of dynlibPaths) {
       const libName: string = this.#module.PATH.basename(path);
-      if (DYNLIB_PATHS.has(libName)) {
-        console.warn(`duplicate dynlib ${libName}: ${path} vs ${DYNLIB_PATHS.get(libName)}`);
+      if (this._dynlib_paths.has(libName)) {
+        console.warn(`duplicate dynlib ${libName}: ${path} vs ${this._dynlib_paths.get(libName)}`);
       } else {
         console.log(`register dynlib ${libName}: ${path}`);
       }
-      DYNLIB_PATHS.set(libName, path);
+      this._dynlib_paths.set(libName, path);
       // this.loadDynlibSync(path, false, [auditWheelLibDir]);
     }
+  }
+
+  public lookupDynlibPath(name: string): string | undefined {
+    return this._dynlib_paths.get(name);
   }
 }
 
@@ -303,4 +307,5 @@ if (typeof API !== "undefined" && typeof Module !== "undefined") {
   API.loadDynlib = singletonDynlibLoader.loadDynlib.bind(singletonDynlibLoader);
   API.loadDynlibsFromPackage =
     singletonDynlibLoader.loadDynlibsFromPackage.bind(singletonDynlibLoader);
+  API.lookupDynlibPath = singletonDynlibLoader.lookupDynlibPath.bind(singletonDynlibLoader);
 }

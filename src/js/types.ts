@@ -454,6 +454,7 @@ export interface API {
     searchDirs?: string[] | undefined,
     readFileFunc?: (path: string) => Uint8Array,
   ) => Promise<void>;
+  lookupDynlibPath: (name: string) => string | undefined;
   // TODO: Remove this from the API after migrating micropip to use the `install` API instead.
   loadDynlibsFromPackage: (
     pkg: { file_name: string },
