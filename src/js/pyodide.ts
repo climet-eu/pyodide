@@ -278,7 +278,7 @@ If you updated the Pyodide version, make sure you also updated the 'indexURL' pa
 `);
   }
   // Disable further loading of Emscripten file_packager stuff.
-  Module.locateFile = (path: string) => {
+  Module.locateFile = (...path) => {
     throw new Error(`Didn't expect to load any more file_packager files but asked to find ${path}!`);
   };
 
