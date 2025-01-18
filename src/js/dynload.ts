@@ -261,13 +261,7 @@ export class DynlibLoader {
     }.libs`;
 
     for (const path of dynlibPaths) {
-      const libName: string = this.#module.PATH.basename(path);
-      if (this._dynlib_paths.has(libName)) {
-        console.warn(`duplicate dynlib ${libName}: ${path} vs ${this._dynlib_paths.get(libName)}`);
-      } else {
-        console.log(`register dynlib ${libName}: ${path}`);
-      }
-      this._dynlib_paths.set(libName, path);
+      API.registerDynlib(path);
       // await this.loadDynlib(path, false, [auditWheelLibDir]);
     }
   }
@@ -284,16 +278,20 @@ export class DynlibLoader {
     }.libs`;
 
     for (const path of dynlibPaths) {
-      const libName: string = this.#module.PATH.basename(path);
-      if (this._dynlib_paths.has(libName)) {
-        console.warn(`duplicate dynlib ${libName}: ${path} vs ${this._dynlib_paths.get(libName)}`);
-      } else {
-        console.log(`register dynlib ${libName}: ${path}`);
-      }
-      this._dynlib_paths.set(libName, path);
-      console.debug("set dynlib paths:", this._dynlib_paths);
+      API.registerDynlib(path);
       // this.loadDynlibSync(path, false, [auditWheelLibDir]);
     }
+  }
+
+  public registerDynlib(path: string): void {
+    const name: string = this.#module.PATH.basename(path);
+    if (this._dynlib_paths.has(name)) {
+      console.warn(`duplicate dynlib ${name}: ${path} vs ${this._dynlib_paths.get(name)}`);
+    } else {
+      console.log(`register dynlib ${name}: ${path}`);
+    }
+    this._dynlib_paths.set(name, path);
+    console.debug("set dynlib paths:", this._dynlib_paths);
   }
 
   public lookupDynlibPath(name: string): string | undefined {
@@ -309,5 +307,6 @@ if (typeof API !== "undefined" && typeof Module !== "undefined") {
   API.loadDynlib = singletonDynlibLoader.loadDynlib.bind(singletonDynlibLoader);
   API.loadDynlibsFromPackage =
     singletonDynlibLoader.loadDynlibsFromPackage.bind(singletonDynlibLoader);
+  API.registerDynlib = singletonDynlibLoader.registerDynlib.bind(singletonDynlibLoader);
   API.lookupDynlibPath = singletonDynlibLoader.lookupDynlibPath.bind(singletonDynlibLoader);
 }
