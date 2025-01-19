@@ -187,7 +187,7 @@ export class PackageManager {
     const { messageCallback, errorCallback } = options;
     const pkgNames = toStringArray(names);
 
-    const toLoad = this.recursiveDependencies(pkgNames, true, errorCallback);
+    const toLoad = this.recursiveDependencies(pkgNames, errorCallback);
 
     for (const [_, { name, normalizedName, channel }] of toLoad) {
       const loadedChannel = this.getLoadedPackageChannel(name);
@@ -283,17 +283,15 @@ export class PackageManager {
       messageCallback?: (message: string) => void;
       errorCallback?: (message: string) => void;
       checkIntegrity?: boolean;
-      loadPackageDependencies?: boolean;
     } = {
       checkIntegrity: true,
-      loadPackageDependencies: true,
     },
   ): Array<PackageData> {
     const loadedPackageData = new Set<InternalPackageData>();
-    const { messageCallback, errorCallback, loadPackageDependencies } = options;
+    const { messageCallback, errorCallback } = options;
     const pkgNames = toStringArray(names);
 
-    const toLoad = this.recursiveDependencies(pkgNames, loadPackageDependencies, errorCallback);
+    const toLoad = this.recursiveDependencies(pkgNames, errorCallback);
 
     for (const [_, { name, normalizedName, channel }] of toLoad) {
       const loadedChannel = this.getLoadedPackageChannel(name);
@@ -431,7 +429,6 @@ export class PackageManager {
   private addPackageToLoad(
     name: string,
     toLoad: Map<string, PackageLoadMetadata>,
-    addPackageDependencies: boolean,
   ) {
     const normalizedName = canonicalizePackageName(name);
     if (toLoad.has(normalizedName)) {
@@ -442,23 +439,11 @@ export class PackageManager {
       throw new Error(`No known package with name '${name}'`);
     }
 
-    const depends = addPackageDependencies ? pkgInfo.depends : pkgInfo.depends.filter(name => {
-      const normalizedName = canonicalizePackageName(name);
-      if (toLoad.has(normalizedName)) {
-        return true;
-      }
-      const pkgInfo = this.#api.lockfile_packages[normalizedName];
-      if (!pkgInfo) {
-        throw new Error(`No known package with name '${name}'`);
-      }
-      return (pkgInfo.package_type !== "package");
-    });
-
     toLoad.set(normalizedName, {
       name: pkgInfo.name,
       normalizedName,
       channel: this.defaultChannel,
-      depends,
+      depends: pkgInfo.depends,
       installPromise: undefined,
       done: createResolvable(),
       packageData: pkgInfo,
@@ -471,8 +456,8 @@ export class PackageManager {
       return;
     }
 
-    for (const depName of depends) {
-      this.addPackageToLoad(depName, toLoad, addPackageDependencies);
+    for (const depName of pkgInfo.depends) {
+      this.addPackageToLoad(depName, toLoad);
     }
   }
 
@@ -484,14 +469,13 @@ export class PackageManager {
    */
   public recursiveDependencies(
     names: string[],
-    addPackageDependencies: boolean = true,
     errorCallback?: (err: string) => void,
   ): Map<string, PackageLoadMetadata> {
     const toLoad: Map<string, PackageLoadMetadata> = new Map();
     for (let name of names) {
       const parsedPackageData = uriToPackageData(name);
       if (parsedPackageData === undefined) {
-        this.addPackageToLoad(name, toLoad, addPackageDependencies);
+        this.addPackageToLoad(name, toLoad);
         continue;
       }
 

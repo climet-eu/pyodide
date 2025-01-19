@@ -470,7 +470,6 @@ export interface API {
   ) => Promise<void>;
   recursiveDependencies: (
     names: string[],
-    addPackageDependencies: boolean,
     errorCallback: (err: string) => void,
   ) => Map<string, PackageLoadMetadata>;
   _Comlink: any;
