@@ -187,11 +187,36 @@ class PyodideMemoryMonitor:
             )
 
 
+class PyodideDynlibMonitor:
+    def __init__(self):
+        self.update()
+
+    def update(self):
+        self.dynlibs = js.Object.keys(
+            pyodide_js._module.LDSO.loadedLibsByName,
+        ).length
+
+    def post_execute_hook(self):
+        dynlibs_before = self.dynlibs
+        self.update()
+        dynlibs_after = self.dynlibs
+
+        dynlibs_extra = dynlibs_after - dynlibs_before
+
+        if dynlibs_extra > 0:
+            print(
+                f"[pyodide]: Loaded {dynlibs_extra} new dynamic "
+                + f"librar{'ies' if dynlibs_extra > 1 else 'y'} "
+                + f"({dynlibs_after} total for this notebook)",
+            )
+
+
 patch_all()
 
 
 def _finalize_with_ipython(ip):
-    monitor = PyodideMemoryMonitor()
+    memory_monitor = PyodideMemoryMonitor()
+    dynlib_monitor = PyodideDynlibMonitor()
 
 
     def pre_execute_hook(*args, **kwargs):
@@ -202,7 +227,8 @@ def _finalize_with_ipython(ip):
 
 
     def post_execute_hook(*args, **kwargs):
-        monitor.post_execute_hook()
+        memory_monitor.post_execute_hook()
+        dynlib_monitor.post_execute_hook()
 
 
     ip.events.register("pre_execute", pre_execute_hook)
