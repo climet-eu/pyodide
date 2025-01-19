@@ -14,7 +14,7 @@ export class DynlibLoader {
   // it.
   private _lock = createLock();
 
-  private _dynlib_paths: Map<string, string> = new Map();
+  private _dynlib_paths: Map<string, [string, Array<string>]> = new Map();
 
   constructor(api: PackageManagerAPI, pyodideModule: PackageManagerModule) {
     this.#api = api;
@@ -285,14 +285,30 @@ export class DynlibLoader {
 
   public registerDynlib(path: string): void {
     const name: string = this.#module.PATH.basename(path);
-    if (this._dynlib_paths.has(name)) {
-      console.warn(`duplicate dynlib ${name}: ${path} vs ${this._dynlib_paths.get(name)}`);
+    const paths = this._dynlib_paths.get(name);
+
+    if (paths === undefined) {
+      this._dynlib_paths.set(name, [path, []]);
+    } else {
+      const [_head, tail] = paths;
+      tail.push(path);
     }
-    this._dynlib_paths.set(name, path);
   }
 
   public lookupDynlibPath(name: string): string | undefined {
-    return this._dynlib_paths.get(name);
+    const paths = this._dynlib_paths.get(name);
+
+    if (paths === undefined) {
+      return undefined;
+    }
+
+    const [head, tail] = paths;
+
+    if (tail.length !== 0) {
+      console.warn(`ambiguous dynlib ${name}: ${head} vs ${tail.join(' vs ')}`);
+    }
+
+    return head;
   }
 }
 
