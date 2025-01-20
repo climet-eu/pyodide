@@ -1,5 +1,7 @@
 /* Handle dynamic library loading. */
 
+import { buf as crc32 } from "crc-32";
+
 import { PackageManagerAPI, PackageManagerModule } from "./types";
 
 import { createLock } from "./common/lock";
@@ -304,8 +306,16 @@ export class DynlibLoader {
 
     const [head, tail] = paths;
 
+    // only allow ambiguous dynlib path lookups iff *all* paths refer to the
+    // same dynlib (by checking if all files have the same CRC32 checksum)
     if (tail.length !== 0) {
-      console.warn(`ambiguous dynlib ${name}: ${head} vs ${tail.join(' vs ')}`);
+      const headCrc32 = crc32(API.public_api.FS.readFile(head), 0);
+      for (const path of tail) {
+        const pathCrc32 = crc32(API.public_api.FS.readFile(path), 0);
+        if (pathCrc32 !== headCrc32) {
+          throw new Error(`ambiguous dynlib ${name}: ${head} vs ${tail.join(' vs ')}`);
+        }
+      }
     }
 
     return head;
