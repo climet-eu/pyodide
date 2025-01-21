@@ -397,6 +397,7 @@ export interface API {
   config: ConfigType;
   packageIndexReady: Promise<void>;
   bootstrapFinalizedPromise: Promise<void>;
+  bootstrapFinalizedDone: boolean;
   setCdnUrl: (url: string) => void;
   typedArrayAsUint8Array: (buffer: TypedArray | ArrayBuffer) => Uint8Array;
   initializeStreams: (

@@ -187,54 +187,52 @@ export class DynlibLoader {
   }
 
   public loadDynlibSync(lib: string, global: boolean, searchDirs?: string[]) {
-    // const releaseDynlibLock = await this._lock();
+    this._lock.withLockSync(() => {
+      DEBUG &&
+        console.debug(`Loading a dynamic library ${lib} (global: ${global})`);
 
-    DEBUG &&
-      console.debug(`Loading a dynamic library ${lib} (global: ${global})`);
+      const fs = this.createDynlibFS(lib, searchDirs);
+      const localScope = global ? null : {};
 
-    const fs = this.createDynlibFS(lib, searchDirs);
-    const localScope = global ? null : {};
-
-    try {
-      this.#module.loadDynamicLibrary(
-        lib,
-        {
-          loadAsync: false,
-          nodelete: true,
-          allowUndefined: true,
-          global,
-          fs,
-        },
-        localScope,
-      );
-
-      // Emscripten saves the list of loaded libraries in LDSO.loadedLibsByName.
-      // However, since emscripten dylink metadata only contains the name of the
-      // library not the full path, we need to update it manually in order to
-      // prevent loading same library twice.
-      if (this.#module.PATH.isAbs(lib)) {
-        const libName: string = this.#module.PATH.basename(lib);
-        const dso: any = this.#module.LDSO.loadedLibsByName[libName];
-        if (!dso) {
-          this.#module.LDSO.loadedLibsByName[libName] =
-            this.#module.LDSO.loadedLibsByName[lib];
-        }
-      }
-    } catch (e: any) {
-      if (
-        e &&
-        e.message &&
-        e.message.includes("need to see wasm magic number")
-      ) {
-        console.warn(
-          `Failed to load dynlib ${lib}. We probably just tried to load a linux .so file or something.`,
+      try {
+        this.#module.loadDynamicLibrary(
+          lib,
+          {
+            loadAsync: false,
+            nodelete: true,
+            allowUndefined: true,
+            global,
+            fs,
+          },
+          localScope,
         );
-        return;
+
+        // Emscripten saves the list of loaded libraries in LDSO.loadedLibsByName.
+        // However, since emscripten dylink metadata only contains the name of the
+        // library not the full path, we need to update it manually in order to
+        // prevent loading same library twice.
+        if (this.#module.PATH.isAbs(lib)) {
+          const libName: string = this.#module.PATH.basename(lib);
+          const dso: any = this.#module.LDSO.loadedLibsByName[libName];
+          if (!dso) {
+            this.#module.LDSO.loadedLibsByName[libName] =
+              this.#module.LDSO.loadedLibsByName[lib];
+          }
+        }
+      } catch (e: any) {
+        if (
+          e &&
+          e.message &&
+          e.message.includes("need to see wasm magic number")
+        ) {
+          console.warn(
+            `Failed to load dynlib ${lib}. We probably just tried to load a linux .so file or something.`,
+          );
+          return;
+        }
+        throw e;
       }
-      throw e;
-    } // finally {
-    //   releaseDynlibLock();
-    // }
+    });
   }
 
   /**

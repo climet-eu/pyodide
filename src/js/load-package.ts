@@ -324,8 +324,8 @@ export class PackageManager {
       .sort()
       .join(", ");
     const failed = new Map<string, Error>();
-    // const releaseLock = await this._lock();
-    // try {
+
+    return this._lock.withLockSync(() => {
       this.logStdout(`Loading ${packageNames}`, messageCallback);
       for (const [_, pkg] of toLoad) {
         if (this.getLoadedPackageChannel(pkg.name)) {
@@ -414,9 +414,7 @@ export class PackageManager {
       // see the new files.
       this.#api.importlib.invalidate_caches();
       return Array.from(loadedPackageData, filterPackageData);
-    // } finally {
-    //   releaseLock();
-    // }
+    });
   }
 
   /**
@@ -576,10 +574,10 @@ export class PackageManager {
     pkg: PackageLoadMetadata,
     checkIntegrity: boolean = true,
   ): Uint8Array {
-    const installBaseUrl = IN_NODE
-      ? this.#api.config.packageCacheDir
-      : this.#api.config.indexURL;
-    // await ensureDirNode(installBaseUrl);
+    if (IN_NODE) {
+      throw new Error("downloadPackageSync is not supported in Node");
+    }
+    const installBaseUrl = this.#api.config.indexURL;
 
     let fileName, uri, fileSubResourceHash;
     if (pkg.channel === this.defaultChannel) {
@@ -599,24 +597,8 @@ export class PackageManager {
     if (!checkIntegrity) {
       fileSubResourceHash = undefined;
     }
-    // try {
-      return loadBinaryFileSync(uri, fileSubResourceHash);
-    // } catch (e) {
-    //   if (!IN_NODE || pkg.channel !== this.defaultChannel) {
-    //     throw e;
-    //   }
-    // }
-    // console.log(
-    //   `Didn't find package ${fileName} locally, attempting to load from ${this.cdnURL}`,
-    // );
-    // // If we are IN_NODE, download the package from the cdn, then stash it into
-    // // the node_modules directory for future use.
-    // let binary = await loadBinaryFile(this.cdnURL + fileName);
-    // console.log(
-    //   `Package ${fileName} loaded from ${this.cdnURL}, caching the wheel in node_modules for future use.`,
-    // );
-    // await nodeFsPromisesMod.writeFile(uri, binary);
-    // return binary;
+
+    return loadBinaryFileSync(uri, fileSubResourceHash);
   }
 
   /**
@@ -723,8 +705,7 @@ export class PackageManager {
     }
   }
 
-  // TODO: needs to be called once dependencies have already been installed
-  //       so needs a topological sort
+  // Must only be called after pkg's dependencies have already been installed
   private downloadAndInstallSync(
     pkg: PackageLoadMetadata,
     loaded: Set<InternalPackageData>,
@@ -737,17 +718,13 @@ export class PackageManager {
 
     try {
       const buffer = this.downloadPackageSync(pkg, checkIntegrity);
-      // const installPromiseDependencies = pkg.depends.map((dependency) => {
-      //   return toLoad.has(dependency)
-      //     ? toLoad.get(dependency)!.done
-      //     : Promise.resolve();
-      // });
+
       // Can't install until bootstrap is finalized.
-      // await this.#api.bootstrapFinalizedPromise;
+      if (API.bootstrapFinalizedDone !== true) {
+        throw new Error("can't sync install package until after bootstrap is finalized");
+      }
 
-      // wait until all dependencies are installed
-      // await Promise.all(installPromiseDependencies);
-
+      // all dependencies have already been installed per pre-condition
       this.installPackageSync(pkg, buffer);
 
       loaded.add(pkg.packageData);

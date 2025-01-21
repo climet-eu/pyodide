@@ -737,6 +737,7 @@ let bootstrapFinalized: () => void;
 API.bootstrapFinalizedPromise = new Promise<void>(
   (r) => (bootstrapFinalized = r),
 );
+API.bootstrapFinalizedDone = false;
 
 export function jsFinderHook(o: object) {
   if ("__all__" in o) {
@@ -831,5 +832,6 @@ API.finalizeBootstrap = function (
   pyodide.pyodide_py = API.pyodide_py;
   pyodide.globals = API.globals;
   bootstrapFinalized!();
+  API.bootstrapFinalizedDone = true;
   return pyodide;
 };
