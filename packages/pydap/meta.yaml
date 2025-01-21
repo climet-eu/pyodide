@@ -1,0 +1,22 @@
+package:
+  name: pydap
+  version: 3.5.3
+  top-level:
+    - pydap
+source:
+  url: https://files.pythonhosted.org/packages/59/44/d5614c3da8dd13f4cb86a923afb3420cce61b4b9615ebdc7869c64df7db1/pydap-3.5.3-py3-none-any.whl
+  sha256: 408d654ab8e024917b5a1457dd0d46c5164f69c6a70c7a09b6ea265b39b72769
+requirements:
+  run:
+    - numpy
+    - requests
+    - scipy
+    - Webob
+    - beautifulsoup4
+    - lxml
+    # - netCDF4  # optional dependency
+about:
+  home: https://github.com/pydap/pydap
+  PyPI: https://pypi.org/project/pydap
+  summary: A pure python implementation of the Data Access Protocol.
+  license: MIT License
