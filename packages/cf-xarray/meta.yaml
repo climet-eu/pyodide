@@ -1,0 +1,17 @@
+package:
+  name: cf-xarray
+  version: 0.10.0
+  top-level:
+    - cf_xarray
+source:
+  url: https://files.pythonhosted.org/packages/1b/2c/7ba6a2a7ad421075ec3bd33ff4b5067763816687d2da95ea0751eee9621f/cf_xarray-0.10.0-py3-none-any.whl
+  sha256: 24ea127556d014960b0a469227692157c2cd56abc443801d3e5919bb0399c1f1
+requirements:
+  run:
+    - xarray
+    - cftime
+about:
+  home: https://github.com/xarray-contrib/cf-xarray/
+  PyPI: https://pypi.org/project/cf-xarray
+  summary: A convenience wrapper for using CF attributes on xarray objects
+  license: Apache License Version 2.0
