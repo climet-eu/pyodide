@@ -1,5 +1,5 @@
 diff --git a/fsspec/asyn.py b/fsspec/asyn.py
-index de41839..01d0479 100644
+index de41839..31a5aee 100644
 --- a/fsspec/asyn.py
 +++ b/fsspec/asyn.py
 @@ -11,6 +11,8 @@ from contextlib import contextmanager
@@ -19,7 +19,7 @@ index de41839..01d0479 100644
  loop = [None]  # global event loop for any non-async instance
  _lock = None  # global lock placeholder
  get_running_loop = asyncio.get_running_loop
-@@ -43,7 +44,6 @@ def reset_lock():
+@@ -43,23 +44,10 @@ def reset_lock():
      """
      global _lock
  
@@ -27,11 +27,26 @@ index de41839..01d0479 100644
      loop[0] = None
      _lock = None
  
-@@ -69,40 +69,22 @@ def sync(loop, func, *args, timeout=None, **kwargs):
-     >>> fsspec.asyn.sync(fsspec.asyn.get_loop(), func, *args,
+ 
+-async def _runner(event, coro, result, timeout=None):
+-    timeout = timeout if timeout else None  # convert 0 or 0.0 to None
+-    if timeout is not None:
+-        coro = asyncio.wait_for(coro, timeout=timeout)
+-    try:
+-        result[0] = await coro
+-    except Exception as ex:
+-        result[0] = ex
+-    finally:
+-        event.set()
+-
+-
+ def sync(loop, func, *args, timeout=None, **kwargs):
+     """
+     Make loop run coroutine until it returns. Runs in other thread
+@@ -70,39 +58,29 @@ def sync(loop, func, *args, timeout=None, **kwargs):
                           timeout=timeout, **kwargs)
      """
--    timeout = timeout if timeout else None  # convert 0 or 0.0 to None
+     timeout = timeout if timeout else None  # convert 0 or 0.0 to None
 -    # NB: if the loop is not running *yet*, it is OK to submit work
 -    # and we will wait for it
 -    if loop is None or loop.is_closed():
@@ -52,7 +67,10 @@ index de41839..01d0479 100644
 -        # this loops allows thread to get interrupted
 -        if event.wait(1):
 -            break
--        if timeout is not None:
++
++    # use JSPI if available
++    if pyodide.ffi.can_run_sync():
+         if timeout is not None:
 -            timeout -= 1
 -            if timeout < 0:
 -                raise FSTimeoutError
@@ -63,10 +81,13 @@ index de41839..01d0479 100644
 -        raise FSTimeoutError from return_result
 -    elif isinstance(return_result, BaseException):
 -        raise return_result
++            coro = asyncio.wait_for(coro, timeout=timeout)
 +
-+    # use JSPI if available
-+    if pyodide.ffi.can_run_sync():
-+        return pyodide.ffi.run_sync(coro)
++        try:
++            return pyodide.ffi.run_sync(coro)
++        except asyncio.TimeoutError as err:
++            # suppress asyncio.TimeoutError, raise FSTimeoutError
++            raise FSTimeoutError from return_result
 +
 +    # otherwise fall back to polling the awaitable once
 +    # and hoping that it resolves immediately
@@ -82,7 +103,7 @@ index de41839..01d0479 100644
  
  
  def sync_wrapper(func, obj=None):
-@@ -144,10 +126,6 @@ def get_loop():
+@@ -144,10 +122,6 @@ def get_loop():
              if loop[0] is None:
                  with _selector_policy():
                      loop[0] = asyncio.new_event_loop()
@@ -93,7 +114,7 @@ index de41839..01d0479 100644
      return loop[0]
  
  
-@@ -232,6 +210,10 @@ async def _run_coros_in_chunks(
+@@ -232,6 +206,10 @@ async def _run_coros_in_chunks(
          If yes, you normally expect smaller batches.
      """
  
