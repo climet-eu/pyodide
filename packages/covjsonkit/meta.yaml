@@ -1,0 +1,23 @@
+package:
+  name: covjsonkit
+  version: 0.1.1
+  top-level:
+    - covjsonkit
+source:
+  url: https://files.pythonhosted.org/packages/ac/a6/a2e8b2f74dac4ffe74d34598884929aa5b6f256c63b3ba709ea6b36a6858/covjsonkit-0.1.1.tar.gz
+  sha256: 76df848efd1810ae05f90d20090bb0c296daafd8a19359292cdaab806827f54c
+requirements:
+  run:
+    - pandas
+    - orjson
+    - xarray
+    - pandas
+    - covjson-pydantic
+    - conflator
+about:
+  home: https://github.com/ecmwf/covjsonkit
+  PyPI: https://pypi.org/project/covjsonkit
+  summary:
+    ECMWF library for encoding and decoding coerageJSON files/objects of meteorlogical
+    features such as vertical profiles and time series.
+  license: Apache License Version 2.0

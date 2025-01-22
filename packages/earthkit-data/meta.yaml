@@ -12,6 +12,7 @@ requirements:
     - Cartopy
     - cdsapi
     - cfgrib
+    - covjsonkit
     - dask
     - earthkit-geo
     - earthkit-meteo
