@@ -53,7 +53,11 @@ class PyodidePackageFinder(importlib.abc.MetaPathFinder):
         if getattr(pyodide_js.loadedPackages, pkg.name, None) is not None:
             return None
 
-        pyodide_js.loadPackageSync(package_name)
+        # use JSPI if available, otherwise fall back to loadPackageSync
+        if pyodide.ffi.can_run_sync():
+            pyodide.ffi.run_sync(pyodide_js.loadPackage(package_name))
+        else:
+            pyodide_js.loadPackageSync(package_name)
 
         # the package is now installed and can be loaded as usual
         return None
