@@ -1,11 +1,14 @@
 package:
   name: pydantic_core
-  version: 2.25.1
+  version: 2.27.2
   top-level:
     - pydantic_core
 source:
-  url: https://github.com/pydantic/pydantic-core/releases/download/v2.25.1/pydantic_core-2.25.1-cp312-cp312-emscripten_3_1_58_wasm32.whl
-  sha256: f4b77016b1511e54a8c6bd833bb68e190b96989ba9997f9e0f023cfb0f8a16c2
+  url: https://github.com/pydantic/pydantic-core/releases/download/v2.27.2/pydantic_core-2.27.2-cp312-cp312-emscripten_3_1_58_wasm32.whl
+  sha256: cf0a64dd4f748d6bf12b71f8c3502242191c414d9519ed59b33feff8b1e18b9c
+requirements:
+  run:
+    - typing-extensions
 about:
   home: https://github.com/pydantic/pydantic-core
   PyPI: https://pypi.org/project/pydantic_core
