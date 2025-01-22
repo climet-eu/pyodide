@@ -9,6 +9,7 @@ import pyodide_js
 import pyodide_http
 
 
+# patch some asyncio functions if JSPI is not available
 def patch_syncifiable_asyncio():
     async def asyncio_gather(*coros_or_futures, return_exceptions=False):
         results = []
@@ -24,8 +25,6 @@ def patch_syncifiable_asyncio():
 
         return results
 
-    # FIXME: somehow detect if we're actually running on a loop and use the
-    #        actual async sleep in that case
     async def asyncio_sleep(delay, result=None):
         import time
 
@@ -156,11 +155,14 @@ def patch_all():
         return
     patch_all._patched = True
 
-    pyodide_http.patch_all()
-
-    patch_syncifiable_asyncio()
-    patch_import_loader()
     patch_pyodide_stdio()
+
+    if not pyodide.ffi.can_run_sync():
+        patch_syncifiable_asyncio()
+
+    patch_import_loader()
+
+    pyodide_http.patch_all()
 
 
 class PyodideMemoryMonitor:

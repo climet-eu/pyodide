@@ -1,8 +1,17 @@
 diff --git a/fsspec/asyn.py b/fsspec/asyn.py
-index de41839..3895fd2 100644
+index de41839..01d0479 100644
 --- a/fsspec/asyn.py
 +++ b/fsspec/asyn.py
-@@ -18,7 +18,6 @@ from .spec import AbstractBufferedFile, AbstractFileSystem
+@@ -11,6 +11,8 @@ from contextlib import contextmanager
+ from glob import has_magic
+ from typing import TYPE_CHECKING, Iterable
+ 
++import pyodide
++
+ from .callbacks import DEFAULT_CALLBACK
+ from .exceptions import FSTimeoutError
+ from .implementations.local import LocalFileSystem, make_path_posix, trailing_sep
+@@ -18,7 +20,6 @@ from .spec import AbstractBufferedFile, AbstractFileSystem
  from .utils import glob_translate, is_exception, other_paths
  
  private = re.compile("_[^_]")
@@ -10,7 +19,7 @@ index de41839..3895fd2 100644
  loop = [None]  # global event loop for any non-async instance
  _lock = None  # global lock placeholder
  get_running_loop = asyncio.get_running_loop
-@@ -43,7 +42,6 @@ def reset_lock():
+@@ -43,7 +44,6 @@ def reset_lock():
      """
      global _lock
  
@@ -18,7 +27,7 @@ index de41839..3895fd2 100644
      loop[0] = None
      _lock = None
  
-@@ -69,40 +67,15 @@ def sync(loop, func, *args, timeout=None, **kwargs):
+@@ -69,40 +69,22 @@ def sync(loop, func, *args, timeout=None, **kwargs):
      >>> fsspec.asyn.sync(fsspec.asyn.get_loop(), func, *args,
                           timeout=timeout, **kwargs)
      """
@@ -27,8 +36,7 @@ index de41839..3895fd2 100644
 -    # and we will wait for it
 -    if loop is None or loop.is_closed():
 -        raise RuntimeError("Loop is not running")
-+    awaitable = func(*args, **kwargs).__await__()
-     try:
+-    try:
 -        loop0 = asyncio.events.get_running_loop()
 -        if loop0 is loop:
 -            raise NotImplementedError("Calling sync() from within a running loop")
@@ -36,7 +44,7 @@ index de41839..3895fd2 100644
 -        raise
 -    except RuntimeError:
 -        pass
--    coro = func(*args, **kwargs)
+     coro = func(*args, **kwargs)
 -    result = [None]
 -    event = threading.Event()
 -    asyncio.run_coroutine_threadsafe(_runner(event, coro, result, timeout), loop)
@@ -55,7 +63,15 @@ index de41839..3895fd2 100644
 -        raise FSTimeoutError from return_result
 -    elif isinstance(return_result, BaseException):
 -        raise return_result
-+        next(awaitable)
++
++    # use JSPI if available
++    if pyodide.ffi.can_run_sync():
++        return pyodide.ffi.run_sync(coro)
++
++    # otherwise fall back to polling the awaitable once
++    # and hoping that it resolves immediately
++    try:
++        next(coro.__await__())
 +    except StopIteration as result:
 +        return result.value
 +    except Exception as err:
@@ -66,7 +82,7 @@ index de41839..3895fd2 100644
  
  
  def sync_wrapper(func, obj=None):
-@@ -144,10 +117,6 @@ def get_loop():
+@@ -144,10 +126,6 @@ def get_loop():
              if loop[0] is None:
                  with _selector_policy():
                      loop[0] = asyncio.new_event_loop()
@@ -77,48 +93,14 @@ index de41839..3895fd2 100644
      return loop[0]
  
  
-@@ -232,43 +201,7 @@ async def _run_coros_in_chunks(
+@@ -232,6 +210,10 @@ async def _run_coros_in_chunks(
          If yes, you normally expect smaller batches.
      """
  
--    if batch_size is None:
--        batch_size = _get_batch_size(nofiles=nofiles)
--
--    if batch_size == -1:
--        batch_size = len(coros)
--
--    assert batch_size > 0
--
--    async def _run_coro(coro, i):
--        try:
--            return await asyncio.wait_for(coro, timeout=timeout), i
--        except Exception as e:
--            if not return_exceptions:
--                raise
--            return e, i
--        finally:
--            callback.relative_update(1)
--
--    i = 0
--    n = len(coros)
--    results = [None] * n
--    pending = set()
--
--    while pending or i < n:
--        while len(pending) < batch_size and i < n:
--            pending.add(asyncio.ensure_future(_run_coro(coros[i], i)))
--            i += 1
--
--        if not pending:
--            break
--
--        done, pending = await asyncio.wait(pending, return_when=asyncio.FIRST_COMPLETED)
--        while done:
--            result, k = await done.pop()
--            results[k] = result
--
--    return results
-+    return [await c for c in coros]
++    # if JSPI is not available, run the coros sequentially
++    if not pyodide.ffi.can_run_sync():
++        return [await c for c in coros]
++
+     if batch_size is None:
+         batch_size = _get_batch_size(nofiles=nofiles)
  
- 
- # these methods should be implemented as async by any async-able backend
