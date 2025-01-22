@@ -1,5 +1,5 @@
 diff --git a/fsspec/asyn.py b/fsspec/asyn.py
-index de41839..31a5aee 100644
+index de41839..c4d9116 100644
 --- a/fsspec/asyn.py
 +++ b/fsspec/asyn.py
 @@ -11,6 +11,8 @@ from contextlib import contextmanager
@@ -87,7 +87,7 @@ index de41839..31a5aee 100644
 +            return pyodide.ffi.run_sync(coro)
 +        except asyncio.TimeoutError as err:
 +            # suppress asyncio.TimeoutError, raise FSTimeoutError
-+            raise FSTimeoutError from return_result
++            raise FSTimeoutError from err
 +
 +    # otherwise fall back to polling the awaitable once
 +    # and hoping that it resolves immediately
