@@ -129,6 +129,7 @@
   },
   "dependencies": {
     "crc-32": "^1.2.2",
+    "crypto-es": "^2.1.0",
     "ws": "^8.5.0"
   },
   "types": "./pyodide.d.ts",
