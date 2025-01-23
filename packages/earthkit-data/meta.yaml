@@ -32,6 +32,8 @@ requirements:
     - pandas
     - pdbufr
     - polytope-client
+    # - pyfdb  # TODO
+    - pyodc
     - pyyaml
     - tqdm
     - xarray
