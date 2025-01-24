@@ -16,14 +16,15 @@ requirements:
   host:
     - numpy
   run:
-    - numpy
-    - matplotlib
-    - shapely
-    - packaging
-    - pyshp
-    - pyproj
-    - Pillow
-    - scipy
+    - fiona       # required
+    - numpy       # required
+    - matplotlib  # required, not loaded immediately
+    - shapely     # required
+    - packaging   # required, not loaded immediately
+    - pyshp       # required
+    - pyproj      # required
+    - Pillow      # optional
+    - scipy       # optional
 
 build:
   vendor-sharedlib: true

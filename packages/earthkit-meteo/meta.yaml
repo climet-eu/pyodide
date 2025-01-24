@@ -8,7 +8,7 @@ source:
   sha256: 2aec3ff6a505dcb129fbbafc7b20d7868420c82eb7e7229c7d7679a87b2efcd4
 requirements:
   run:
-    - numpy
+    - numpy  # required, not loaded immediately
 about:
   home: https://github.com/ecmwf/earthkit-meteo
   PyPI: https://pypi.org/project/earthkit-meteo

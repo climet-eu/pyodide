@@ -8,11 +8,11 @@ source:
   sha256: 3290f526f87ae6e77655555baba4f36681c555b8bdbbff430b70e52c34c86245
 requirements:
   run:
-    - comm
-    - ipython
-    - jupyterlab_widgets
-    - traitlets
-    - widgetsnbextension
+    - comm                # required
+    - ipython             # required
+    - jupyterlab_widgets  # required, not loaded immediately
+    - traitlets           # required
+    - widgetsnbextension  # required, not loaded immediately
 about:
   home: http://jupyter.org
   PyPI: https://pypi.org/project/ipywidgets

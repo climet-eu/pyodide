@@ -8,10 +8,10 @@ source:
   sha256: f4d0b69dcf4a0ed740daa313dbcd4d5665420d305c50ca879285e96dc828093f
 requirements:
   run:
-    - requests
-    - tqdm
-    - pytz
-    - python-dateutil
+    - requests         # required
+    - tqdm             # required, not loaded immediately
+    - pytz             # required
+    - python-dateutil  # required
 about:
   home: https://github.com/ecmwf/multiurl
   PyPI: https://pypi.org/project/multiurl

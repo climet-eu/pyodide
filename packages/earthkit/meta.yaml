@@ -8,13 +8,13 @@ source:
   sha256: 6901bafc182fb1ee8b6d2c28ab69e1158510cf6dcbbc78bf24b7f5fd3c81d6fc
 requirements:
   run:
-    - earthkit-data
-    - earthkit-geo
-    - earthkit-meteo
-    - earthkit-plots
-    - earthkit-regrid
-    - earthkit-time
-    - earthkit-transforms
+    - earthkit-data        # required
+    - earthkit-geo         # required
+    - earthkit-meteo       # required
+    - earthkit-plots       # required
+    - earthkit-regrid      # required
+    - earthkit-time        # required
+    - earthkit-transforms  # required
 about:
   home: https://github.com/ecmwf/earthkit
   PyPI: https://pypi.org/project/earthkit

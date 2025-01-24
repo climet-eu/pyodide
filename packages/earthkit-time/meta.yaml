@@ -8,7 +8,7 @@ source:
   sha256: 5d60729d03b505730b8e7f62c6fd325182ae2e8d2b811e48172f16fedcbf0136
 requirements:
   run:
-    - pyyaml
+    - pyyaml  # required
 about:
   home: https://github.com/ecmwf/earthkit-time
   PyPI: https://pypi.org/project/earthkit-time

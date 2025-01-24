@@ -11,15 +11,15 @@ test:
     - dask
 requirements:
   run:
-    - click
-    - cloudpickle
-    - fsspec
-    - Jinja2
-    - numpy
-    - packaging
-    - partd
-    - pyyaml
-    - toolz
+    - click        # required, not loaded immediately
+    - cloudpickle  # required
+    - fsspec       # required, not loaded immediately
+    - Jinja2       # optional, but loaded immediately
+    - numpy        # optional, but loaded immediately
+    - packaging    # required
+    - partd        # required, not loaded immediately
+    - pyyaml       # required
+    - toolz        # required
 about:
   home: https://github.com/dask/dask/
   PyPI: https://pypi.org/project/dask

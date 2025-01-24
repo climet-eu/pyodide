@@ -11,8 +11,8 @@ requirements:
   host:
     - libproj
   run:
-    - certifi
-    - sqlite3
+    - certifi  # required
+    - sqlite3  # maybe not required?
 
 build:
   script: |

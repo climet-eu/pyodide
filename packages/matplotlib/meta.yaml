@@ -46,17 +46,17 @@ requirements:
   host:
     - numpy
   run:
-    - contourpy
-    - cycler
-    - fonttools
-    - kiwisolver
-    - numpy
-    - packaging
-    - Pillow
-    - pyparsing
-    - python-dateutil
-    - pytz
-    - matplotlib-pyodide
+    - contourpy           # required, not loaded immediately
+    - cycler              # required
+    - fonttools           # required, not loaded immediately
+    - kiwisolver          # required, not loaded immediately
+    - numpy               # required
+    - packaging           # required
+    - Pillow              # required
+    - pyparsing           # required
+    - python-dateutil     # required, not loaded immediately
+    - pytz                # required, not loaded immediately
+    - matplotlib-pyodide  # required
 
 about:
   home: https://matplotlib.org

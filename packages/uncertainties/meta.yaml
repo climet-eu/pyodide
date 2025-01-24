@@ -9,6 +9,7 @@ source:
 requirements:
   run:
     - future
+    - numpy
 about:
   home: http://uncertainties-python-package.readthedocs.io/
   PyPI: https://pypi.org/project/uncertainties

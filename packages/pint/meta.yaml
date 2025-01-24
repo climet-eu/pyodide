@@ -8,10 +8,13 @@ source:
   sha256: aa54926c8772159fcf65f82cc0d34de6768c151b32ad1deb0331291c38fe7659
 requirements:
   run:
-    - flexcache
-    - flexparser
-    - platformdirs
-    - typing-extensions
+    - dask               # optional, but loaded immediately
+    - flexcache          # required
+    - flexparser         # required
+    - numpy              # optional, but loaded immediately
+    - platformdirs       # required
+    - typing-extensions  # required
+    - uncertainties      # optional, but loaded immediately
 about:
   home: https://github.com/hgrecco/pint
   PyPI: https://pypi.org/project/pint

@@ -10,9 +10,12 @@ source:
     - patches/0001-no-caching.patch
 requirements:
   run:
-    - filelock
-    - multiurl
-    - scipy
+    - filelock    # required
+    - ipywidgets  # optional, but loaded immediately
+    - multiurl    # required
+    - numpy       # required
+    - scipy       # required
+    - tqdm        # optional, but loaded immediately
 about:
   home: https://github.com/ecmwf/earthkit-regrid
   PyPI: https://pypi.org/project/earthkit-regrid
