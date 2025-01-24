@@ -14,7 +14,6 @@ requirements:
     - geos
   run:
     - attrs       # required
-    - boto3       # optional, but loaded immediately
     - certifi     # required, not loaded immediately
     - setuptools  # required
     - six         # maybe not required?
