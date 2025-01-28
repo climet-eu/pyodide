@@ -115,12 +115,9 @@ def patch_pyodide_stdio():
             console.log(message);
 
             // Reduce noise by ignoring
-            // "PACKAGE already loaded from CHANNEL channel"
+            // "PACKAGE already loaded from CHANNEL"
             // messages
-            if (
-                message.includes(" already loaded from ") &&
-                message.endsWith(" channel")
-            ) {
+            if (message.includes(" already loaded from ")) {
                 return;
             }
 
