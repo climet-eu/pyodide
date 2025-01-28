@@ -14,7 +14,7 @@ requirements:
     - pyproj     # required
     - packaging  # required
     - pandas     # required
-      # - matplotlib # matplotlib is not a hard dependency
+    - pyogrio    # required
 about:
   home: http://geopandas.org
   PyPI: https://pypi.org/project/geopandas

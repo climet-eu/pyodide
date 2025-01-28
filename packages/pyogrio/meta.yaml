@@ -1,0 +1,25 @@
+package:
+  name: pyogrio
+  version: 0.10.0
+  top-level:
+    - pyogrio
+source:
+  url: https://files.pythonhosted.org/packages/a5/8f/5a784595524a79c269f2b1c880f4fdb152867df700c97005dda51997da02/pyogrio-0.10.0.tar.gz
+  sha256: ec051cb568324de878828fae96379b71858933413e185148acb6c162851ab23c
+requirements:
+  host:
+    - gdal
+  run:
+    - certifi
+    - numpy
+    - packaging
+build:
+  vendor-sharedlib: true
+  script: |
+    export GDAL_CONFIG=${WASM_LIBRARY_DIR}/bin/gdal-config
+    echo ${GDAL_CONFIG}
+about:
+  home: https://github.com/geopandas/pyogrio
+  PyPI: https://pypi.org/project/pyogrio
+  summary: Vectorized spatial vector file format I/O using GDAL/OGR
+  license: MIT License
