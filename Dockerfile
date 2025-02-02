@@ -9,7 +9,7 @@ RUN apt-get update \
         autoconf autotools-dev automake texinfo dejagnu \
         build-essential libtool libltdl-dev \
         gnupg2 libdbus-glib-1-2 sudo sqlite3 \
-        ninja-build jq xxd \
+        ninja-build jq xxd flex bison \
   && rm -rf /var/lib/apt/lists/*
 
 # Normally, it is a bad idea to install rustup and cargo in

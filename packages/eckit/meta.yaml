@@ -1,0 +1,35 @@
+package:
+  name: eckit
+  version: 1.28.5
+
+source:
+  url: https://github.com/ecmwf/eckit/archive/refs/tags/1.28.5.tar.gz
+  sha256: e856651a2a532af6a37c69e8e53eb805beaad1f452007930e479e94c56401dc0
+  patches:
+    - patches/0001-uid_t.patch
+    - patches/0002-strerror_r.patch
+    - patches/0003-no-tools.patch
+    - patches/0004-no-regressions.patch
+
+build:
+  type: shared_library
+  script: |
+    git clone --branch 3.7.0 --depth 1 https://github.com/ecmwf/ecbuild;
+
+    mkdir -p build;
+
+    cd build \
+        && emcmake cmake ../ \
+        -DCMAKE_INSTALL_PREFIX=${WASM_LIBRARY_DIR} \
+        -DBUILD_SHARED_LIBS=ON \
+        -DENABLE_BUILD_TOOLS=OFF \
+        -DENABLE_MPI=OFF \
+        -DENABLE_ECKIT_CMD=OFF \
+        -DENABLE_ECKIT_SQL=ON \
+        -DENABLE_OMP=OFF \
+        -DENABLE_ECKIT_CODEC=OFF \
+        -DDISABLE_OS_CHECK=ON \
+        -DENABLE_TESTS=OFF;
+
+    emmake make -j ${PYODIDE_JOBS:-3};
+    emmake make -j ${PYODIDE_JOBS:-3} install;

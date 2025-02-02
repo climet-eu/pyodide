@@ -1,0 +1,33 @@
+package:
+  name: libodc
+  version: 1.5.2
+
+source:
+  url: https://github.com/ecmwf/odc/archive/refs/tags/1.5.2.tar.gz
+  sha256: 49575c3ef9ae8825d588357022d0ff6caf3e557849888c9d2f0677e9efe95869
+  patches:
+    - patches/0001-32bit-long.patch
+
+requirements:
+  host:
+    - eckit
+
+build:
+  type: shared_library
+  script: |
+    git clone --branch 3.4.0 --depth 1 https://github.com/ecmwf/ecbuild;
+
+    mkdir -p build;
+
+    cd build \
+        && emcmake cmake ../ \
+        -DCMAKE_INSTALL_PREFIX=${WASM_LIBRARY_DIR} \
+        -DBUILD_SHARED_LIBS=ON \
+        -DDISABLE_OS_CHECK=ON \
+        -DENABLE_TESTS=OFF \
+        -DENABLE_FORTRAN=OFF;
+
+    emmake make -j ${PYODIDE_JOBS:-3};
+    emmake make -j ${PYODIDE_JOBS:-3} install;
+
+    cp -P ${WASM_LIBRARY_DIR}/lib/libodc.so ${DISTDIR}

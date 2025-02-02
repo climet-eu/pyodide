@@ -1,0 +1,12 @@
+diff --git a/src/eckit/filesystem/PathName.h b/src/eckit/filesystem/PathName.h
+index 851990d9c..0e4586cfa 100644
+--- a/src/eckit/filesystem/PathName.h
++++ b/src/eckit/filesystem/PathName.h
+@@ -27,6 +27,7 @@
+ #include <mutex>
+ 
+ namespace eckit {
++    using uid_t = unsigned int;
+ 
+ class BasePathName;
+ class DataHandle;

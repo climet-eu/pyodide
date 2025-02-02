@@ -1,0 +1,31 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 14d2ed10..55f43cae 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -35,7 +35,7 @@ ecbuild_check_c_source_return(
+ )
+ 
+ if( NOT check_long_final OR NOT __sizeof_long_final EQUAL "8" )
+-    message( FATAL_ERROR "operating system ${CMAKE_SYSTEM} (${EC_OS_BITS} bits) and sizeof long [${__sizeof_long_final}] -- long must be 64 bits exactly" )
++    message( WARNING "operating system ${CMAKE_SYSTEM} (${EC_OS_BITS} bits) and sizeof long [${__sizeof_long_final}] -- long must be 64 bits exactly" )
+ elseif( NOT check_double_final OR NOT __sizeof_double_final EQUAL "8" )
+     message( FATAL_ERROR "operating system ${CMAKE_SYSTEM} (${EC_OS_BITS} bits) and sizeof double [${__sizeof_double_final}] -- double must be 64 bits exactly" )
+ endif()
+@@ -53,7 +53,7 @@ ecbuild_check_cxx_source_return(
+ )
+ 
+ if( NOT cxx_check_long_final OR NOT __cxx_sizeof_long_final EQUAL "8" )
+-    message( FATAL_ERROR "operating system ${CMAKE_SYSTEM} (${EC_OS_BITS} bits) and sizeof long [${__cxx_sizeof_long_final}] -- long must be 64 bits exactly" )
++    message( WARNING "operating system ${CMAKE_SYSTEM} (${EC_OS_BITS} bits) and sizeof long [${__cxx_sizeof_long_final}] -- long must be 64 bits exactly" )
+ elseif( NOT cxx_check_double_final OR NOT __cxx_sizeof_double_final EQUAL "8" )
+     message( FATAL_ERROR "operating system ${CMAKE_SYSTEM} (${EC_OS_BITS} bits) and sizeof double [${__cxx_sizeof_double_final}] -- double must be 64 bits exactly" )
+ endif()
+@@ -62,7 +62,7 @@ check_type_size( long ODC_SIZEOF_LONG )
+ check_type_size( double ODC_SIZEOF_DOUBLE )
+ 
+ if( NOT ODC_SIZEOF_LONG EQUAL "8" )
+-    message( FATAL_ERROR "operating system ${CMAKE_SYSTEM} (${EC_OS_BITS} bits) and sizeof long [${ODC_SIZEOF_LONG}] -- long must be 64 bits exactly" )
++    message( WARNING "operating system ${CMAKE_SYSTEM} (${EC_OS_BITS} bits) and sizeof long [${ODC_SIZEOF_LONG}] -- long must be 64 bits exactly" )
+ elseif( NOT ODC_SIZEOF_LONG EQUAL "8" )
+     message( FATAL_ERROR "operating system ${CMAKE_SYSTEM} (${EC_OS_BITS} bits) and sizeof double [${ODC_SIZEOF_LONG}] -- double must be 64 bits exactly" )
+ endif()
