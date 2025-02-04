@@ -11,8 +11,6 @@ source:
     - patches/0001-Remove-non-essential-build-targets.patch
 
 requirements:
-  run:
-    - openblas
   host:
     - openblas
 

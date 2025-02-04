@@ -13,8 +13,6 @@ requirements:
     - libproj
     - libiconv
     - geos
-  run:
-    - geos
 
 build:
   type: shared_library

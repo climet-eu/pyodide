@@ -8,8 +8,11 @@ source:
   sha256: c1ba14b08e4a5f5c31a302b7721239695b2f0f058d125bd5ce1ee36b9d9d3c3b
 
 requirements:
-  run:
+  host:
     - libmagic
+
+build:
+  vendor-sharedlib: true
 
 about:
   home: http://github.com/ahupp/python-magic

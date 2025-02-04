@@ -41,6 +41,7 @@ source:
     - patches/0018-Fix-lapack-larfg-function-signature.patch
 
 build:
+  vendor-sharedlib: true
   cflags: |
     -I$(WASM_LIBRARY_DIR)/include
     -Wno-return-type
@@ -128,7 +129,6 @@ requirements:
     - boost-cpp
   run:
     - numpy
-    - openblas
   executable:
     - gfortran
 
