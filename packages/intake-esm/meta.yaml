@@ -1,14 +1,11 @@
 package:
   name: intake-esm
-  version: 2024.2.6
+  version: 2025.2.3
   top-level:
     - intake_esm
 source:
-  # FIXME: Upgrade to PyPi artifact once released
-  url: https://github.com/intake/intake-esm/archive/9db6ad637c5995174aa532069934b81101153a72.tar.gz
-  sha256: 283d9e40a7226929bd7a15395a21339cace80075b6ba70be43611beacf271798
-  patches:
-    - patches/0001-fallback-version.patch
+  url: https://files.pythonhosted.org/packages/da/58/7727592d0c72bfd3ad83144e53d3c2ff5f1c7fa2f0f42b183405574e32ff/intake_esm-2025.2.3-py3-none-any.whl
+  sha256: c836df7be119806894f98fb86f36697cfd05e49c68c5b2418cb89ed696ac478c
 requirements:
   run:
     - dask
