@@ -23,6 +23,8 @@ import {
   resolvePath,
   initNodeModules,
   ensureDirNode,
+  loadLockFile,
+  loadLockFileSync,
 } from "./compat";
 import { Installer } from "./installer";
 
@@ -34,6 +36,7 @@ import { Installer } from "./installer";
  * @private
  */
 export async function initializePackageIndex(
+  api: typeof API,
   lockFilePromise: Promise<Lockfile>,
 ) {
   await initNodeModules();
@@ -44,57 +47,58 @@ export async function initializePackageIndex(
     );
   }
 
-  if (lockfile.info.version !== API.version) {
+  if (lockfile.info.version !== api.version) {
     throw new Error(
       "Lock file version doesn't match Pyodide version.\n" +
         `   lockfile version: ${lockfile.info.version}\n` +
-        `   pyodide  version: ${API.version}`,
+        `   pyodide  version: ${api.version}`,
     );
   }
 
-  API.lockfile_info = lockfile.info;
-  API.lockfile_packages = lockfile.packages;
-  API.lockfile_unvendored_stdlibs_and_test = [];
+  api.lockfile_info = lockfile.info;
+  api.lockfile_packages = lockfile.packages;
+  api.lockfile_unvendored_stdlibs_and_test = [];
 
   // micropip compatibility
-  API.repodata_info = lockfile.info;
-  API.repodata_packages = lockfile.packages;
+  api.repodata_info = lockfile.info;
+  api.repodata_packages = lockfile.packages;
 
   // compute the inverted index for imports to package names
-  API._import_name_to_package_name = new Map<string, string>();
-  for (let name of Object.keys(API.lockfile_packages)) {
-    const pkg = API.lockfile_packages[name];
+  api._import_name_to_package_name = new Map<string, string>();
+  for (let name of Object.keys(api.lockfile_packages)) {
+    const pkg = api.lockfile_packages[name];
 
     for (let import_name of pkg.imports) {
-      API._import_name_to_package_name.set(import_name, name);
+      api._import_name_to_package_name.set(import_name, name);
     }
 
     if (pkg.package_type === "cpython_module") {
-      API.lockfile_unvendored_stdlibs_and_test.push(name);
+      api.lockfile_unvendored_stdlibs_and_test.push(name);
     }
   }
 
-  API.lockfile_unvendored_stdlibs =
-    API.lockfile_unvendored_stdlibs_and_test.filter(
+  api.lockfile_unvendored_stdlibs =
+  api.lockfile_unvendored_stdlibs_and_test.filter(
       (lib: string) => lib !== "test",
     );
-  let toLoad = API.config.packages;
-  if (API.config.fullStdLib) {
-    toLoad = [...toLoad, ...API.lockfile_unvendored_stdlibs];
+  let toLoad = api.config.packages;
+  if (api.config.fullStdLib) {
+    toLoad = [...toLoad, ...api.lockfile_unvendored_stdlibs];
   }
   await loadPackage(toLoad, { messageCallback() {} });
   // Have to wait for bootstrapFinalizedPromise before calling Python APIs
-  await API.bootstrapFinalizedPromise;
+  await api.bootstrapFinalizedPromise;
   // Set up module_not_found_hook
-  const importhook = API._pyodide._importhook;
+  const importhook = api._pyodide._importhook;
   importhook.register_module_not_found_hook(
-    API._import_name_to_package_name,
-    API.lockfile_unvendored_stdlibs_and_test,
+    api._import_name_to_package_name,
+    api.lockfile_unvendored_stdlibs_and_test,
   );
-  API.package_loader.init_loaded_packages();
+  api.package_loader.init_loaded_packages();
 }
 
 export function initializePackageIndexSync(
+  api: typeof API,
   lockfile: Lockfile,
 ) {
   if (!lockfile.packages) {
@@ -103,56 +107,56 @@ export function initializePackageIndexSync(
     );
   }
 
-  if (lockfile.info.version !== API.version) {
+  if (lockfile.info.version !== api.version) {
     throw new Error(
       "Lock file version doesn't match Pyodide version.\n" +
         `   lockfile version: ${lockfile.info.version}\n` +
-        `   pyodide  version: ${API.version}`,
+        `   pyodide  version: ${api.version}`,
     );
   }
 
-  API.lockfile_info = lockfile.info;
-  API.lockfile_packages = lockfile.packages;
-  API.lockfile_unvendored_stdlibs_and_test = [];
+  api.lockfile_info = lockfile.info;
+  api.lockfile_packages = lockfile.packages;
+  api.lockfile_unvendored_stdlibs_and_test = [];
 
   // micropip compatibility
-  API.repodata_info = lockfile.info;
-  API.repodata_packages = lockfile.packages;
+  api.repodata_info = lockfile.info;
+  api.repodata_packages = lockfile.packages;
 
   // compute the inverted index for imports to package names
-  API._import_name_to_package_name = new Map<string, string>();
-  for (let name of Object.keys(API.lockfile_packages)) {
-    const pkg = API.lockfile_packages[name];
+  api._import_name_to_package_name = new Map<string, string>();
+  for (let name of Object.keys(api.lockfile_packages)) {
+    const pkg = api.lockfile_packages[name];
 
     for (let import_name of pkg.imports) {
-      API._import_name_to_package_name.set(import_name, name);
+      api._import_name_to_package_name.set(import_name, name);
     }
 
     if (pkg.package_type === "cpython_module") {
-      API.lockfile_unvendored_stdlibs_and_test.push(name);
+      api.lockfile_unvendored_stdlibs_and_test.push(name);
     }
   }
 
-  API.lockfile_unvendored_stdlibs =
-    API.lockfile_unvendored_stdlibs_and_test.filter(
+  api.lockfile_unvendored_stdlibs =
+    api.lockfile_unvendored_stdlibs_and_test.filter(
       (lib: string) => lib !== "test",
     );
-  let toLoad = API.config.packages;
-  if (API.config.fullStdLib) {
-    toLoad = [...toLoad, ...API.lockfile_unvendored_stdlibs];
+  let toLoad = api.config.packages;
+  if (api.config.fullStdLib) {
+    toLoad = [...toLoad, ...api.lockfile_unvendored_stdlibs];
   }
   loadPackageSync(toLoad, { messageCallback() {} });
   // Can't initialize the package inde until bootstrap is finalized.
-  if (API.bootstrapFinalizedDone !== true) {
+  if (api.bootstrapFinalizedDone !== true) {
     throw new Error("can't sync initialize the package index until after bootstrap is finalized");
   }
   // Set up module_not_found_hook
-  const importhook = API._pyodide._importhook;
+  const importhook = api._pyodide._importhook;
   importhook.register_module_not_found_hook(
-    API._import_name_to_package_name,
-    API.lockfile_unvendored_stdlibs_and_test,
+    api._import_name_to_package_name,
+    api.lockfile_unvendored_stdlibs_and_test,
   );
-  API.package_loader.init_loaded_packages();
+  api.package_loader.init_loaded_packages();
 }
 
 const DEFAULT_CHANNEL = "default channel";
@@ -781,7 +785,7 @@ export class PackageManager {
       const buffer = this.downloadPackageSync(pkg, checkIntegrity);
 
       // Can't install until bootstrap is finalized.
-      if (API.bootstrapFinalizedDone !== true) {
+      if (this.#api.bootstrapFinalizedDone !== true) {
         throw new Error("can't sync install package until after bootstrap is finalized");
       }
 
@@ -832,6 +836,17 @@ export class PackageManager {
   public setStderr(logger: (message: string) => void) {
     this.stderr = logger;
   }
+
+  public async reloadLockFileFromURL(api: typeof API, lockFileURL: string): Promise<void> {
+    api.lockFilePromise = loadLockFile(lockFileURL);
+    api.packageIndexReady = initializePackageIndex(api, api.lockFilePromise);
+    await api.packageIndexReady;
+  }
+
+  public reloadLockFileFromURLSync(api: typeof API, lockFileURL: string): void {
+    const lockfile = loadLockFileSync(lockFileURL);
+    initializePackageIndexSync(api, lockfile);
+  }
 }
 
 function filterPackageData({
@@ -864,6 +879,8 @@ export function toStringArray(str: string | PyProxy | string[]): string[] {
   return str;
 }
 
+export let reloadLockFileFromURL: (lockFileURL: string) => Promise<void>;
+export let reloadLockFileFromURLSync: (lockFileURL: string) => void;
 export let loadPackage: typeof PackageManager.prototype.loadPackage;
 export let loadPackageSync: typeof PackageManager.prototype.loadPackageSync;
 export let loadPackageSetStdout: typeof PackageManager.prototype.setStdout;
@@ -878,6 +895,13 @@ if (typeof API !== "undefined" && typeof Module !== "undefined") {
   );
   loadPackageSync = singletonPackageManager.loadPackageSync.bind(
     singletonPackageManager,
+  );
+
+  reloadLockFileFromURL = singletonPackageManager.reloadLockFileFromURL.bind(
+    singletonPackageManager, API,
+  );
+  reloadLockFileFromURLSync = singletonPackageManager.reloadLockFileFromURLSync.bind(
+    singletonPackageManager, API,
   );
 
   loadPackageSetStdout = singletonPackageManager.setStdout.bind(
@@ -903,6 +927,6 @@ if (typeof API !== "undefined" && typeof Module !== "undefined") {
   );
 
   if (API.lockFilePromise) {
-    API.packageIndexReady = initializePackageIndex(API.lockFilePromise);
+    API.packageIndexReady = initializePackageIndex(API, API.lockFilePromise);
   }
 }

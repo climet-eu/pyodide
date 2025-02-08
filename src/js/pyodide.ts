@@ -7,11 +7,9 @@ import {
   initNodeModules,
   resolvePath,
   loadLockFile,
-  loadLockFileSync,
 } from "./compat";
 
 import { createSettings } from "./emscripten-settings";
-import { initializePackageIndex, initializePackageIndexSync } from "./load-package";
 import { version } from "./version";
 
 import type { PyodideInterface } from "./api.js";
@@ -314,15 +312,4 @@ If you updated the Pyodide version, make sure you also updated the 'indexURL' pa
   // packageIndexReady? I don't remember why.
   API.initializeStreams(config.stdin, config.stdout, config.stderr);
   return pyodide;
-}
-
-export async function reloadPyodideLockFileURL(lockFileURL: string): Promise<void> {
-  API.lockFilePromise = loadLockFile(lockFileURL);
-  API.packageIndexReady = initializePackageIndex(API.lockFilePromise);
-  await API.packageIndexReady;
-}
-
-export function reloadPyodideLockFileURLSync(lockFileURL: string): void {
-  const lockfile = loadLockFileSync(lockFileURL);
-  initializePackageIndexSync(lockfile);
 }

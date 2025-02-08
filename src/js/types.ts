@@ -503,6 +503,7 @@ export type PackageManagerAPI = Pick<
   | "package_loader"
   | "lockfile_packages"
   | "bootstrapFinalizedPromise"
+  | "bootstrapFinalizedDone"
   | "sitepackages"
   | "defaultLdLibraryPath"
 > & {
