@@ -55,16 +55,33 @@ export async function initializePackageIndex(
     );
   }
 
-  api.lockfile_info = lockfile.info;
-  api.lockfile_packages = lockfile.packages;
-  api.lockfile_unvendored_stdlibs_and_test = [];
+  if (api.lockfile_info === undefined) {
+    api.lockfile_info = lockfile.info;
+    api.lockfile_packages = lockfile.packages;
+    api.lockfile_unvendored_stdlibs_and_test = [];
 
-  // micropip compatibility
-  api.repodata_info = lockfile.info;
-  api.repodata_packages = lockfile.packages;
+    // micropip compatibility
+    api.repodata_info = lockfile.info;
+    api.repodata_packages = lockfile.packages;
+
+    api._import_name_to_package_name = new Map<string, string>();
+    api.lockfile_unvendored_stdlibs = [];
+  } else {
+    Object.assign(api.lockfile_info, lockfile.info);
+    Object.keys(api.lockfile_packages).forEach(key => delete api.lockfile_packages[key]);
+    Object.assign(api.lockfile_packages, lockfile.packages);
+    api.lockfile_unvendored_stdlibs_and_test.length = 0;
+
+    // micropip compatibility
+    Object.assign(api.repodata_info, lockfile.info);
+    Object.keys(api.repodata_packages).forEach(key => delete api.repodata_packages[key]);
+    Object.assign(api.repodata_packages, lockfile.packages);
+
+    api._import_name_to_package_name.clear();
+    api.lockfile_unvendored_stdlibs.length = 0;
+  }
 
   // compute the inverted index for imports to package names
-  api._import_name_to_package_name = new Map<string, string>();
   for (let name of Object.keys(api.lockfile_packages)) {
     const pkg = api.lockfile_packages[name];
 
@@ -77,10 +94,9 @@ export async function initializePackageIndex(
     }
   }
 
-  api.lockfile_unvendored_stdlibs =
-  api.lockfile_unvendored_stdlibs_and_test.filter(
-      (lib: string) => lib !== "test",
-    );
+  api.lockfile_unvendored_stdlibs.push(...api.lockfile_unvendored_stdlibs_and_test.filter(
+    (lib: string) => lib !== "test",
+  ));
   let toLoad = api.config.packages;
   if (api.config.fullStdLib) {
     toLoad = [...toLoad, ...api.lockfile_unvendored_stdlibs];
@@ -115,16 +131,33 @@ export function initializePackageIndexSync(
     );
   }
 
-  api.lockfile_info = lockfile.info;
-  api.lockfile_packages = lockfile.packages;
-  api.lockfile_unvendored_stdlibs_and_test = [];
+  if (api.lockfile_info === undefined) {
+    api.lockfile_info = lockfile.info;
+    api.lockfile_packages = lockfile.packages;
+    api.lockfile_unvendored_stdlibs_and_test = [];
 
-  // micropip compatibility
-  api.repodata_info = lockfile.info;
-  api.repodata_packages = lockfile.packages;
+    // micropip compatibility
+    api.repodata_info = lockfile.info;
+    api.repodata_packages = lockfile.packages;
+
+    api._import_name_to_package_name = new Map<string, string>();
+    api.lockfile_unvendored_stdlibs = [];
+  } else {
+    Object.assign(api.lockfile_info, lockfile.info);
+    Object.keys(api.lockfile_packages).forEach(key => delete api.lockfile_packages[key]);
+    Object.assign(api.lockfile_packages, lockfile.packages);
+    api.lockfile_unvendored_stdlibs_and_test.length = 0;
+
+    // micropip compatibility
+    Object.assign(api.repodata_info, lockfile.info);
+    Object.keys(api.repodata_packages).forEach(key => delete api.repodata_packages[key]);
+    Object.assign(api.repodata_packages, lockfile.packages);
+
+    api._import_name_to_package_name.clear();
+    api.lockfile_unvendored_stdlibs.length = 0;
+  }
 
   // compute the inverted index for imports to package names
-  api._import_name_to_package_name = new Map<string, string>();
   for (let name of Object.keys(api.lockfile_packages)) {
     const pkg = api.lockfile_packages[name];
 
@@ -137,10 +170,9 @@ export function initializePackageIndexSync(
     }
   }
 
-  api.lockfile_unvendored_stdlibs =
-    api.lockfile_unvendored_stdlibs_and_test.filter(
-      (lib: string) => lib !== "test",
-    );
+  api.lockfile_unvendored_stdlibs.push(...api.lockfile_unvendored_stdlibs_and_test.filter(
+    (lib: string) => lib !== "test",
+  ));
   let toLoad = api.config.packages;
   if (api.config.fullStdLib) {
     toLoad = [...toLoad, ...api.lockfile_unvendored_stdlibs];
