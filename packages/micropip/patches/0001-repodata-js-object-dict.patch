@@ -45,3 +45,23 @@ index be839de..5175acd 100644
  except ImportError:
      if IN_BROWSER:
          raise
+diff --git a/micropip/freeze.py b/micropip/freeze.py
+index caa8dfb..42bbab1 100644
+--- a/micropip/freeze.py
++++ b/micropip/freeze.py
+@@ -17,13 +17,13 @@ def freeze_lockfile(
+ def freeze_data(
+     lockfile_packages: dict[str, dict[str, Any]], lockfile_info: dict[str, str]
+ ) -> dict[str, Any]:
+-    packages = deepcopy(lockfile_packages)
++    packages = deepcopy(lockfile_packages.obj.to_py())
+     packages.update(load_pip_packages())
+ 
+     # Sort
+     packages = dict(sorted(packages.items()))
+     return {
+-        "info": lockfile_info,
++        "info": lockfile_info.obj.to_py(),
+         "packages": packages,
+     }
+ 
