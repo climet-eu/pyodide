@@ -1,13 +1,11 @@
 package:
   name: covjsonkit
-  version: 0.1.1
+  version: 0.1.4
   top-level:
     - covjsonkit
 source:
-  url: https://files.pythonhosted.org/packages/ac/a6/a2e8b2f74dac4ffe74d34598884929aa5b6f256c63b3ba709ea6b36a6858/covjsonkit-0.1.1.tar.gz
-  sha256: 76df848efd1810ae05f90d20090bb0c296daafd8a19359292cdaab806827f54c
-  patches:
-    - patches/0001-no-datetime-dependency.patch
+  url: https://files.pythonhosted.org/packages/d0/1b/a83e9f40f65b6159542c3edf6bb9fe35ea7bcc8e739a7cbc36ff20947ca0/covjsonkit-0.1.4.tar.gz
+  sha256: 67ff8c8e2153c121875d524b1cc4c95c914dae2c87b1e648aeeea134841cd241
 requirements:
   run:
     - pandas
