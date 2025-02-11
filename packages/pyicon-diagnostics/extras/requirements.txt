@@ -6,10 +6,10 @@ zarr
 pandas
 cmocean
 scipy
-ipdb
+# ipdb
 ipywidgets
-jupytext
-pytest
+# jupytext
+# pytest
 healpy
 cftime
 cartopy
