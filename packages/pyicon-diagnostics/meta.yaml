@@ -21,6 +21,7 @@ requirements:
     - scipy
     - ipdb
     - ipywidgets
+    - pytest
     - healpy
     - cftime
     - Cartopy
