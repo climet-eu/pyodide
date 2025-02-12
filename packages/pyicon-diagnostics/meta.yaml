@@ -6,8 +6,6 @@ package:
 source:
   url: https://files.pythonhosted.org/packages/99/8d/e8757581c9d8ad25d2df94d5559d8e6ee5e5a5f7353d7a74485d20add32c/pyicon_diagnostics-0.3.6.tar.gz
   sha256: df2adf98e1b43895b0140286e67bcb8f169de5df41bb0b86ee4e4c939859f765
-  patches:
-    - patches/0001-no-ipdb.patch
   extras:
     - - ./extras/requirements.txt
       - ./requirements.txt
@@ -21,6 +19,7 @@ requirements:
     - pandas
     - cmocean
     - scipy
+    - ipdb
     - ipywidgets
     - healpy
     - cftime
