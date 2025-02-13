@@ -1,7 +1,7 @@
 import { ffi } from "./ffi";
 import { CanvasInterface, canvas } from "./canvas";
 
-import { loadPackage, loadedPackages, loadPackageSync, loadPackageSetStderr, loadPackageSetStdout, reloadLockFileFromURL, reloadLockFileFromURLSync } from "./load-package";
+import { loadPackage, loadedPackages, loadPackageSync, loadPackageSetStderr, loadPackageSetStdout } from "./load-package";
 import { type PyProxy, type PyDict } from "generated/pyproxy";
 import { loadBinaryFile, nodeFSMod } from "./compat";
 import { version } from "./version";
@@ -113,10 +113,6 @@ function ensureMountPathExists(path: string): void {
 export class PyodideAPI {
   /** @hidden */
   static version = version;
-  /** @hidden */
-  static reloadLockFileFromURL = reloadLockFileFromURL;
-  /** @hidden */
-  static reloadLockFileFromURLSync = reloadLockFileFromURLSync;
   /** @hidden */
   static loadPackage = loadPackage;
   /** @hidden */

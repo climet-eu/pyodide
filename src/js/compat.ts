@@ -288,21 +288,6 @@ export async function loadLockFile(lockFileURL: string): Promise<Lockfile> {
   }
 }
 
-export function loadLockFileSync(lockFileURL: string): Lockfile {
-  if (IN_NODE) {
-    throw new Error("loadLockFileSync is not supported in Node");
-  }
-
-  const url = new URL(lockFileURL);
-
-  const request = new XMLHttpRequest();
-  request.open("GET", url, false);
-  request.responseType = "json";
-  request.send();
-
-  return request.response;
-}
-
 /**
  * Calculate the directory name of the current module.
  * This is used to guess the indexURL when it is not provided.
