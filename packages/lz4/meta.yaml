@@ -1,0 +1,13 @@
+package:
+  name: lz4
+  version: 4.4.3
+  top-level:
+    - lz4
+source:
+  url: https://files.pythonhosted.org/packages/cc/bc/b2e79af05be82841706ddd7d78059e5f78e6ca5828f92034394b54e303b7/lz4-4.4.3.tar.gz
+  sha256: 91ed5b71f9179bf3dbfe85d92b52d4b53de2e559aa4daa3b7de18e0dd24ad77d
+about:
+  home: https://github.com/python-lz4/python-lz4
+  PyPI: https://pypi.org/project/lz4
+  summary: LZ4 Bindings for Python
+  license: BSD 3-Clause License
