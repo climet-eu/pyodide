@@ -1,0 +1,13 @@
+diff --git a/setup.py b/setup.py
+index e3ef1ef..8086dae 100644
+--- a/setup.py
++++ b/setup.py
+@@ -18,7 +18,7 @@ def setup_package():
+         long_description="Patch requests, urllib and urllib3 to make them work in Pyodide",
+         long_description_content_type="text/markdown",
+         classifiers=[],
+-        install_requires=[],
++        install_requires=["jupyterlite-cors==0.0.0"],
+         ext_modules=[],
+     )
+ 

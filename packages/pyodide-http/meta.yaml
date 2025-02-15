@@ -8,6 +8,7 @@ source:
   sha256: 96afea01716c434025d70c45e255e28ac68ecddc196ddc2eafe8741c91661354
   patches:
     - patches/0001-cors-proxy.patch
+    - patches/0002-requires-jupyterlite-cors.patch
 requirements:
   run:
     - jupyterlite-cors

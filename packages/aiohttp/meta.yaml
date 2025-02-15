@@ -9,6 +9,7 @@ source:
   patches:
     - patches/0001-pyodide-connection.patch
     - patches/0002-export-http-exceptions.patch
+    - patches/0003-requires-jupyterlite-cors.patch
 
 requirements:
   run:

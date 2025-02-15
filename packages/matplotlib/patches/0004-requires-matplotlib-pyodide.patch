@@ -1,0 +1,12 @@
+diff --git a/setup.py b/setup.py
+index 899021a832..f6faf8ad6e 100644
+--- a/setup.py
++++ b/setup.py
+@@ -338,6 +338,7 @@ setup(  # Finally, pass this all along to setuptools to do the heavy lifting.
+         "pillow>=8",
+         "pyparsing>=2.3.1",
+         "python-dateutil>=2.7",
++        "matplotlib-pyodide==0.2.3",
+     ] + (
+         # Installing from a git checkout that is not producing a wheel.
+         # setuptools_scm warns with older setuptools, which turns into errors for our
