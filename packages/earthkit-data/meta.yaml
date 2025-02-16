@@ -4,8 +4,10 @@ package:
   top-level:
     - earthkit.data
 source:
-  url: https://files.pythonhosted.org/packages/5d/f0/b6634b47b2d4cf3a9aa21ef5b4db6d96cc8a912391fdb3f3ed1b9618267c/earthkit_data-0.11.4-py3-none-any.whl
-  sha256: 490ca5a843e840753bfc2dc9b8b4e7366f4d9342f71995c866c7aea5c015fc27
+  url: https://files.pythonhosted.org/packages/4a/56/ed72b8d129185c2cd06d834806afe9d49800d004a10f249a453e36fa0777/earthkit_data-0.11.4.tar.gz
+  sha256: 14abb50a647fccfbd2e14b5d5d9444ab51fced8d1a3afb011664fbfc62b50e9a
+  patches:
+    - patches/0001-no-pyfdb.patch
 requirements:
   run:
     - array-api-compat  # required, not loaded immediately
