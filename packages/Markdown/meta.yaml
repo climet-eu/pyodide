@@ -1,5 +1,5 @@
 package:
-  name: markdown
+  name: Markdown
   version: "3.7"
   top-level:
     - markdown
