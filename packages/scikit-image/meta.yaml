@@ -23,7 +23,7 @@ requirements:
     - numpy
     - scipy
     - networkx
-    - Pillow
+    - pillow
     - imageio
     - pywavelets
     - lazy_loader

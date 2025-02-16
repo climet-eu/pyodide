@@ -8,7 +8,7 @@ source:
   url: https://files.pythonhosted.org/packages/58/26/82663c79010b28eddf29dcdd0ea723439535fa917fce5905885c0e9ba562/pydantic-2.10.5-py3-none-any.whl
 requirements:
   run:
-    - typing-extensions
+    - typing_extensions
     - pydantic_core
     - annotated-types
 about:

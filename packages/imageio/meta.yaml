@@ -9,7 +9,7 @@ source:
 requirements:
   run:
     - numpy
-    - Pillow
+    - pillow
 about:
   home: https://github.com/imageio/imageio
   PyPI: https://pypi.org/project/imageio

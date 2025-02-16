@@ -11,7 +11,7 @@ requirements:
     - matplotlib
     - numpy
     - pandas
-    - pint
+    - Pint
     - pooch
     - pyproj
     - scipy

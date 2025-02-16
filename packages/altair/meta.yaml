@@ -16,7 +16,7 @@ extra:
     - joelostblom
 requirements:
   run:
-    - typing-extensions
+    - typing_extensions
     - Jinja2
     - jsonschema
     - packaging

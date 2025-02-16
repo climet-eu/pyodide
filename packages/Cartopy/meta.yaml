@@ -23,7 +23,7 @@ requirements:
     - packaging   # required, not loaded immediately
     - pyshp       # required
     - pyproj      # required
-    - Pillow      # optional
+    - pillow      # optional
     - scipy       # optional
 
 build:

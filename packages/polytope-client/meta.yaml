@@ -10,7 +10,7 @@ requirements:
   run:
     - click
     - requests
-    - pyyaml
+    - PyYAML
     - jsonschema
     - docstring_parser
     - tqdm

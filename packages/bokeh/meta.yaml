@@ -9,11 +9,11 @@ requirements:
     - numpy
     - Jinja2
     - pandas
-    - Pillow
+    - pillow
     - python-dateutil
     - six
-    - typing-extensions
-    - pyyaml
+    - typing_extensions
+    - PyYAML
     - xyzservices
 source:
   sha256: 0032dc1e76ad097b07626e51584685ff48c65481fbaaad105663b1046165867a

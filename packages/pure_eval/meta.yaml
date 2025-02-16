@@ -1,5 +1,5 @@
 package:
-  name: pure-eval
+  name: pure_eval
   version: 0.2.3
   top-level:
     - pure_eval

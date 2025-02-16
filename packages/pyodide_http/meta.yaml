@@ -1,5 +1,5 @@
 package:
-  name: pyodide-http
+  name: pyodide_http
   version: 0.2.1
   top-level:
     - pyodide_http

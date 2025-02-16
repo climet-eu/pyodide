@@ -12,7 +12,7 @@ requirements:
     - fsspec
     - intake
     - msgpack
-    - netcdf4
+    - netCDF4
     - requests
     - xarray
     - zarr

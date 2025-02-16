@@ -10,7 +10,7 @@ source:
     - patches/0001-no-pyfdb.patch
 requirements:
   run:
-    - array-api-compat  # required, not loaded immediately
+    - array_api_compat  # required, not loaded immediately
     - Cartopy           # optional
     - cdsapi            # optional
     - cfgrib            # required, not loaded immediately
@@ -30,13 +30,13 @@ requirements:
     - lru-dict          # required, not loaded immediately
     - markdown          # required, not loaded immediately
     - multiurl          # required, not loaded immediately
-    - netcdf4           # required, not loaded immediately
+    - netCDF4           # required, not loaded immediately
     - pandas            # required, not loaded immediately
     - pdbufr            # optional
     - polytope-client   # optional
     # - pyfdb  # TODO   # optional
     - pyodc             # optional
-    - pyyaml            # required
+    - PyYAML            # required
     - tqdm              # required, not loaded immediately
     - xarray            # required, not loaded immediately
 about:

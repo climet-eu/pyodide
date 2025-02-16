@@ -9,7 +9,7 @@ source:
 requirements:
   run:
     - fsspec
-    - pyyaml
+    - PyYAML
     - platformdirs
     - networkx
 about:

@@ -1,5 +1,5 @@
 package:
-  name: pint
+  name: Pint
   version: 0.24.4
   top-level:
     - pint
@@ -13,7 +13,7 @@ requirements:
     - flexparser         # required
     - numpy              # optional, but loaded immediately
     - platformdirs       # required
-    - typing-extensions  # required
+    - typing_extensions  # required
     - uncertainties      # optional, but loaded immediately
 about:
   home: https://github.com/hgrecco/pint

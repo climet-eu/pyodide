@@ -1,5 +1,5 @@
 package:
-  name: Pillow
+  name: pillow
   version: 11.0.0
   top-level:
     - PIL

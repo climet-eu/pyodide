@@ -13,7 +13,7 @@ requirements:
     - pandas
     - scikit-learn
     - tqdm
-    - typing-extensions
+    - typing_extensions
     - xarray
 about:
   home: https://github.com/nicrie/xeofs

@@ -11,7 +11,7 @@ source:
 requirements:
   run:
     - cffi
-    - Pillow
+    - pillow
   host:
     - cffi
     - libheif

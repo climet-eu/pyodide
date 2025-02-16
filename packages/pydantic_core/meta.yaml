@@ -8,7 +8,7 @@ source:
   sha256: cf0a64dd4f748d6bf12b71f8c3502242191c414d9519ed59b33feff8b1e18b9c
 requirements:
   run:
-    - typing-extensions
+    - typing_extensions
 about:
   home: https://github.com/pydantic/pydantic-core
   PyPI: https://pypi.org/project/pydantic_core

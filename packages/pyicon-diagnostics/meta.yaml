@@ -13,7 +13,7 @@ requirements:
   run:
     - numpy
     - matplotlib
-    - netcdf4
+    - netCDF4
     - xarray
     - zarr
     - pandas

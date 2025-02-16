@@ -11,7 +11,7 @@ requirements:
     - attrs
     - multiurl
     - requests
-    - typing-extensions
+    - typing_extensions
 about:
   home: https://github.com/ecmwf-projects/datapi
   PyPI: https://pypi.org/project/datapi

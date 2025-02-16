@@ -1,5 +1,5 @@
 package:
-  name: array-api-compat
+  name: array_api_compat
   version: 1.9.1
   top-level:
     - array_api_compat

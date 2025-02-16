@@ -15,9 +15,9 @@ requirements:
     - earthkit-regrid                # required
     - matplotlib                     # required
     - numpy                          # required
-    - pint                           # required
+    - Pint                           # required
     - plotly                         # required, not loaded immediately
-    - pyyaml                         # required
+    - PyYAML                         # required
     - scipy                          # required
 about:
   home: https://github.com/ecmwf/earthkit-plots

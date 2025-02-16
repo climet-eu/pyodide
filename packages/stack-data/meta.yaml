@@ -10,7 +10,7 @@ requirements:
   run:
     - executing
     - asttokens
-    - pure-eval
+    - pure_eval
 about:
   home: http://github.com/alexmojaki/stack_data
   PyPI: https://pypi.org/project/stack_data

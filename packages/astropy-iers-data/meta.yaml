@@ -1,5 +1,5 @@
 package:
-  name: astropy_iers_data
+  name: astropy-iers-data
   version: 0.2024.12.9.0.36.21
   top-level:
     - astropy_iers_data

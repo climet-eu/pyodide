@@ -53,7 +53,7 @@ requirements:
     - kiwisolver          # required, not loaded immediately
     - numpy               # required
     - packaging           # required
-    - Pillow              # required
+    - pillow              # required
     - pyparsing           # required
     - python-dateutil     # required, not loaded immediately
     - pytz                # required, not loaded immediately

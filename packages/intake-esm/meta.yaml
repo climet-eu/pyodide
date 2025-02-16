@@ -12,7 +12,7 @@ requirements:
     - fastprogress
     - fsspec
     - intake
-    - netcdf4
+    - netCDF4
     - pandas
     - pydantic
     - requests

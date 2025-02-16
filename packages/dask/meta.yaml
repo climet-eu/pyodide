@@ -18,7 +18,7 @@ requirements:
     - numpy        # optional, but loaded immediately
     - packaging    # required
     - partd        # required, not loaded immediately
-    - pyyaml       # required
+    - PyYAML       # required
     - toolz        # required
 about:
   home: https://github.com/dask/dask/

@@ -11,7 +11,7 @@ requirements:
     - pydantic
     - rich
     - rich-argparse
-    - pyyaml
+    - PyYAML
 about:
   home: https://github.com/ecmwf/conflator/
   PyPI: https://pypi.org/project/conflator

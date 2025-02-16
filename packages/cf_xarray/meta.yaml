@@ -1,5 +1,5 @@
 package:
-  name: cf-xarray
+  name: cf_xarray
   version: 0.10.0
   top-level:
     - cf_xarray
