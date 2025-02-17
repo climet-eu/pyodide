@@ -10,14 +10,6 @@ source:
     - patches/0001-jupyterlite-preload.patch
 requirements:
   run:
-    - decorator
-    - jedi
-    - matplotlib-inline
-    - prompt_toolkit
-    - pydoc_data
-    - Pygments
-    - stack-data
-    - traitlets
     - jupyterlite-preload
 about:
   home: https://ipython.org/

@@ -13,7 +13,6 @@ requirements:
   run:
     - antlr4-python3-runtime
     - cftime
-    - Jinja2
     - numpy
 build:
   script: |

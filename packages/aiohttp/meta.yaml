@@ -13,15 +13,9 @@ source:
 
 requirements:
   run:
-    - aiohappyeyeballs
-    - aiosignal
-    - async-timeout
-    - attrs
-    - charset-normalizer
     - frozenlist
     - jupyterlite-cors
     - multidict
-    - propcache
     - yarl
 
 about:

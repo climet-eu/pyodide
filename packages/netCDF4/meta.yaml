@@ -14,7 +14,6 @@ requirements:
     - numpy
     - packaging
     - cftime
-    - certifi
     - h5py
 test:
   imports:

@@ -10,7 +10,6 @@ requirements:
   run:
     - pandas
     - orjson
-    - xarray
     - pandas
     - covjson-pydantic
     - conflator

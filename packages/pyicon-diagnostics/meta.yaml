@@ -14,18 +14,12 @@ requirements:
     - numpy
     - matplotlib
     - netCDF4
-    - xarray
     - zarr
     - pandas
-    - cmocean
     - scipy
-    - ipdb
-    - ipywidgets
-    - pytest
     - healpy
     - cftime
     - Cartopy
-    - dask
 
 about:
   home: https://gitlab.dkrz.de/m300602/pyicon

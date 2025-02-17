@@ -12,7 +12,6 @@ source:
 requirements:
   run:
     - jupyterlite-cors
-    - requests
 about:
   home: https://github.com/koenvo/pyodide-http
   PyPI: https://pypi.org/project/pyodide-http

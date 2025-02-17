@@ -21,7 +21,6 @@ requirements:
     - matplotlib  # required, not loaded immediately
     - shapely     # required
     - packaging   # required, not loaded immediately
-    - pyshp       # required
     - pyproj      # required
     - pillow      # optional
     - scipy       # optional

@@ -10,7 +10,6 @@ source:
     - patches/0001-no-aeccodec.patch
 requirements:
   run:
-    - cfgrib
     - eccodes
     - numcodecs
     - numpy

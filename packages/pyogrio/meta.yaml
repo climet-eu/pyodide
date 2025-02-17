@@ -10,7 +10,6 @@ requirements:
   host:
     - gdal
   run:
-    - certifi
     - numpy
     - packaging
 build:

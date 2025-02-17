@@ -6,12 +6,6 @@ package:
 source:
   url: https://files.pythonhosted.org/packages/33/db/aad981174d3bdaecc1d7e1f2d176641f022300ddf3a17b13c2775d041b7a/multiurl-0.3.3.tar.gz
   sha256: f4d0b69dcf4a0ed740daa313dbcd4d5665420d305c50ca879285e96dc828093f
-requirements:
-  run:
-    - requests         # required
-    - tqdm             # required, not loaded immediately
-    - pytz             # required
-    - python-dateutil  # required
 about:
   home: https://github.com/ecmwf/multiurl
   PyPI: https://pypi.org/project/multiurl

@@ -12,14 +12,6 @@ requirements:
   host:
     - gdal
     - geos
-  run:
-    - attrs       # required
-    - certifi     # required, not loaded immediately
-    - setuptools  # required
-    - six         # maybe not required?
-    - click       # required, not loaded immediately
-    - cligj       # required, not loaded immediately
-      # - click-plugins  # only for fiona CLI?
 
 build:
   vendor-sharedlib: true

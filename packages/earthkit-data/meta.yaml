@@ -13,9 +13,7 @@ requirements:
     - array_api_compat  # required, not loaded immediately
     - Cartopy           # optional
     - cdsapi            # optional
-    - cfgrib            # required, not loaded immediately
     - covjsonkit        # optional
-    - dask              # required, not loaded immediately
     - earthkit-geo      # required, not loaded immediately
     - earthkit-meteo    # required, not loaded immediately
     - eccodes           # required, not loaded immediately
@@ -25,7 +23,6 @@ requirements:
     - filelock          # required, not loaded immediately
     - geopandas         # optional
     - hda               # optional
-    - Jinja2            # required, not loaded immediately
     - jsonschema        # required, not loaded immediately
     - lru-dict          # required, not loaded immediately
     - Markdown          # required, not loaded immediately
@@ -37,8 +34,6 @@ requirements:
     # - pyfdb  # TODO   # optional
     - pyodc             # optional
     - PyYAML            # required
-    - tqdm              # required, not loaded immediately
-    - xarray            # required, not loaded immediately
 about:
   home: https://github.com/ecmwf/earthkit-data
   PyPI: https://pypi.org/project/earthkit-data

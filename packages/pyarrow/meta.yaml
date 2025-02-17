@@ -46,7 +46,6 @@ about:
 requirements:
   run:
     - numpy                   # required, not loaded immediately
-    - pyodide-unix-timezones  # required
   host:
     - numpy
 extra:

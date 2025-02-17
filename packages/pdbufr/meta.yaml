@@ -8,7 +8,6 @@ source:
   sha256: a9ea85e29cad5c66a0573f28ac21874df37859516458b311b5e3398bbc8e9c78
 requirements:
   run:
-    - attrs
     - eccodes
     - pandas
 about:

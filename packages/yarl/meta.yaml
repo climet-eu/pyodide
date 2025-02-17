@@ -8,9 +8,7 @@ source:
   sha256: ac1801c45cbf77b6c99242eeff4fffb5e4e73a800b5c4ad4fc0be5def634d2e1
 requirements:
   run:
-    - idna
     - multidict
-    - propcache
 about:
   home: https://github.com/aio-libs/yarl/
   PyPI: https://pypi.org/project/yarl

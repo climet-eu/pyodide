@@ -10,11 +10,9 @@ requirements:
   host:
     - geos
   run:
-    - basemap-data
     - numpy
     - matplotlib
     - pyproj
-    - pyshp
     - packaging
 
 build:

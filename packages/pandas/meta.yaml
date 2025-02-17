@@ -20,9 +20,6 @@ requirements:
     - lzma             # required
     - numpy            # required
     - pyarrow          # required
-    - python-dateutil  # required, not loaded immediately
-    - pytz             # required
-    - tzdata           # required, not loaded immediately
 about:
   home: https://pandas.pydata.org
   PyPI: https://pypi.org/project/pandas
