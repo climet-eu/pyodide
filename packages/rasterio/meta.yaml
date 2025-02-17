@@ -13,7 +13,6 @@ requirements:
     - libproj
   run:
     - numpy
-    - affine
 build:
   vendor-sharedlib: true
   script: |
