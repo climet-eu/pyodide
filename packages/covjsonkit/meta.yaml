@@ -11,8 +11,6 @@ requirements:
     - pandas
     - orjson
     - pandas
-    - covjson-pydantic
-    - conflator
 about:
   home: https://github.com/ecmwf/covjsonkit
   PyPI: https://pypi.org/project/covjsonkit
