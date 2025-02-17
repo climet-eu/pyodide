@@ -10,27 +10,18 @@ source:
     - patches/0001-no-pyfdb.patch
 requirements:
   run:
-    - array_api_compat  # required, not loaded immediately
     - Cartopy           # optional
-    - cdsapi            # optional
     - covjsonkit        # optional
-    - earthkit-geo      # required, not loaded immediately
-    - earthkit-meteo    # required, not loaded immediately
     - eccodes           # required, not loaded immediately
     - ecmwf-api-client  # optional
     - ecmwf-opendata    # optional
-    - entrypoints       # required
     - filelock          # required, not loaded immediately
-    - geopandas         # optional
     - hda               # optional
-    - jsonschema        # required, not loaded immediately
     - lru-dict          # required, not loaded immediately
-    - Markdown          # required, not loaded immediately
     - multiurl          # required, not loaded immediately
     - netCDF4           # required, not loaded immediately
     - pandas            # required, not loaded immediately
     - pdbufr            # optional
-    - polytope-client   # optional
     # - pyfdb  # TODO   # optional
     - pyodc             # optional
     - PyYAML            # required
