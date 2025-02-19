@@ -20,7 +20,6 @@ requirements:
     - multiurl          # required, not loaded immediately
     - netCDF4           # required, not loaded immediately
     - pandas            # required, not loaded immediately
-    - pdbufr            # optional
     # - pyfdb  # TODO   # optional
     - pyodc             # optional
     - PyYAML            # required
