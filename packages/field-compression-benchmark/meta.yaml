@@ -34,7 +34,6 @@ requirements:
     - netCDF4  # 1.7.2
     - numcodecs  # 0.13.1
     - numpy  # 1.26.4
-    - zarr  # 2.18.3
 about:
   home: https://github.com/juntyr/field-compression-benchmark
   summary:
