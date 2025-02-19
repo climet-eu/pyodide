@@ -22,7 +22,6 @@ requirements:
     - numpy
     - pyerfa
     - PyYAML
-    - astropy-iers-data
 test:
   imports:
     - astropy
