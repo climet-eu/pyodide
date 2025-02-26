@@ -13,7 +13,6 @@ requirements:
     - Cartopy           # optional
     - eccodes           # required, not loaded immediately
     - ecmwf-api-client  # optional
-    - ecmwf-opendata    # optional
     - filelock          # required, not loaded immediately
     - hda               # optional
     - lru-dict          # required, not loaded immediately
