@@ -15,7 +15,6 @@ requirements:
   run:
     - frozenlist
     - jupyterlite-cors
-    - multidict
     - yarl
 
 about:
