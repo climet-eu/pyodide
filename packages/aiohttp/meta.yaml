@@ -15,7 +15,6 @@ requirements:
   run:
     - frozenlist
     - jupyterlite-cors
-    - yarl
 
 about:
   home: https://github.com/aio-libs/aiohttp
