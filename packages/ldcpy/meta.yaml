@@ -8,18 +8,18 @@ source:
   sha256: 9894e4276d83cccf35d9e606780e8147e0f9461688be4b87348e0dd36d7cb5ac
   patches:
     - patches/0001-no-nodejs.patch
-# requirements:
-#   run:
-    # - Cartopy
-    # - matplotlib
-    # - netCDF4
-    # - numpy
-    # - scikit-image
-    # - scipy
-    # - pandas
-    # - astropy
-    # - ipython
-    # - statsmodels
+requirements:
+  run:
+    - Cartopy
+    - matplotlib
+    - netCDF4
+    - numpy
+    - scikit-image
+    - scipy
+    - pandas
+    - astropy
+    - ipython
+    - statsmodels
 about:
   home: https://ldcpy.readthedocs.io
   PyPI: https://pypi.org/project/ldcpy
