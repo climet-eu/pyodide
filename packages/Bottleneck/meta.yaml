@@ -1,5 +1,5 @@
 package:
-  name: bottleneck
+  name: Bottleneck
   version: 1.4.2
   top-level:
     - bottleneck
