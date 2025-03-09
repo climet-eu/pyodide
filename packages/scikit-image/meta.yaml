@@ -19,11 +19,10 @@ requirements:
   host:
     - numpy
   run:
-    - packaging
     - numpy
     - scipy
     - pillow
-    - pywavelets
+    - packaging
 
 about:
   home: https://scikit-image.org
