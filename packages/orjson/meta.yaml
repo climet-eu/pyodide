@@ -1,13 +1,12 @@
 package:
   name: orjson
   version: 3.10.15
-  _disabled: true
   tag:
     - rust
   top-level:
     - orjson
 source:
-  url: https://files.pythonhosted.org/packages/ae/f9/5dea21763eeff8c1590076918a446ea3d6140743e0e36f58f369928ed0f4/orjson-3.10.15.tar.gz
+  url: https://files.pythonhosted.org/packages/source/o/orjson/orjson-3.10.15.tar.gz
   sha256: 05ca7fe452a2e9d8d9d706a2984c95b9c2ebc5db417ce0b7a49b91d50642a23e
 requirements:
   executable:

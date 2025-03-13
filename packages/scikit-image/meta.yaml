@@ -8,7 +8,7 @@ source:
   patches:
     - patches/make-tifffile-optional.patch
   sha256: e5a37e6cd4d0c018a7a55b9d601357e3382826d3888c10d0213fc63bff977dde
-  url: https://files.pythonhosted.org/packages/c7/a8/3c0f256012b93dd2cb6fda9245e9f4bff7dc0486880b248005f15ea2255e/scikit_image-0.25.2.tar.gz
+  url: https://files.pythonhosted.org/packages/source/s/scikit_image/scikit_image-0.25.2.tar.gz
 
 build:
   script: |

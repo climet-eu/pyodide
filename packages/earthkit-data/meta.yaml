@@ -12,7 +12,6 @@ requirements:
   run:
     - Cartopy           # optional
     - eccodes           # required, not loaded immediately
-    - ecmwf-api-client  # optional
     - filelock          # required, not loaded immediately
     - hda               # optional
     - lru-dict          # required, not loaded immediately
