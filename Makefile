@@ -126,7 +126,7 @@ dist/pyodide.asm.js: \
    # TODO(ryanking13): Link libgl to a side module not to the main module.
    # For unknown reason, a side module cannot see symbols when libGL is linked to it.
 	embuilder build libgl
-	$(CXX) -o dist/pyodide.asm.js -lpyodide src/core/main.o $(MAIN_MODULE_LDFLAGS)
+	$(CXX) -o dist/pyodide.asm.js -lpyodide src/core/main.o $(MAIN_MODULE_LDFLAGS) --embed-file ./assets@/
 
 	if [[ -n $${PYODIDE_SOURCEMAP+x} ]] || [[ -n $${PYODIDE_SYMBOLS+x} ]] || [[ -n $${PYODIDE_DEBUG_JS+x} ]]; then \
 		cd dist && npx prettier -w pyodide.asm.js ; \
