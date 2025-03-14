@@ -12,7 +12,6 @@ requirements:
   run:
     - Cartopy           # optional
     - eccodes           # required, not loaded immediately
-    - filelock          # required, not loaded immediately
     - hda               # optional
     - lru-dict          # required, not loaded immediately
     - multiurl          # required, not loaded immediately
