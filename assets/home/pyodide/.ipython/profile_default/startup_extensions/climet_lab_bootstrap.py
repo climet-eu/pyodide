@@ -79,7 +79,7 @@ class PyodidePackageFinder(importlib.abc.MetaPathFinder):
             return None
 
         package_name = pyodide_js._api._import_name_to_package_name[fullname]
-        pkg = getattr(pyodide_js._api.lockfile_packages, package_name)
+        pkg = getattr(pyodide_js.lockfile.packages, package_name)
 
         # no need to load an already-loaded package
         if getattr(pyodide_js.loadedPackages, pkg.name, None) is not None:
