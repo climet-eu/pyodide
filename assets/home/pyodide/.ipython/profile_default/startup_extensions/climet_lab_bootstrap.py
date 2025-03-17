@@ -21,11 +21,11 @@ def load_ipython_extension(ip):
 
     # the import loader has been patched, so we can now sync-load pyodide-http
     import pyodide_http
+
     pyodide_http.patch_all()
 
     memory_monitor = PyodideMemoryMonitor()
     dynlib_monitor = PyodideDynlibMonitor()
-
 
     def pre_execute_hook(*args, **kwargs):
         try:
@@ -33,14 +33,13 @@ def load_ipython_extension(ip):
         except AttributeError:
             pass
 
-
     def post_execute_hook(*args, **kwargs):
         memory_monitor.post_execute_hook()
         dynlib_monitor.post_execute_hook()
 
-
     ip.events.register("pre_execute", pre_execute_hook)
     ip.events.register("post_execute", post_execute_hook)
+
 
 # patch some asyncio functions if JSPI is not available
 def patch_syncifiable_asyncio():
@@ -74,15 +73,24 @@ class PyodidePackageFinder(importlib.abc.MetaPathFinder):
         if fullname in sys.modules:
             return None
 
+        # try to map the import fullname to a Pyodide package name
+        package_name = None
+        for name, package in js.Object.entries(pyodide_js.lockfile.packages):
+            for import_name in package.imports:
+                if import_name == fullname:
+                    package_name = name
+                    break
+            if package_name is not None:
+                break
+
         # we can only load packages in the Pyodide distribution
-        if fullname not in pyodide_js._api._import_name_to_package_name:
+        if package_name is None:
             return None
 
-        package_name = pyodide_js._api._import_name_to_package_name[fullname]
-        pkg = getattr(pyodide_js.lockfile.packages, package_name)
+        package = getattr(pyodide_js.lockfile.packages, package_name)
 
         # no need to load an already-loaded package
-        if getattr(pyodide_js.loadedPackages, pkg.name, None) is not None:
+        if getattr(pyodide_js.loadedPackages, package.name, None) is not None:
             return None
 
         # use JSPI if available, otherwise fall back to loadPackageSync
