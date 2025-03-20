@@ -1,8 +1,10 @@
 diff --git a/pyodide_http/_core.py b/pyodide_http/_core.py
-index 1cb711d..84c4b9f 100644
+index 1cb711d..c2af3d4 100644
 --- a/pyodide_http/_core.py
 +++ b/pyodide_http/_core.py
-@@ -2,6 +2,7 @@ import json
+@@ -1,7 +1,9 @@
++import io
+ import json
  from dataclasses import dataclass, field
  from typing import Optional, Dict
  from email.parser import Parser
@@ -10,7 +12,7 @@ index 1cb711d..84c4b9f 100644
  from pyodide.ffi import to_js
  
  # need to import streaming here so that the web-worker is setup
-@@ -72,7 +73,7 @@ def show_streaming_warning():
+@@ -72,7 +74,7 @@ def show_streaming_warning():
          )
  
  
@@ -19,7 +21,7 @@ index 1cb711d..84c4b9f 100644
      if request.params:
          from js import URLSearchParams
  
-@@ -128,3 +129,12 @@ def send(request: Request, stream: bool = False) -> Response:
+@@ -128,3 +130,17 @@ def send(request: Request, stream: bool = False) -> Response:
          body = xhr.response.encode("ISO-8859-15")
  
      return Response(status_code=xhr.status, headers=headers, body=body)
@@ -28,10 +30,38 @@ index 1cb711d..84c4b9f 100644
 +def send(request: Request, stream: bool = False) -> Response:
 +    request.url = cors_url(request.url)
 +
-+    response = _send(request, stream)
++    # FIXME: disable streaming for now
++    response = _send(request, stream=False)
 +    response.status_code = cors_status(request.url, response.status_code)
 +
++    # FIXME: remove once streaming is re-enabled
++    if stream:
++        response.body = io.BytesIO(response.body)
++
 +    return response
+diff --git a/pyodide_http/_requests.py b/pyodide_http/_requests.py
+index a3980cc..a6dcc43 100644
+--- a/pyodide_http/_requests.py
++++ b/pyodide_http/_requests.py
+@@ -12,7 +12,7 @@ _IS_PATCHED = False
+ class PyodideHTTPAdapter(BaseAdapter):
+     """The Base Transport Adapter"""
+ 
+-    def __init__(self):
++    def __init__(self, *args, **kwargs):
+         super().__init__()
+ 
+     def send(self, request, **kwargs):
+@@ -101,7 +101,8 @@ def patch():
+ 
+     import requests
+ 
+-    requests.sessions.Session._old_init = requests.sessions.Session.__init__
++    requests.adapters._old_HTTPAdapter = requests.adapters.HTTPAdapter
++    requests.adapters.HTTPAdapter = PyodideHTTPAdapter
+ 
+     def new_init(self):
+         self._old_init()
 diff --git a/pyodide_http/_urllib.py b/pyodide_http/_urllib.py
 index 639fee4..7111f17 100644
 --- a/pyodide_http/_urllib.py
