@@ -10,7 +10,6 @@ source:
     - patches/0001-no-caching.patch
 requirements:
   run:
-    - multiurl    # required
     - numpy       # required
     - scipy       # required
 about:
