@@ -4,7 +4,7 @@ FROM python:3.13.2-slim-bookworm
 # Requirements for building packages
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
-        bzip2 ccache f2c g++ gfortran git make \
+        bzip2 ccache f2c g++ gfortran git make cmake \
         patch pkg-config swig unzip wget xz-utils \
         autoconf autotools-dev automake texinfo dejagnu \
         build-essential libtool libltdl-dev \
@@ -26,8 +26,6 @@ ADD requirements.txt /
 WORKDIR /
 RUN pip3 --no-cache-dir install -r requirements.txt \
     && rm requirements.txt
-
-RUN pip3 --no-cache-dir install cmake
 
 RUN cd / \
     && git clone --recursive https://github.com/WebAssembly/wabt \
