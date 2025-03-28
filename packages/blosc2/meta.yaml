@@ -18,9 +18,7 @@ requirements:
     # Dependencies that are needed to run the package
     - numpy
     - msgpack
-    - requests
     - ndindex
-    - platformdirs
 
 about:
   home: https://github.com/Blosc/python-blosc2

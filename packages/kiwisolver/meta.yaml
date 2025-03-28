@@ -1,4 +1,4 @@
-xpackage:
+package:
   name: kiwisolver
   version: 1.4.8
   top-level:
