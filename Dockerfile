@@ -27,6 +27,8 @@ WORKDIR /
 RUN pip3 --no-cache-dir install -r requirements.txt \
     && rm requirements.txt
 
+RUN pip3 --no-cache-dir install cmake
+
 RUN cd / \
     && git clone --recursive https://github.com/WebAssembly/wabt \
     && cd wabt \
