@@ -1,18 +1,25 @@
-diff --git a/setup.py b/setup.py
-index 1ceb220..221829e 100644
---- a/setup.py
-+++ b/setup.py
-@@ -30,12 +30,8 @@ setuptools.setup(
-     author_email="software.support@ecmwf.int",
-     license="Apache License Version 2.0",
-     url="https://github.com/ecmwf/pyodc",
--    packages=["pyodc", "codc"],
--    package_data={"": ["*.h"]},
--    include_package_data=True,
-+    packages=["pyodc"],
-     install_requires=[
--        "cffi",
--        "findlibs>=0.0.5",
-         "pandas",
-     ],
-     extras_require={},
+diff --git a/setup.cfg b/setup.cfg
+index 877a905..fe0d404 100644
+--- a/setup.cfg
++++ b/setup.cfg
+@@ -25,19 +25,11 @@ classifiers =
+ [options]
+ package_dir = 
+ 	= src
+-packages = pyodc, codc
++packages = pyodc
+ python_requires = >=3.8
+-include_package_data = True
+ test_suite = tests
+ install_requires = 
+-	cffi
+-	odclib>=1.6.0,<1.7.0
+-	findlibs>=0.1.0
+ 	pandas
+-	packaging
+-
+-[options.package_data]
+-* = *.h
+ 
+ [options.extras_require]
+ dev = 

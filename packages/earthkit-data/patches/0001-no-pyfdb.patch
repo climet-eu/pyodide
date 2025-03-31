@@ -1,17 +1,17 @@
 diff --git a/pyproject.toml b/pyproject.toml
-index e6cc5e2..e169fe9 100644
+index 5701cf1..e9f063d 100644
 --- a/pyproject.toml
 +++ b/pyproject.toml
-@@ -55,7 +55,7 @@ optional-dependencies.all = [
+@@ -56,7 +56,7 @@ optional-dependencies.all = [
    "geopandas",
-   "hda",
+   "hda>=2.22",
    "polytope-client>=0.7.4",
 -  "pyfdb>=0.1",
 +  # "pyfdb>=0.1",
    "pyodc",
  ]
  optional-dependencies.cds = [ "cdsapi>=0.7.2" ]
-@@ -73,7 +73,7 @@ optional-dependencies.dev = [
+@@ -75,7 +75,7 @@ optional-dependencies.dev = [
    "nbconvert",
    "nbformat",
    "polytope-client>=0.7.4",
@@ -20,12 +20,12 @@ index e6cc5e2..e169fe9 100644
    "pyodc",
    "pytest",
    "pytest-cov",
-@@ -91,7 +91,7 @@ optional-dependencies.docs = [
+@@ -93,7 +93,7 @@ optional-dependencies.docs = [
    "sphinx-tabs",
  ]
  optional-dependencies.ecmwf-opendata = [ "ecmwf-opendata>=0.3.3" ]
 -optional-dependencies.fdb = [ "pyfdb>=0.1" ]
 +# optional-dependencies.fdb = [ "pyfdb>=0.1" ]
+ optional-dependencies.geo = [ "earthkit-geo>=0.2" ]
  optional-dependencies.geopandas = [ "geopandas" ]
  optional-dependencies.geotiff = [ "pyproj", "rasterio", "rioxarray" ]
- optional-dependencies.mars = [ "ecmwf-api-client>=1.6.1" ]

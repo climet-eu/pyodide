@@ -1,13 +1,13 @@
 package:
   name: numcodecs_wasm
-  version: 0.1.2
+  version: 0.1.3
   tag:
     - rust
   top-level:
     - numcodecs_wasm
 source:
-  url: https://files.pythonhosted.org/packages/source/n/numcodecs_wasm/numcodecs_wasm-0.1.2.tar.gz
-  sha256: f7989af42f5781417c55be2a9de7296b47e504a2e8eb549ff9399153cb1580ad
+  url: https://files.pythonhosted.org/packages/source/n/numcodecs_wasm/numcodecs_wasm-0.1.3.tar.gz
+  sha256: d645b58bb001f3fd2c917e16e4472a040b11634daa8267a796fd53bf8c053910
 about:
   home: https://github.com/juntyr/numcodecs-rs
   PyPI: https://pypi.org/project/numcodecs-wasm
