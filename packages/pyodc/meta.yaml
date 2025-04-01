@@ -1,12 +1,12 @@
 package:
   name: pyodc
-  version: 1.6.0
+  version: 1.5.0
   top-level:
     # - codc
     - pyodc
 source:
-  url: https://files.pythonhosted.org/packages/source/p/pyodc/pyodc-1.6.0.tar.gz
-  sha256: 702ce63f91e5a0ac75812c1b7a298c7bc95e7287531155f8a6e10ca31cd345aa
+  url: https://files.pythonhosted.org/packages/source/p/pyodc/pyodc-1.5.0.tar.gz
+  sha256: 78dce79ef8eb0b75dc7bf5988dcd88f77d1c8319d969bbef21dbfe268e0b5b12
   patches:
     - patches/0001-only-pyodc.patch
 requirements:
