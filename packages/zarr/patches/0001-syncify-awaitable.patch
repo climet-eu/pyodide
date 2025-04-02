@@ -1,3 +1,16 @@
+diff --git a/src/zarr/core/common.py b/src/zarr/core/common.py
+index 3308ca3..af9fcc4 100644
+--- a/src/zarr/core/common.py
++++ b/src/zarr/core/common.py
+@@ -65,7 +65,7 @@ async def concurrent_map(
+             async with sem:
+                 return await func(*item)
+ 
+-        return await asyncio.gather(*[asyncio.ensure_future(run(item)) for item in items])
++        return await asyncio.gather(*[run(item) for item in items])
+ 
+ 
+ E = TypeVar("E", bound=Enum)
 diff --git a/src/zarr/core/sync.py b/src/zarr/core/sync.py
 index d9b4839..d803942 100644
 --- a/src/zarr/core/sync.py
