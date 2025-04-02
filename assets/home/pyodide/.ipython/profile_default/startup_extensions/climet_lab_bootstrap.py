@@ -43,6 +43,25 @@ def load_ipython_extension(ip):
 
 # patch some asyncio functions if JSPI is not available
 def patch_syncifiable_asyncio():
+    class AsCompletedIterator:
+        def __init__(self, aws):
+            self._aws = iter(aws)
+
+        def __iter__(self):
+            return self
+
+        def __next__(self):
+            return next(self._aws)
+
+        def __aiter__(self):
+            return self
+
+        async def __anext__(self):
+            return next(self._aws)
+
+    def asyncio_as_completed(aws, *, timeout=None):
+        return AsCompletedIterator(aws)
+
     async def asyncio_gather(*coros_or_futures, return_exceptions=False):
         results = []
 
@@ -63,6 +82,7 @@ def patch_syncifiable_asyncio():
         time.sleep(delay)
         return result
 
+    asyncio.as_completed = asyncio_as_completed
     asyncio.gather = asyncio_gather
     asyncio.sleep = asyncio_sleep
 

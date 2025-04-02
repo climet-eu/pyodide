@@ -11,6 +11,19 @@ index 3308ca3..af9fcc4 100644
  
  
  E = TypeVar("E", bound=Enum)
+diff --git a/src/zarr/core/group.py b/src/zarr/core/group.py
+index 8e7f7f3..fd67fd6 100644
+--- a/src/zarr/core/group.py
++++ b/src/zarr/core/group.py
+@@ -3287,7 +3287,7 @@ async def _iter_members(
+     keys_filtered = tuple(filter(lambda v: v not in skip_keys, keys))
+ 
+     node_tasks = tuple(
+-        asyncio.create_task(_getitem_semaphore(node, key, semaphore), name=key)
++        _getitem_semaphore(node, key, semaphore)
+         for key in keys_filtered
+     )
+ 
 diff --git a/src/zarr/core/sync.py b/src/zarr/core/sync.py
 index d9b4839..d803942 100644
 --- a/src/zarr/core/sync.py
