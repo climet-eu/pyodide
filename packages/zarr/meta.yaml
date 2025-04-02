@@ -1,0 +1,21 @@
+package:
+  name: zarr
+  version: 3.0.6
+  top-level:
+    - zarr
+source:
+  sha256: 6ef23c740e34917a2a1099471361537732942e49f0cabe95c9b7124cd0d6d84f
+  url: https://files.pythonhosted.org/packages/source/z/zarr/zarr-3.0.6.tar.gz
+  patches:
+    - patches/0001-syncify-awaitable.patch
+requirements:
+  run:
+    - crc32c
+    - numcodecs
+    - numpy
+    - packaging
+about:
+  home: https://github.com/zarr-developers/zarr-python
+  PyPI: https://pypi.org/project/zarr
+  summary: An implementation of chunked, compressed, N-dimensional arrays for Python.
+  license: MIT
