@@ -1,0 +1,35 @@
+package:
+  name: libfdb
+  version: 5.15.12
+
+source:
+  url: https://github.com/ecmwf/fdb/archive/refs/tags/5.15.12.tar.gz
+  sha256: b31421bf22ef3c45fcefa3801c33b5c8e8395fec8842003bece62dc44d0e02ae
+
+requirements:
+  host:
+    - eccodes
+    - eckit
+    - metkit
+
+build:
+  type: shared_library
+  script: |
+    git clone --branch 3.7.0 --depth 1 https://github.com/ecmwf/ecbuild;
+
+    mkdir -p build;
+
+    cd build \
+        && emcmake cmake ../ \
+        -DCMAKE_INSTALL_PREFIX=${WASM_LIBRARY_DIR} \
+        -DBUILD_SHARED_LIBS=ON \
+        -DDISABLE_OS_CHECK=ON \
+        -DENABLE_BUILD_TOOLS=OFF \
+        -DENABLE_FDB_BUILD_TOOLS=OFF \
+        -DENABLE_TESTS=OFF \
+        -DENABLE_FORTRAN=OFF;
+
+    emmake make -j ${PYODIDE_JOBS:-3};
+    emmake make -j ${PYODIDE_JOBS:-3} install;
+
+    cp -P ${WASM_LIBRARY_DIR}/lib/libfdb5.so ${DISTDIR}

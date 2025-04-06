@@ -1,0 +1,21 @@
+diff --git a/src/tools/CMakeLists.txt b/src/tools/CMakeLists.txt
+index eaff5c5a0..c486c7c2f 100644
+--- a/src/tools/CMakeLists.txt
++++ b/src/tools/CMakeLists.txt
+@@ -1,12 +1,12 @@
++if( NOT eckit_HAVE_BUILD_TOOLS )
++    return()
++endif()
++
+ ecbuild_add_executable( TARGET      eckit_version
+                         OUTPUT_NAME eckit-version
+                         SOURCES     eckit-version.cc
+                         LIBS        eckit_option eckit )
+ 
+-if( NOT eckit_HAVE_BUILD_TOOLS )
+-    return()
+-endif()
+-
+ ecbuild_add_executable( TARGET      eckit_info
+                         OUTPUT_NAME eckit-info
+                         SOURCES     eckit-info.cc

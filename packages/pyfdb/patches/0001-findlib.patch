@@ -1,0 +1,21 @@
+diff --git a/src/pyfdb/pyfdb.py b/src/pyfdb/pyfdb.py
+index 3f22169..79b247a 100644
+--- a/src/pyfdb/pyfdb.py
++++ b/src/pyfdb/pyfdb.py
+@@ -16,6 +16,7 @@ import io
+ import json
+ import os
+ from functools import wraps
++from pathlib import Path
+ 
+ import cffi
+ import findlibs
+@@ -41,7 +42,7 @@ class PatchedLib:
+     """
+ 
+     def __init__(self):
+-        self.path = findlibs.find("fdb5")
++        self.path = str(Path(__file__).parent.parent / "pyfdb.libs" / "libfdb5.so")
+ 
+         if self.path is None:
+             raise RuntimeError("FDB5 library not found")

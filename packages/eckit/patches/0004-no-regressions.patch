@@ -1,0 +1,13 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index d92311448..6d43d0bf7 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -342,7 +342,7 @@ add_subdirectory( bamboo )
+ add_subdirectory( doc )
+ add_subdirectory( etc )
+ add_subdirectory( tests )
+-add_subdirectory( regressions )
++# add_subdirectory( regressions )
+ 
+ ecbuild_add_resources( TARGET ${PROJECT_NAME}_top_files
+                        SOURCES AUTHORS README.md NOTICE LICENSE
