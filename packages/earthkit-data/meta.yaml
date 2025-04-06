@@ -1,11 +1,11 @@
 package:
   name: earthkit-data
-  version: 0.13.6
+  version: 0.13.7
   top-level:
     - earthkit.data
 source:
-  url: https://files.pythonhosted.org/packages/source/e/earthkit_data/earthkit_data-0.13.6.tar.gz
-  sha256: d2e6b969c25644bea26c53ae0ac67976f1b6a461e2f24653b2d880ae47309fd6
+  url: https://files.pythonhosted.org/packages/source/e/earthkit_data/earthkit_data-0.13.7.tar.gz
+  sha256: 2046973c6ddff6f8bd5066a439e326697dcf70ab3de4dad6075896137578580e
   patches:
     - patches/0001-no-pyfdb.patch
 requirements:

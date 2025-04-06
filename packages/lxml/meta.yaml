@@ -1,11 +1,11 @@
 package:
   name: lxml
-  version: 5.3.1
+  version: 5.3.2
   top-level:
     - lxml
 source:
-  sha256: 106b7b5d2977b339f1e97efe2778e2ab20e99994cbb0ec5e55771ed0795920c8
-  url: https://files.pythonhosted.org/packages/source/l/lxml/lxml-5.3.1.tar.gz
+  sha256: 773947d0ed809ddad824b7b14467e1a481b8976e87278ac4a730c2f7c7fcddc1
+  url: https://files.pythonhosted.org/packages/source/l/lxml/lxml-5.3.2.tar.gz
 build:
   cflags: |
     -Wno-implicit-function-declaration

@@ -1,11 +1,11 @@
 package:
   name: shapely
-  version: 2.0.7
+  version: 2.1.0
   top-level:
     - shapely
 source:
-  url: https://files.pythonhosted.org/packages/source/s/shapely/shapely-2.0.7.tar.gz
-  sha256: 28fe2997aab9a9dc026dc6a355d04e85841546b2a5d232ed953e3321ab958ee5
+  url: https://files.pythonhosted.org/packages/source/s/shapely/shapely-2.1.0.tar.gz
+  sha256: 2cbe90e86fa8fc3ca8af6ffb00a77b246b918c7cf28677b7c21489b678f6b02e
 build:
   vendor-sharedlib: true
   script: |
