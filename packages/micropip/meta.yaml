@@ -7,8 +7,10 @@ package:
     - micropip
 
 source:
-  sha256: babcf68c1849e229aa887564bc5f2de50273c3212e73c9aff8e3e6e80f2b6a23
-  url: https://files.pythonhosted.org/packages/27/6d/195810e3e73e5f351dc6082cada41bb4d5b0746a6804155ba6bae4304612/micropip-0.9.0-py3-none-any.whl
+  sha256: d72c3224537a14e5d9d02f29e945bf7cde02404ec744291e8f6a310cedf60b66
+  url: https://files.pythonhosted.org/packages/3d/6f/aeef5f7696480704c133206511ff785dd86b76b6eba77391d14de162c1ab/micropip-0.9.0.tar.gz
+  patches:
+    - patches/0001-relative-index-urls.patch
 
 about:
   home: https://github.com/pyodide/micropip
