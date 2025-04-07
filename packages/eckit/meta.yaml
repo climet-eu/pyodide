@@ -10,6 +10,7 @@ source:
     - patches/0002-strerror_r.patch
     - patches/0003-no-tools.patch
     - patches/0004-no-regressions.patch
+    - patches/0005-system-info.patch
 
 build:
   type: shared_library

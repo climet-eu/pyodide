@@ -1,0 +1,133 @@
+diff --git a/src/eckit/system/SystemInfo.cc b/src/eckit/system/SystemInfo.cc
+index 59dcbd9..43f693c 100644
+--- a/src/eckit/system/SystemInfo.cc
++++ b/src/eckit/system/SystemInfo.cc
+@@ -40,6 +40,10 @@
+ #include "eckit/system/SystemInfoFreeBSD.h"
+ #endif
+ 
++#if defined(__EMSCRIPTEN__)
++#include "eckit/system/SystemInfoEmscripten.h"
++#endif
++
+ namespace eckit::system {
+ 
+ //----------------------------------------------------------------------------------------------------------------------
+@@ -65,6 +69,10 @@ SystemInfo* makeSystemInfo(const std::string& system) {
+     }
+ #endif
+ 
++#if defined(__EMSCRIPTEN__)
++return new SystemInfoEmscripten();
++#endif
++
+     NOTIMP;
+ }
+ 
+diff --git a/src/eckit/system/SystemInfoEmscripten.cc b/src/eckit/system/SystemInfoEmscripten.cc
+new file mode 100644
+index 0000000..b2992c7
+--- /dev/null
++++ b/src/eckit/system/SystemInfoEmscripten.cc
+@@ -0,0 +1,49 @@
++/*
++ * (C) Copyright 1996- ECMWF.
++ *
++ * This software is licensed under the terms of the Apache Licence Version 2.0
++ * which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.
++ * In applying this licence, ECMWF does not waive the privileges and immunities
++ * granted to it by virtue of its status as an intergovernmental organisation nor
++ * does it submit to any jurisdiction.
++ */
++
++/// @author Juniper Tyree
++/// @date   April 2025
++
++#include "eckit/system/SystemInfoEmscripten.h"
++
++#include "eckit/exception/Exceptions.h"
++#include "eckit/filesystem/LocalPathName.h"
++#include "eckit/io/Buffer.h"
++#include "eckit/system/MemoryInfo.h"
++
++namespace eckit {
++namespace system {
++
++//----------------------------------------------------------------------------------------------------------------------
++
++SystemInfoEmscripten::~SystemInfoEmscripten() {}
++
++std::string SystemInfoEmscripten::userName() const {
++    return std::string("pyodide");
++}
++
++LocalPathName SystemInfoEmscripten::executablePath() const {
++    return LocalPathName(std::string("/bin/pyodide"));
++}
++
++MemoryInfo SystemEmscripten::memoryUsage() const {
++    MemoryInfo mem;
++    return mem;
++}
++
++std::string SystemInfoEmscripten::dynamicLibraryName(const std::string& name) const {
++    return std::string("lib") + name + ".so";
++}
++
++
++//----------------------------------------------------------------------------------------------------------------------
++
++}  // namespace system
++}  // namespace eckit
+diff --git a/src/eckit/system/SystemInfoEmscripten.h b/src/eckit/system/SystemInfoEmscripten.h
+new file mode 100644
+index 0000000..4ed2e95
+--- /dev/null
++++ b/src/eckit/system/SystemInfoEmscripten.h
+@@ -0,0 +1,46 @@
++/*
++ * (C) Copyright 1996- ECMWF.
++ *
++ * This software is licensed under the terms of the Apache Licence Version 2.0
++ * which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.
++ * In applying this licence, ECMWF does not waive the privileges and immunities
++ * granted to it by virtue of its status as an intergovernmental organisation nor
++ * does it submit to any jurisdiction.
++ */
++
++/// @author Juniper Tyree
++/// @date   April 2025
++
++#ifndef eckit_system_SystemInfoEmscripten_H
++#define eckit_system_SystemInfoEmscripten_H
++
++#include "eckit/system/SystemInfo.h"
++
++namespace eckit {
++namespace system {
++
++//----------------------------------------------------------------------------------------------------------------------
++
++class SystemInfoEmscripten : public SystemInfo {
++
++public:  // methods
++    ~SystemInfoEmscripten() override;
++
++    virtual std::string userName() const;
++
++    virtual eckit::LocalPathName executablePath() const;
++
++    virtual MemoryInfo memoryUsage() const;
++
++    virtual std::string dynamicLibraryName(const std::string& name) const;
++
++protected:  // methods
++private:    // members
++};
++
++//----------------------------------------------------------------------------------------------------------------------
++
++}  // namespace system
++}  // namespace eckit
++
++#endif
