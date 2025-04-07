@@ -1,0 +1,23 @@
+diff --git a/src/eckit/os/System.cc b/src/eckit/os/System.cc
+index dabd1c2..5ce6439 100644
+--- a/src/eckit/os/System.cc
++++ b/src/eckit/os/System.cc
+@@ -35,13 +35,18 @@ std::string System::addrToPath(const void* addr) {
+ 
+     std::string result = "/UNKNOWN";
+ 
++    std::cout << "System::addrToPath" << std::endl;
++
+ #ifdef ECKIT_ADDRTOPATH_WITH_DLADDR
++    std::cout << "ECKIT_ADDRTOPATH_WITH_DLADDR" << std::endl;
+     Dl_info info;
+     info.dli_fname = result.c_str();
+     dladdr(addr, &info);
+     result = info.dli_fname;
+ #endif
+ 
++std::cout << result << std::endl;
++
+     /// @todo: what do we do with archives (.a)
+     ///  * maybe we rely on env variable set?
+     ///  * or rely on etc/path

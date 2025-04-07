@@ -39,7 +39,7 @@ index 59dcbd9..43f693c 100644
  
 diff --git a/src/eckit/system/SystemInfoEmscripten.cc b/src/eckit/system/SystemInfoEmscripten.cc
 new file mode 100644
-index 0000000..a8fa201
+index 0000000..4a9cda8
 --- /dev/null
 +++ b/src/eckit/system/SystemInfoEmscripten.cc
 @@ -0,0 +1,49 @@
@@ -75,7 +75,7 @@ index 0000000..a8fa201
 +}
 +
 +LocalPathName SystemInfoEmscripten::executablePath() const {
-+    return LocalPathName(std::string("/bin/pyodide"));
++    return LocalPathName(std::string("/bin/pyodide")).realName();
 +}
 +
 +MemoryInfo SystemInfoEmscripten::memoryUsage() const {
