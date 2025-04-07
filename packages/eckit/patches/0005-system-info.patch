@@ -1,3 +1,16 @@
+diff --git a/src/eckit/CMakeLists.txt b/src/eckit/CMakeLists.txt
+index d3a2523..851760c 100644
+--- a/src/eckit/CMakeLists.txt
++++ b/src/eckit/CMakeLists.txt
+@@ -814,7 +814,7 @@ elseif( EC_OS_NAME STREQUAL "freebsd" )
+ elseif( EC_OS_NAME STREQUAL "macosx" )
+     list( APPEND eckit_system_srcs system/SystemInfoMacOSX.h system/SystemInfoMacOSX.cc )
+ else()
+-    ecbuild_warn("eckit does not support SystemInfo for OS '${EC_OS_NAME}'")
++    list( APPEND eckit_system_srcs system/SystemInfoEmscripten.h system/SystemInfoEmscripten.cc )
+ endif()
+ 
+ if(HAVE_JEMALLOC)
 diff --git a/src/eckit/system/SystemInfo.cc b/src/eckit/system/SystemInfo.cc
 index 59dcbd9..43f693c 100644
 --- a/src/eckit/system/SystemInfo.cc
@@ -26,7 +39,7 @@ index 59dcbd9..43f693c 100644
  
 diff --git a/src/eckit/system/SystemInfoEmscripten.cc b/src/eckit/system/SystemInfoEmscripten.cc
 new file mode 100644
-index 0000000..b2992c7
+index 0000000..a8fa201
 --- /dev/null
 +++ b/src/eckit/system/SystemInfoEmscripten.cc
 @@ -0,0 +1,49 @@
@@ -65,7 +78,7 @@ index 0000000..b2992c7
 +    return LocalPathName(std::string("/bin/pyodide"));
 +}
 +
-+MemoryInfo SystemEmscripten::memoryUsage() const {
++MemoryInfo SystemInfoEmscripten::memoryUsage() const {
 +    MemoryInfo mem;
 +    return mem;
 +}
