@@ -1,0 +1,12 @@
+diff --git a/src/eckit/system/LibraryManager.cc b/src/eckit/system/LibraryManager.cc
+index ced7118..96249f3 100644
+--- a/src/eckit/system/LibraryManager.cc
++++ b/src/eckit/system/LibraryManager.cc
+@@ -86,6 +86,7 @@ public:  // methods
+     void enregister(const std::string& name, Library* obj) {
+         AutoLock<Mutex> lockme(mutex_);
+         ASSERT(obj);
++        std::cout << "enregister: " << name << std::endl;
+         ASSERT(libs_.find(name) == libs_.end());
+         Log::debug() << "Registering library [" << name << "] with address [" << obj << "]" << std::endl;
+         libs_[name] = obj;

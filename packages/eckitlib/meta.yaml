@@ -12,6 +12,7 @@ source:
     - patches/0004-no-regressions.patch
     - patches/0005-system-info.patch
     - patches/0006-library-path.patch
+    - patches/0007-library-registry.patch
   extras:
     - [extras/__init__.py, __init__.py]
     - [extras/pyproject.toml, pyproject.toml]
