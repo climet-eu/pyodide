@@ -47,7 +47,10 @@ build:
     mkdir -p eckitlib/include
     cp -rP ${WASM_LIBRARY_DIR}/include/eckit eckitlib/include
     mkdir -p eckitlib/lib
-    cp -rP ${WASM_LIBRARY_DIR}/lib/libeckit*.so eckitlib/lib
+    cp -rP ${WASM_LIBRARY_DIR}/lib/libeckit.so eckitlib/lib
+    mkdir -p eckitlib.libs
+    cp -rP ${WASM_LIBRARY_DIR}/lib/libeckit*.so eckitlib.libs
+    rm -f eckitlib.libs/libeckit.so
     mkdir -p eckitlib/lib/cmake
     cp -rP ${WASM_LIBRARY_DIR}/lib/cmake/eckit eckitlib/lib/cmake
     mkdir -p eckitlib/lib/pkgconfig
