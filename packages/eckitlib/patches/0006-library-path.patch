@@ -1,15 +1,14 @@
 diff --git a/src/eckit/os/System.cc b/src/eckit/os/System.cc
-index dabd1c2..75dc5e8 100644
+index dabd1c2..9d95a4b 100644
 --- a/src/eckit/os/System.cc
 +++ b/src/eckit/os/System.cc
-@@ -42,6 +42,12 @@ std::string System::addrToPath(const void* addr) {
+@@ -42,6 +42,11 @@ std::string System::addrToPath(const void* addr) {
      result = info.dli_fname;
  #endif
  
 +    if (result == "/UNKNOWN") {
 +        // FIXME: update Python version
-+        // FIXME: if eckit is ever packaged on its own, use its canonical path
-+        result = "/lib/python3.13/site-packages/pyfdb.libs/libeckit.so";
++        result = "/lib/python3.13/site-packages/eckitlib/lib/libeckit.so";
 +    }
 +
      /// @todo: what do we do with archives (.a)
