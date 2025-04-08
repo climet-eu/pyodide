@@ -1,0 +1,9 @@
+[project]
+name = "metkitlib"
+version = "1.12.8.dev0"
+description = "metkitlib"
+readme = "README.md"
+dependencies = [
+    "eckitlib<2,>=1.28.6.dev0",
+    "eccodeslib<3,>=2.40.0",
+]

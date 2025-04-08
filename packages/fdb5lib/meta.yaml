@@ -1,20 +1,26 @@
 package:
-  name: libfdb
-  version: 5.15.12
+  name: fdb5lib
+  version: 5.15.12.dev0
 
 source:
   url: https://github.com/ecmwf/fdb/archive/refs/tags/5.15.12.tar.gz
   sha256: b31421bf22ef3c45fcefa3801c33b5c8e8395fec8842003bece62dc44d0e02ae
+  extras:
+    - [extras/__init__.py, __init__.py]
+    - [extras/pyproject.toml, pyproject.toml]
 
 requirements:
   host:
-    - eccodes
-    - eckit
-    - metkit
+    - eccodeslib
+    - eckitlib
+    - metkitlib
 
 build:
-  type: shared_library
+  type: package
   script: |
+    mkdir -p src/fdb5lib
+    mv __init__.py src/fdb5lib
+
     git clone --branch 3.7.0 --depth 1 https://github.com/ecmwf/ecbuild;
 
     mkdir -p build;
@@ -31,5 +37,12 @@ build:
 
     emmake make -j ${PYODIDE_JOBS:-3};
     emmake make -j ${PYODIDE_JOBS:-3} install;
-
-    cp -P ${WASM_LIBRARY_DIR}/lib/libfdb5.so ${DISTDIR}
+  post: |
+    rm -rf fdb5
+    rm -f libfdb5.so
+    mkdir -p fdb5lib/include
+    cp -rP ${WASM_LIBRARY_DIR}/include/fdb5 fdb5lib/include
+    mkdir -p fdb5lib/lib
+    cp -rP ${WASM_LIBRARY_DIR}/lib/libfdb5.so fdb5lib/lib
+    mkdir -p fdb5lib/lib/cmake
+    cp -rP ${WASM_LIBRARY_DIR}/lib/cmake/fdb5 fdb5lib/lib/cmake

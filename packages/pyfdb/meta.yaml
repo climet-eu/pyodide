@@ -1,26 +1,19 @@
 package:
   name: pyfdb
-  version: 0.1.1
+  version: 0.1.2
   top-level:
     - pyfdb
 source:
-  url: https://files.pythonhosted.org/packages/source/p/pyfdb/pyfdb-0.1.1.tar.gz
-  sha256: f27648875074428d26a8ae6c78daf86f6b4fc6333138dd29d582946355a6158e
+  url: https://files.pythonhosted.org/packages/source/p/pyfdb/pyfdb-0.1.2.tar.gz
+  sha256: cbb79f159db6bf5453d0f3a26504624ce0fc9450ea9e2d8f7691705506dbf276
   patches:
-    - patches/0001-findlib.patch
+    - patches/0001-fdb5lib.patch
 requirements:
-  host:
-    - libfdb
   run:
     - cffi
     - eccodes
+    - fdb5lib
     - packaging
-build:
-  vendor-sharedlib: true
-  post: |
-    mkdir -p pyfdb.libs
-    cp -P ${WASM_LIBRARY_DIR}/lib/libfdb5.so pyfdb.libs
-
 about:
   home: https://github.com/ecmwf/pyfdb
   PyPI: https://pypi.org/project/pyfdb

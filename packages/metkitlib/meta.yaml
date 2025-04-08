@@ -1,0 +1,55 @@
+package:
+  name: metkitlib
+  version: 1.12.8.dev0
+
+source:
+  url: https://github.com/ecmwf/metkit/archive/refs/tags/1.12.8.tar.gz
+  sha256: 8ece8695e95f69e63de8f9ae7cf210b8517162d99b53e73a3093014d468b35ed
+  extras:
+    - [extras/__init__.py, __init__.py]
+    - [extras/pyproject.toml, pyproject.toml]
+
+requirements:
+  host:
+    - eccodeslib
+    - eckitlib
+
+build:
+  type: package
+  script: |
+    mkdir -p src/metkitlib
+    mv __init__.py src/metkitlib
+
+    git clone --branch 3.7.2 --depth 1 https://github.com/ecmwf/ecbuild;
+
+    mkdir -p build;
+
+    cd build \
+        && emcmake cmake ../ \
+        -DCMAKE_INSTALL_PREFIX=${WASM_LIBRARY_DIR} \
+        -DBUILD_SHARED_LIBS=ON \
+        -DDISABLE_OS_CHECK=ON \
+        -DENABLE_BUILD_TOOLS=OFF \
+        -DENABLE_EXPERIMENTAL=OFF \
+        -DENABLE_GRIB=ON \
+        -DENABLE_BUFR=ON \
+        -DENABLE_NETCDF=OFF \
+        -DENABLE_ODB=OFF \
+        -DENABLE_TESTS=OFF;
+
+    emmake make -j ${PYODIDE_JOBS:-3};
+    emmake make -j ${PYODIDE_JOBS:-3} install;
+  post: |
+    rm -f libmetkit.so
+    rm -rf pkgconfig
+    rm -rf tools
+    mkdir -p metkitlib/include
+    cp -rP ${WASM_LIBRARY_DIR}/include/metkit metkitlib/include
+    mkdir -p metkitlib/lib
+    cp -rP ${WASM_LIBRARY_DIR}/lib/libmetkit.so metkitlib/lib
+    mkdir -p metkitlib/lib/cmake
+    cp -rP ${WASM_LIBRARY_DIR}/lib/cmake/metkit metkitlib/lib/cmake
+    mkdir -p metkitlib/lib/pkgconfig
+    cp -rP ${WASM_LIBRARY_DIR}/lib/pkgconfig/metkit.pc metkitlib/lib/pkgconfig
+    mkdir -p metkitlib/share
+    cp -rP ${WASM_LIBRARY_DIR}/share/metkit metkitlib/share

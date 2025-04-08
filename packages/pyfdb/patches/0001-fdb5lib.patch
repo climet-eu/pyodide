@@ -1,0 +1,12 @@
+diff --git a/pyproject.toml b/pyproject.toml
+index b5c5920..9e01f73 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -32,6 +32,7 @@ dependencies = [
+   "findlibs",
+   "eccodes>=2.39.1",
+   "packaging",
++  "fdb5lib",
+ ]
+ 
+ [project.optional-dependencies]

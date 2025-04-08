@@ -44,8 +44,6 @@ build:
     rm -f *.so
     rm -rf pkgconfig
     rm -rf sandbox
-    mkdir -p eckitlib/share
-    cp -rP ${WASM_LIBRARY_DIR}/etc/eckit eckitlib/share
     mkdir -p eckitlib/include
     cp -rP ${WASM_LIBRARY_DIR}/include/eckit eckitlib/include
     mkdir -p eckitlib/lib
@@ -54,3 +52,5 @@ build:
     cp -rP ${WASM_LIBRARY_DIR}/lib/cmake/eckit eckitlib/lib/cmake
     mkdir -p eckitlib/lib/pkgconfig
     cp -rP ${WASM_LIBRARY_DIR}/lib/pkgconfig/eckit*.pc eckitlib/lib/pkgconfig
+    mkdir -p eckitlib/share
+    cp -rP ${WASM_LIBRARY_DIR}/etc/eckit eckitlib/share

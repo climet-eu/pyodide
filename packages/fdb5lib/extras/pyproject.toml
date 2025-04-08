@@ -1,0 +1,10 @@
+[project]
+name = "fdb5lib"
+version = "5.15.12.dev0"
+description = "fdb5lib"
+readme = "README.md"
+dependencies = [
+    "eckitlib<2,>=1.28.5.dev0",
+    "metkitlib<2,>=1.12.5.dev0",
+    "eccodeslib<3,>=2.40.0",
+]

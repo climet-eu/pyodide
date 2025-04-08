@@ -1,0 +1,6 @@
+[project]
+name = "eccodeslib"
+version = "2.40.0"
+description = "eccodeslib"
+readme = "README.md"
+dependencies = []

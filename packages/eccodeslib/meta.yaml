@@ -1,20 +1,26 @@
 package:
-  name: libeccodes
-  version: 2.40.1
+  name: eccodeslib
+  version: 2.40.0
 
 source:
-  url: https://github.com/ecmwf/eccodes/archive/refs/tags/2.40.1.tar.gz
-  sha256: 3fb5161632150ef0e37519b938871de279be61b0b5e25ec179e6a30fb45cb7a0
+  url: https://github.com/ecmwf/eccodes/archive/refs/tags/2.40.0.tar.gz
+  sha256: 91590147c623a3ca08a81da0f4925fd68ba29b9a0a7d5d862048543da2a0c56a
   patches:
     - patches/0001-32bit-support-hack.patch
+  extras:
+    - [extras/__init__.py, __init__.py]
+    - [extras/pyproject.toml, pyproject.toml]
 
 requirements:
   host:
     - libaec
 
 build:
-  type: shared_library
+  type: package
   script: |
+    mkdir -p src/eccodeslib
+    mv __init__.py src/eccodeslib
+
     git clone --branch 3.7.0 --depth 1 https://github.com/ecmwf/ecbuild;
 
     mkdir -p build;
@@ -50,5 +56,20 @@ build:
 
     emmake make -j ${PYODIDE_JOBS:-3};
     emmake make -j ${PYODIDE_JOBS:-3} install;
-
-    cp -P ${WASM_LIBRARY_DIR}/lib/libeccodes.so ${DISTDIR}
+  post: |
+    rm -f libeccodes.so
+    rm -f libeccodes_memfs.so
+    rm -rf pkgconfig
+    mkdir -p eccodeslib/include
+    cp -P ${WASM_LIBRARY_DIR}/include/eccodes*.h eccodeslib/include
+    cp -P ${WASM_LIBRARY_DIR}/include/grib_api.h eccodeslib/include
+    mkdir -p eccodeslib/lib
+    cp -rP ${WASM_LIBRARY_DIR}/lib/libeccodes.so eccodeslib/lib
+    mkdir -p eccodeslib.libs
+    cp -rP ${WASM_LIBRARY_DIR}/lib/libeccodes_memfs.so eccodeslib.libs
+    mkdir -p eccodeslib/lib/cmake
+    cp -rP ${WASM_LIBRARY_DIR}/lib/cmake/eccodes eccodeslib/lib/cmake
+    mkdir -p eccodeslib/lib/pkgconfig
+    cp -rP ${WASM_LIBRARY_DIR}/lib/pkgconfig/eccodes.pc eccodeslib/lib/pkgconfig
+    mkdir -p eccodeslib/share
+    cp -rP ${WASM_LIBRARY_DIR}/share/eccodes eccodeslib/share
