@@ -1,0 +1,6 @@
+[project]
+name = "eckitlib"
+version = "1.28.5"
+description = "eckitlib"
+readme = "README.md"
+dependencies = []
