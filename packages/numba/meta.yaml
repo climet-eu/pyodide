@@ -1,6 +1,6 @@
 package:
   name: numba
-  version: 0.61.0
+  version: 0.61.2
   top-level:
     - numba
 source:
