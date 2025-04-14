@@ -1,10 +1,10 @@
 package:
   name: libeccodes
-  version: 2.40.1
+  version: 2.41.0
 
 source:
-  url: https://github.com/ecmwf/eccodes/archive/refs/tags/2.40.1.tar.gz
-  sha256: 3fb5161632150ef0e37519b938871de279be61b0b5e25ec179e6a30fb45cb7a0
+  url: https://github.com/ecmwf/eccodes/archive/refs/tags/2.41.0.tar.gz
+  sha256: 62e3fb8c2e261bdb26468c216bedaa81942ca44ebcc9a664f09606eed1024f22
   patches:
     - patches/0001-32bit-support-hack.patch
 

@@ -1,12 +1,12 @@
 package:
   name: eccodes
-  version: 2.40.1
+  version: 2.41.0
   top-level:
     - eccodes
     - gribapi
 source:
-  url: https://github.com/ecmwf/eccodes-python/archive/refs/tags/2.40.1.tar.gz
-  sha256: 3185746d11542ca14d482b0a179cdfe7cb4817012ec95c92e480fcc08adf0cea
+  url: https://github.com/ecmwf/eccodes-python/archive/refs/tags/2.41.0.tar.gz
+  sha256: 3f711876a5ca57d3356c86229725a4e9cdda52d61e717b71e4099afe244be1af
   patches:
     - patches/0001-package-shared-library.patch
 requirements:
