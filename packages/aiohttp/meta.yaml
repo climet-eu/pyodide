@@ -1,11 +1,11 @@
 package:
   name: aiohttp
-  version: 3.11.16
+  version: 3.11.18
   top-level:
     - aiohttp
 source:
-  url: https://files.pythonhosted.org/packages/source/a/aiohttp/aiohttp-3.11.16.tar.gz
-  sha256: 16f8a2c9538c14a557b4d309ed4d0a7c60f0253e8ed7b6c9a2859a7582f8b1b8
+  url: https://files.pythonhosted.org/packages/source/a/aiohttp/aiohttp-3.11.18.tar.gz
+  sha256: ae856e1138612b7e412db63b7708735cff4d38d0399f6a5435d3dac2669f558a
   patches:
     - patches/0001-pyodide-connection.patch
     - patches/0002-export-http-exceptions.patch
