@@ -14,7 +14,6 @@ requirements:
     - numpy
     - packaging
     - pyproj
-    - pyshp
 
 build:
   vendor-sharedlib: true
