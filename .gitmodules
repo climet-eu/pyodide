@@ -1,3 +1,6 @@
 [submodule "pyodide-build"]
 	path = pyodide-build
 	url = https://github.com/pyodide/pyodide-build
+[submodule "pyodide-recipes"]
+	path = pyodide-recipes
+	url = https://github.com/climet-eu/pyodide-recipes.git
