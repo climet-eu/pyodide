@@ -1,5 +1,7 @@
 /* Handle dynamic library loading. */
 
+import { buf as crc32 } from "crc-32";
+
 import { PackageManagerAPI, PackageManagerModule } from "./types";
 
 import { createLock } from "./common/lock";
@@ -13,6 +15,8 @@ export class DynlibLoader {
   // don't know why we need it, but quite possibly bad stuff will happen without
   // it.
   private _lock = createLock();
+
+  private _dynlib_paths: Map<string, [string, Array<string>]> = new Map();
 
   constructor(api: PackageManagerAPI, pyodideModule: PackageManagerModule) {
     this.#api = api;
@@ -68,6 +72,38 @@ export class DynlibLoader {
     DEBUG && console.debug(`Loaded dynamic library ${lib}`);
   }
 
+  public loadDynlibSync(lib: string) {
+    this._lock.withLockSync(() => {
+      DEBUG &&
+        console.debug(`Loading a dynamic library ${lib}`);
+
+      try {
+        // this.#module.loadDynamicLibrary(
+        //   lib,
+        //   {
+        //     loadAsync: false,
+        //     nodelete: true,
+        //     allowUndefined: true,
+        //     global,
+        //     fs,
+        //   },
+        //   localScope,
+        // );
+      } catch (e: any) {
+        if (
+          e &&
+          e.message &&
+          e.message.includes("need to see wasm magic number")
+        ) {
+          throw new Error(
+            `Failed to load dynamic library ${lib} $. We probably just tried to load a linux .so file or something.`,
+          );
+        }
+        throw e;
+      }
+    });
+  }
+
   /**
    * @returns The error message from the last dynamic library load operation, or undefined if there was no error.
    */
@@ -104,8 +140,56 @@ export class DynlibLoader {
     dynlibPaths: string[],
   ) {
     for (const path of dynlibPaths) {
+      // API.registerDynlib(path);
       await this.loadDynlib(path);
     }
+  }
+
+  public loadDynlibsFromPackageSync(
+    // TODO: Simplify the type of pkg after removing usage of this function in micropip.
+    pkg: { file_name: string },
+    dynlibPaths: string[],
+  ) {
+    for (const path of dynlibPaths) {
+      // API.registerDynlib(path);
+      this.loadDynlibSync(path);
+    }
+  }
+
+  public registerDynlib(path: string): void {
+    const name: string = this.#module.PATH.basename(path);
+    const paths = this._dynlib_paths.get(name);
+
+    if (paths === undefined) {
+      this._dynlib_paths.set(name, [path, []]);
+    } else {
+      const [_head, tail] = paths;
+      tail.push(path);
+    }
+  }
+
+  public lookupDynlibPath(name: string): string | undefined {
+    const paths = this._dynlib_paths.get(name);
+
+    if (paths === undefined) {
+      return undefined;
+    }
+
+    const [head, tail] = paths;
+
+    // only allow ambiguous dynlib path lookups iff *all* paths refer to the
+    // same dynlib (by checking if all files have the same CRC32 checksum)
+    if (tail.length !== 0) {
+      const headCrc32 = crc32(API.public_api.FS.readFile(head), 0);
+      for (const path of tail) {
+        const pathCrc32 = crc32(API.public_api.FS.readFile(path), 0);
+        if (pathCrc32 !== headCrc32) {
+          throw new Error(`ambiguous dynlib ${name}: ${head} vs ${tail.join(' vs ')}`);
+        }
+      }
+    }
+
+    return head;
   }
 }
 
@@ -114,4 +198,6 @@ if (typeof API !== "undefined" && typeof Module !== "undefined") {
 
   // TODO: Find a better way to register these functions
   API.loadDynlib = singletonDynlibLoader.loadDynlib.bind(singletonDynlibLoader);
+  API.registerDynlib = singletonDynlibLoader.registerDynlib.bind(singletonDynlibLoader);
+  API.lookupDynlibPath = singletonDynlibLoader.lookupDynlibPath.bind(singletonDynlibLoader);
 }
