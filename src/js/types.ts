@@ -283,6 +283,7 @@ export interface EmscriptenModule {
   promiseMap: {
     free(id: number): void;
   };
+  _dlopen(lib: number, flags: number): number;
   _emscripten_dlopen_promise(lib: number, flags: number): number;
   _dlerror(): number;
   UTF8ToString: (
@@ -582,6 +583,7 @@ export type PackageManagerModule = Pick<
   | "stackSave"
   | "stackRestore"
   | "_emscripten_dlopen_promise"
+  | "_dlopen"
   | "getPromise"
   | "promiseMap"
   | "_dlerror"

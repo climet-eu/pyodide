@@ -78,17 +78,19 @@ export class DynlibLoader {
         console.debug(`Loading a dynamic library ${lib}`);
 
       try {
-        // this.#module.loadDynamicLibrary(
-        //   lib,
-        //   {
-        //     loadAsync: false,
-        //     nodelete: true,
-        //     allowUndefined: true,
-        //     global,
-        //     fs,
-        //   },
-        //   localScope,
-        // );
+        const stack = this.#module.stackSave();
+        const libUTF8 = this.#module.stringToUTF8OnStack(lib);
+
+        try {
+          this.#module._dlopen(
+            libUTF8,
+            2, // RTLD_NOW (2) | RTLD_LOCAL (0)
+          );
+          this.#module.stackRestore(stack);
+        } catch (e: any) {
+          const error = this.getDLError();
+          throw new Error(`Failed to load dynamic library ${lib}: ${error ?? e}`);
+        }
       } catch (e: any) {
         if (
           e &&
@@ -102,6 +104,8 @@ export class DynlibLoader {
         throw e;
       }
     });
+
+    DEBUG && console.debug(`Loaded dynamic library ${lib}`);
   }
 
   /**
