@@ -405,14 +405,6 @@ If you updated the Pyodide version, make sure you also updated the 'indexURL' pa
 
   // Disable further loading of Emscripten file_packager stuff.
   pyodideModule.locateFile = (path: string) => {
-    // const dynlib = API.lookupDynlibPath(path);
-    // if (dynlib !== undefined) {
-    //   const binary = API.public_api.FS.readFile(dynlib);
-    //   const blob = new Blob([binary], {type: "application/octet-stream"});
-    //   const url = URL.createObjectURL(blob);
-    //   setTimeout(() => URL.revokeObjectURL(url), 1000);
-    //   return url;
-    // }
     if (path.endsWith(".so")) {
       throw new Error(`Failed to find dynamic library "${path}"`);
     }

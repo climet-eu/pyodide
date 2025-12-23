@@ -16,8 +16,6 @@ export class DynlibLoader {
   // it.
   private _lock = createLock();
 
-  private _dynlib_paths: Map<string, [string, Array<string>]> = new Map();
-
   constructor(api: PackageManagerAPI, pyodideModule: PackageManagerModule) {
     this.#api = api;
     this.#module = pyodideModule;
@@ -144,7 +142,6 @@ export class DynlibLoader {
     dynlibPaths: string[],
   ) {
     for (const path of dynlibPaths) {
-      // API.registerDynlib(path);
       // await this.loadDynlib(path);
     }
   }
@@ -155,46 +152,9 @@ export class DynlibLoader {
     dynlibPaths: string[],
   ) {
     for (const path of dynlibPaths) {
-      // API.registerDynlib(path);
       // this.loadDynlibSync(path);
     }
   }
-
-  // public registerDynlib(path: string): void {
-  //   const name: string = this.#module.PATH.basename(path);
-  //   const paths = this._dynlib_paths.get(name);
-
-  //   if (paths === undefined) {
-  //     this._dynlib_paths.set(name, [path, []]);
-  //   } else {
-  //     const [_head, tail] = paths;
-  //     tail.push(path);
-  //   }
-  // }
-
-  // public lookupDynlibPath(name: string): string | undefined {
-  //   const paths = this._dynlib_paths.get(name);
-
-  //   if (paths === undefined) {
-  //     return undefined;
-  //   }
-
-  //   const [head, tail] = paths;
-
-  //   // only allow ambiguous dynlib path lookups iff *all* paths refer to the
-  //   // same dynlib (by checking if all files have the same CRC32 checksum)
-  //   if (tail.length !== 0) {
-  //     const headCrc32 = crc32(API.public_api.FS.readFile(head), 0);
-  //     for (const path of tail) {
-  //       const pathCrc32 = crc32(API.public_api.FS.readFile(path), 0);
-  //       if (pathCrc32 !== headCrc32) {
-  //         throw new Error(`ambiguous dynlib ${name}: ${head} vs ${tail.join(' vs ')}`);
-  //       }
-  //     }
-  //   }
-
-  //   return head;
-  // }
 }
 
 if (typeof API !== "undefined" && typeof Module !== "undefined") {
@@ -202,6 +162,4 @@ if (typeof API !== "undefined" && typeof Module !== "undefined") {
 
   // TODO: Find a better way to register these functions
   API.loadDynlib = singletonDynlibLoader.loadDynlib.bind(singletonDynlibLoader);
-  // API.registerDynlib = singletonDynlibLoader.registerDynlib.bind(singletonDynlibLoader);
-  // API.lookupDynlibPath = singletonDynlibLoader.lookupDynlibPath.bind(singletonDynlibLoader);
 }

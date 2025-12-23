@@ -517,8 +517,6 @@ export interface API {
     searchDirs?: string[] | undefined,
     readFileFunc?: (path: string) => Uint8Array,
   ) => Promise<void>;
-  // registerDynlib(path: string): void;
-  // lookupDynlibPath: (name: string) => string | undefined;
   install: (
     buffer: Uint8Array,
     filename: string,
