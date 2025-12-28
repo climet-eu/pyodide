@@ -128,7 +128,7 @@ class PyodideEntryPointsDistribution(importlib.metadata.Distribution):
     def entry_points(self):
         return [
             importlib.metadata.EntryPoint(name, value, group)
-            for group, entry_points in pyodide_js.lockfile.to_py()["entry-points"].items()
+            for group, entry_points in pyodide_js.lockfile.to_py().get("entry-points", dict()).items()
             for name, value in entry_points.items()
         ]
 
