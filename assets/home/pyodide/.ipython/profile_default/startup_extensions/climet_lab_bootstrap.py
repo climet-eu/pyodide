@@ -123,8 +123,33 @@ class PyodidePackageFinder(importlib.abc.MetaPathFinder):
         return None
 
 
+class PyodideEntryPointsDistribution(importlib.metadata.Distribution):
+    @property
+    def entry_points(self):
+        return [
+            importlib.metadata.EntryPoint(name, value, group)
+            for group, entry_points in pyodide_js.lockfile.to_py()["entry-points"].items()
+            for name, value in entry_points.items()
+        ]
+
+    def read_text(self, filename):
+        return None
+
+    def locate_file(self, path):
+        return None
+
+
+class PyodideEntryPointsDistributionFinder(importlib.metadata.DistributionFinder):
+    def find_distributions(self, context=importlib.metadata.DistributionFinder.Context()):
+        yield PyodideEntryPointsDistribution()
+
+    def find_spec(cls, fullname, path=None, target=None):
+        return None
+
+
 def patch_import_loader():
     sys.meta_path.insert(0, PyodidePackageFinder())
+    sys.meta_path.append(PyodideEntryPointsDistributionFinder())
 
 
 def patch_pyodide_stdio():
