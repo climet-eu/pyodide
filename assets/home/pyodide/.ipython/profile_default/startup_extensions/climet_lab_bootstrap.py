@@ -149,6 +149,8 @@ PYODIDE_ENTRY_POINTS_DISTRIBUTION = PyodideEntryPointsDistribution()
 
 class PyodideEntryPointsDistributionFinder(importlib.metadata.DistributionFinder):
     def find_distributions(self, context=importlib.metadata.DistributionFinder.Context()):
+        if context.name and context.name != PYODIDE_ENTRY_POINTS_DISTRIBUTION.name:
+            return
         yield PYODIDE_ENTRY_POINTS_DISTRIBUTION
 
     def find_spec(cls, fullname, path=None, target=None):
