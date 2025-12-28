@@ -124,12 +124,17 @@ class PyodidePackageFinder(importlib.abc.MetaPathFinder):
 
 
 class PyodideEntryPointsDistribution(importlib.metadata.Distribution):
+    name = "pyodide-entry-points"
+
     @property
     def entry_points(self):
+        installed_modules = set(importlib.metadata.packages_distributions().keys())
+
         return [
             importlib.metadata.EntryPoint(name, value, group)
             for group, entry_points in pyodide_js.lockfile.to_py().get("entry-points", dict()).items()
             for name, value in entry_points.items()
+            if value.split(":", maxsplit=1)[0].split(".", maxsplit=1)[0] not in installed_modules
         ]
 
     def read_text(self, filename):
@@ -139,9 +144,12 @@ class PyodideEntryPointsDistribution(importlib.metadata.Distribution):
         return None
 
 
+PYODIDE_ENTRY_POINTS_DISTRIBUTION = PyodideEntryPointsDistribution()
+
+
 class PyodideEntryPointsDistributionFinder(importlib.metadata.DistributionFinder):
     def find_distributions(self, context=importlib.metadata.DistributionFinder.Context()):
-        yield PyodideEntryPointsDistribution()
+        yield PYODIDE_ENTRY_POINTS_DISTRIBUTION
 
     def find_spec(cls, fullname, path=None, target=None):
         return None
