@@ -93,31 +93,30 @@ class PyodidePackageFinder(importlib.abc.MetaPathFinder):
         if fullname in sys.modules:
             return None
 
-        # try to map the import fullname to a Pyodide package name
-        package_name = None
+        # try to map the import fullname to one (or more) Pyodide package names
+        package_names = []
         for name, package in js.Object.entries(pyodide_js.lockfile.packages):
             for import_name in package.imports:
                 if import_name == fullname:
-                    package_name = name
+                    package_names.append(name)
                     break
-            if package_name is not None:
-                break
 
         # we can only load packages in the Pyodide distribution
-        if package_name is None:
+        if len(package_names) == 0:
             return None
 
-        package = getattr(pyodide_js.lockfile.packages, package_name)
+        for package_name in package_names:
+            package = getattr(pyodide_js.lockfile.packages, package_name)
 
-        # no need to load an already-loaded package
-        if getattr(pyodide_js.loadedPackages, package.name, None) is not None:
-            return None
+            # no need to load an already-loaded package
+            if getattr(pyodide_js.loadedPackages, package.name, None) is not None:
+                return None
 
-        # use JSPI if available, otherwise fall back to loadPackageSync
-        if pyodide.ffi.can_run_sync():
-            pyodide.ffi.run_sync(pyodide_js.loadPackage(package_name))
-        else:
-            pyodide_js.loadPackageSync(package_name)
+            # use JSPI if available, otherwise fall back to loadPackageSync
+            if pyodide.ffi.can_run_sync():
+                pyodide.ffi.run_sync(pyodide_js.loadPackage(package_name))
+            else:
+                pyodide_js.loadPackageSync(package_name)
 
         # the package is now installed and can be loaded as usual
         return None
