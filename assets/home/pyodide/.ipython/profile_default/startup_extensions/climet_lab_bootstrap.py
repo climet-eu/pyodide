@@ -98,27 +98,23 @@ class PyodidePackageFinder(importlib.abc.MetaPathFinder):
         for name, package in js.Object.entries(pyodide_js.lockfile.packages):
             for import_name in package.imports:
                 if import_name == fullname:
-                    package_names.append(name)
+                    package = getattr(pyodide_js.lockfile.packages, name)
+                    # no need to load already-loaded packages
+                    if getattr(pyodide_js.loadedPackages, package.name, None) is None:
+                        package_names.append(name)
                     break
 
         # we can only load packages in the Pyodide distribution
         if len(package_names) == 0:
             return None
 
-        for package_name in package_names:
-            package = getattr(pyodide_js.lockfile.packages, package_name)
+        # use JSPI if available, otherwise fall back to loadPackageSync
+        if pyodide.ffi.can_run_sync():
+            pyodide.ffi.run_sync(pyodide_js.loadPackage(package_names))
+        else:
+            pyodide_js.loadPackageSync(package_names)
 
-            # no need to load an already-loaded package
-            if getattr(pyodide_js.loadedPackages, package.name, None) is not None:
-                return None
-
-            # use JSPI if available, otherwise fall back to loadPackageSync
-            if pyodide.ffi.can_run_sync():
-                pyodide.ffi.run_sync(pyodide_js.loadPackage(package_name))
-            else:
-                pyodide_js.loadPackageSync(package_name)
-
-        # the package is now installed and can be loaded as usual
+        # the packages are now installed and can be loaded as usual
         return None
 
 
