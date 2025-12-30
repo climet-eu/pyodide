@@ -1,6 +1,8 @@
 import asyncio
 import importlib
+import site
 import sys
+from pathlib import Path
 
 import js
 import pyodide
@@ -95,6 +97,7 @@ class PyodidePackageFinder(importlib.abc.MetaPathFinder):
 
         # try to map the import fullname to one (or more) Pyodide package names
         package_names = []
+        namespace_subpackage_names = []
         for name, package in js.Object.entries(pyodide_js.lockfile.packages):
             for import_name in package.imports:
                 if import_name == fullname:
@@ -103,6 +106,21 @@ class PyodidePackageFinder(importlib.abc.MetaPathFinder):
                     if getattr(pyodide_js.loadedPackages, package.name, None) is None:
                         package_names.append(name)
                     break
+                # for namespace packages, if the namespace doesn't yet exist,
+                #  we conservatively find all packages for the namespace
+                if import_name.startswith(f"{fullname}."):
+                    package = getattr(pyodide_js.lockfile.packages, name)
+                    # no need to load already-loaded packages
+                    if getattr(pyodide_js.loadedPackages, package.name, None) is None:
+                        namespace_subpackage_names.append(name)
+                    break
+
+        # we only prepare namespace packages if there are no direct matches
+        if len(package_names) == 0 and len(namespace_subpackage_names) > 0:
+            # create the namespace package directory and hope for the best
+            namespace_path = Path(site.getsitepackages()[0]).joinpath(*fullname.split("."))
+            namespace_path.mkdir(parents=True, exist_ok=True)
+            return None
 
         # we can only load packages in the Pyodide distribution
         if len(package_names) == 0:
