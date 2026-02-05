@@ -216,7 +216,7 @@ $(eval $(call preprocess-js,python2js_buffer.js))
 $(eval $(call preprocess-js,js2python.js))
 
 pyodide_build .pyodide_build_installed:
-	pip install "git+https://github.com/pyodide/pyodide-build@3d95b522fb416a24dc860e23ff88e77cece506d8"
+	pip install "git+https://github.com/pyodide/pyodide-build@0eb494ffb3536971da3309d98ac56f6515f985a4"
 	@which pyodide >/dev/null
 	touch .pyodide_build_installed
 
