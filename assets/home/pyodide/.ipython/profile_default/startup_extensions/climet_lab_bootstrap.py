@@ -1,5 +1,6 @@
 import asyncio
 import importlib
+import os
 import site
 import sys
 from pathlib import Path
@@ -41,6 +42,8 @@ def load_ipython_extension(ip):
 
     ip.events.register("pre_execute", pre_execute_hook)
     ip.events.register("post_execute", post_execute_hook)
+
+    exec_user_boostrap()
 
 
 # patch some asyncio functions if JSPI is not available
@@ -307,3 +310,13 @@ class PyodideDynlibMonitor:
                 + f"librar{'ies' if dynlibs_extra > 1 else 'y'} "
                 + f"({dynlibs_after} total for this notebook)",
             )
+
+
+def exec_user_boostrap():
+    if "CLIMET_LAB_BOOTSTRAP_CODE" not in os.environ:
+        return
+
+    try:
+        exec(os.environ["CLIMET_LAB_BOOTSTRAP_CODE"], locals=dict())
+    except Exception:
+        pass
