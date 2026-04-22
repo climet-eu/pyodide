@@ -318,5 +318,5 @@ def exec_user_boostrap():
 
     try:
         exec(os.environ["CLIMET_LAB_BOOTSTRAP_CODE"], locals=dict())
-    except Exception:
-        pass
+    except Exception as err:
+        print(f"CliMetLab bootstrap failed: {err}")
