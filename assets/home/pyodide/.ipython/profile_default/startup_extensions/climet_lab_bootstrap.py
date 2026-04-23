@@ -43,7 +43,7 @@ def load_ipython_extension(ip):
     ip.events.register("pre_execute", pre_execute_hook)
     ip.events.register("post_execute", post_execute_hook)
 
-    exec_user_boostrap()
+    exec_user_boostrap(ip)
 
 
 # patch some asyncio functions if JSPI is not available
@@ -121,7 +121,9 @@ class PyodidePackageFinder(importlib.abc.MetaPathFinder):
         # we only prepare namespace packages if there are no direct matches
         if len(package_names) == 0 and len(namespace_subpackage_names) > 0:
             # create the namespace package directory and hope for the best
-            namespace_path = Path(site.getsitepackages()[0]).joinpath(*fullname.split("."))
+            namespace_path = Path(site.getsitepackages()[0]).joinpath(
+                *fullname.split(".")
+            )
             namespace_path.mkdir(parents=True, exist_ok=True)
             return None
 
@@ -148,9 +150,12 @@ class PyodideEntryPointsDistribution(importlib.metadata.Distribution):
 
         return [
             importlib.metadata.EntryPoint(name, value, group)
-            for group, entry_points in pyodide_js.lockfile.to_py().get("entry-points", dict()).items()
+            for group, entry_points in pyodide_js.lockfile.to_py()
+            .get("entry-points", dict())
+            .items()
             for name, value in entry_points.items()
-            if value.split(":", maxsplit=1)[0].split(".", maxsplit=1)[0] not in installed_modules
+            if value.split(":", maxsplit=1)[0].split(".", maxsplit=1)[0]
+            not in installed_modules
         ]
 
     def read_text(self, filename):
@@ -164,7 +169,9 @@ PYODIDE_ENTRY_POINTS_DISTRIBUTION = PyodideEntryPointsDistribution()
 
 
 class PyodideEntryPointsDistributionFinder(importlib.metadata.DistributionFinder):
-    def find_distributions(self, context=importlib.metadata.DistributionFinder.Context()):
+    def find_distributions(
+        self, context=importlib.metadata.DistributionFinder.Context()
+    ):
         if context.name and context.name != PYODIDE_ENTRY_POINTS_DISTRIBUTION.name:
             return
         yield PYODIDE_ENTRY_POINTS_DISTRIBUTION
@@ -312,11 +319,11 @@ class PyodideDynlibMonitor:
             )
 
 
-def exec_user_boostrap():
+def exec_user_boostrap(ip):
     if "CLIMET_LAB_BOOTSTRAP_CODE" not in os.environ:
         return
 
     try:
-        exec(os.environ["CLIMET_LAB_BOOTSTRAP_CODE"], locals=dict())
+        exec(os.environ["CLIMET_LAB_BOOTSTRAP_CODE"], locals=dict(ip=ip))
     except Exception as err:
         print(f"CliMetLab bootstrap failed: {err}")
