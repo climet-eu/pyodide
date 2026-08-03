@@ -6,4 +6,5 @@
 # on them at build time.
 
 cmake < 4
+meson < 1.10
 setuptools < 81
