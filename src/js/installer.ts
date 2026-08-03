@@ -46,6 +46,33 @@ export class Installer {
       dynlibs,
     );
   }
+
+  installSync(
+    buffer: Uint8Array,
+    filename: string,
+    installDir: string,
+    metadata?: ReadonlyMap<string, string>,
+  ) {
+    const dynlibs: string[] = this.#api.package_loader.unpack_buffer.callKwargs(
+      {
+        buffer,
+        filename,
+        extract_dir: installDir,
+        metadata,
+        calculate_dynlibs: true,
+      },
+    );
+
+    DEBUG &&
+      console.debug(
+        `Found ${dynlibs.length} dynamic libraries inside ${filename}`,
+      );
+
+    this.#dynlibLoader.loadDynlibsFromPackageSync(
+      { file_name: filename },
+      dynlibs,
+    );
+  }
 }
 
 /** @hidden */
