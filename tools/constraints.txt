@@ -6,3 +6,4 @@
 # on them at build time.
 
 cmake < 4
+setuptools < 81
