@@ -313,6 +313,7 @@ export interface EmscriptenModule {
   promiseMap: {
     free(id: number): void;
   };
+  _dlopen(lib: number, flags: number): number;
   _emscripten_dlopen_promise(lib: number, flags: number): number;
   _dlerror(): number;
   UTF8ToString: (
@@ -487,6 +488,7 @@ export interface API {
   config: PyodideConfigWithDefaults;
   packageIndexReady: Promise<void>;
   bootstrapFinalizedPromise: Promise<void>;
+  bootstrapFinalizedDone: boolean;
   typedArrayAsUint8Array: (buffer: TypedArray | ArrayBuffer) => Uint8Array;
   initializeStreams: (
     stdin?: InFuncType | undefined,
@@ -593,6 +595,7 @@ export type PackageManagerAPI = Pick<
   | "package_loader"
   | "lockfile_packages"
   | "bootstrapFinalizedPromise"
+  | "bootstrapFinalizedDone"
   | "sitepackages"
   | "defaultLdLibraryPath"
   | "version"
@@ -616,6 +619,7 @@ export type PackageManagerModule = Pick<
   | "stackSave"
   | "stackRestore"
   | "_emscripten_dlopen_promise"
+  | "_dlopen"
   | "getPromise"
   | "promiseMap"
   | "_dlerror"

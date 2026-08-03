@@ -1,7 +1,7 @@
 import { ffi } from "./ffi";
 import { CanvasInterface, canvas } from "./canvas";
 
-import { loadPackage, loadedPackages } from "./load-package";
+import { loadPackage, loadedPackages, loadPackageSync, loadPackageSetStderr, loadPackageSetStdout } from "./load-package";
 import { type PyProxy, type PyDict } from "generated/pyproxy";
 import { loadBinaryFile, nodeFSMod } from "./compat";
 import { version } from "./version";
@@ -126,6 +126,12 @@ export class PyodideAPI_ {
   static version = version;
   /** @hidden */
   static loadPackage = loadPackage;
+  /** @hidden */
+  static loadPackageSync = loadPackageSync;
+  /** @hidden */
+  static loadPackageSetStdout = loadPackageSetStdout;
+  /** @hidden */
+  static loadPackageSetStderr = loadPackageSetStderr;
   /** @hidden */
   static loadedPackages = loadedPackages;
   /** @hidden */
@@ -781,6 +787,7 @@ let bootstrapFinalized: () => void;
 API.bootstrapFinalizedPromise = new Promise<void>(
   (r) => (bootstrapFinalized = r),
 );
+API.bootstrapFinalizedDone = false;
 
 /**
  * This function is called after the emscripten module is finished initializing,
@@ -862,5 +869,6 @@ API.finalizeBootstrap = function (
   pyodide.pyodide_py = API.pyodide_py;
   pyodide.globals = API.globals;
   bootstrapFinalized!();
+  API.bootstrapFinalizedDone = true;
   return pyodide;
 };

@@ -68,6 +68,42 @@ export class DynlibLoader {
     DEBUG && console.debug(`Loaded dynamic library ${lib}`);
   }
 
+  public loadDynlibSync(lib: string) {
+    this._lock.withLockSync(() => {
+      DEBUG &&
+        console.debug(`Loading a dynamic library ${lib}`);
+
+      try {
+        const stack = this.#module.stackSave();
+        const libUTF8 = this.#module.stringToUTF8OnStack(lib);
+
+        try {
+          this.#module._dlopen(
+            libUTF8,
+            2, // RTLD_NOW (2) | RTLD_LOCAL (0)
+          );
+          this.#module.stackRestore(stack);
+        } catch (e: any) {
+          const error = this.getDLError();
+          throw new Error(`Failed to load dynamic library ${lib}: ${error ?? e}`);
+        }
+      } catch (e: any) {
+        if (
+          e &&
+          e.message &&
+          e.message.includes("need to see wasm magic number")
+        ) {
+          throw new Error(
+            `Failed to load dynamic library ${lib} $. We probably just tried to load a linux .so file or something.`,
+          );
+        }
+        throw e;
+      }
+    });
+
+    DEBUG && console.debug(`Loaded dynamic library ${lib}`);
+  }
+
   /**
    * @returns The error message from the last dynamic library load operation, or undefined if there was no error.
    */
@@ -104,7 +140,17 @@ export class DynlibLoader {
     dynlibPaths: string[],
   ) {
     for (const path of dynlibPaths) {
-      await this.loadDynlib(path);
+      // await this.loadDynlib(path);
+    }
+  }
+
+  public loadDynlibsFromPackageSync(
+    // TODO: Simplify the type of pkg after removing usage of this function in micropip.
+    pkg: { file_name: string },
+    dynlibPaths: string[],
+  ) {
+    for (const path of dynlibPaths) {
+      // this.loadDynlibSync(path);
     }
   }
 }
