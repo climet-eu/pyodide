@@ -77,7 +77,7 @@ export function isAbsolute(path: string): boolean {
 }
 
 function node_resolvePath(path: string, base?: string): string {
-  return nodePath.resolve(base || ".", path);
+  return isAbsolute(path) ? path : nodePath.resolve(base || ".", path);
 }
 
 function browser_resolvePath(path: string, base?: string): string {
