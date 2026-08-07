@@ -1,5 +1,6 @@
 import asyncio
 import importlib
+import importlib.metadata
 import os
 import site
 import sys
