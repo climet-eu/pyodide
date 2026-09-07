@@ -47,7 +47,7 @@ RUN apt-get update \
         autoconf autotools-dev automake texinfo dejagnu \
         build-essential libltdl-dev \
         gnupg2 libdbus-glib-1-2 sudo sqlite3 \
-        ninja-build jq cmake bison \
+        ninja-build jq cmake bison flex \
         # Dependencies of Chrome and Firefox \
         ca-certificates fonts-liberation libasound2 \
         libatk-bridge2.0-0 libatk1.0-0 libatspi2.0-0 \
