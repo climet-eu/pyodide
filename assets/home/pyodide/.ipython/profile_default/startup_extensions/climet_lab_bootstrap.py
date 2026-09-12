@@ -18,6 +18,9 @@ def load_ipython_extension(ip):
 
     patch_pyodide_stdio()
 
+    # FIXME: unconditionally disable JSPI
+    pyodide.ffi.can_run_sync = lambda: False
+
     if not pyodide.ffi.can_run_sync():
         patch_syncifiable_asyncio()
 
