@@ -8,7 +8,7 @@ RUN apt-get update \
 ADD requirements.txt /
 
 WORKDIR /
-RUN pip3 --no-cache-dir install -r --upgrade requirements.txt \
+RUN pip3 --no-cache-dir install --upgrade -r requirements.txt \
     && rm requirements.txt
 
 CMD ["/bin/sh"]
