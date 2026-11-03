@@ -5,5 +5,11 @@ RUN apt-get update \
         flex \
   && rm -rf /var/lib/apt/lists/*
 
+ADD requirements.txt /
+
+WORKDIR /
+RUN pip3 --no-cache-dir install -r --upgrade requirements.txt \
+    && rm requirements.txt
+
 CMD ["/bin/sh"]
 WORKDIR /src
